@@ -1,0 +1,5 @@
+[book]
+authors = ["victor.houisse"]
+language = "en"
+src = "src"
+title = "Distributed Mesh Adapatation"
