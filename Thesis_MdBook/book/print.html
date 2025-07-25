@@ -208,10 +208,10 @@ Tucanos metric-based remeshing library (developed at Airbus) with CODA, thus ben
 can defined related to a metric \(  \mathcal{M} \) as</p>
 <p>\[  &lt;\textbf{u},\textbf{v}&gt;_{\mathcal{M}} = &lt;\textbf{u},\mathcal{M}\textbf{v} &gt; = {^t}\textbf{u}\mathcal{M}\textbf{v}\]</p>
 <p>Under this notion, the Euclidean norm of a vector \(  \textbf{u}  \text{ in } \mathbb{R}^n\) according to \(  \mathcal{M}\) is defined as</p>
-<p>\[ \left| \textbf{u} \right| = \sqrt{&lt;\textbf{u},\textbf{u} &gt;_{\mathcal{M}} } = \sqrt{{^t}\textbf{u}\mathcal{M}\textbf{u}} \]</p>
+<p>\[ \left| \textbf{u} \right| = \sqrt{&lt;\textbf{u},\textbf{u} &gt;_{\mathcal{M}} } = \sqrt{  \textbf{u}^{t} \mathcal{M} \textbf{u} } \]</p>
 <p>This formula allows us to measure the length of a vector \(\textbf{u}\) with repsect to a certain metric \( \mathcal{M}\).</p>
 <p>A metric \(\mathcal{M}\) can be geometrically represented by its associated unit ball, defined by</p>
-<p>\( \xi _{M} ={ p | \sqrt{{^t} \textbf{op} \mathcal{M} \textbf{op} }=1|  } \)</p>
+<p>\( \xi _{M} ={ p | \sqrt{ \textbf{op}^{t} \mathcal{M} \textbf{op} }=1|  } \)</p>
 <p><br><br></p>
 <figure style="text-align: center;">
   <img src="images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
@@ -220,7 +220,7 @@ can defined related to a metric \(  \mathcal{M} \) as</p>
 <h3 id="definition-32"><a class="header" href="#definition-32">Definition 3.2</a></h3>
 <p>An Euclidean metric space is a vector space supplied with a certain scalar product \(&lt;.,.&gt;_{\mathcal{M}}\) defined by a metric tensor \(\mathcal{M}\). We denote it \( (\mathbb{R}^n, \mathcal{M} ) \).<br />
 The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p>
-<p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{ {^t} \textbf{pq} \mathcal{M} \textbf{pq} }  \]</p>
+<p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \]</p>
 <p>Finaly the lenght of a segment \( \textbf{pq} \) is the distance between its extremities</p>
 <p>\(    \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = d_{ \mathcal{M} } ( \textbf{p},\textbf{q} )  \).</p>
 <h3 id="remark-321"><a class="header" href="#remark-321">Remark 3.2.1</a></h3>
@@ -233,8 +233,8 @@ The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p
 <h3 id="definition-33"><a class="header" href="#definition-33">Definition 3.3</a></h3>
 <p>A \( \textit{Riemmanian}\) metric space is a continuous manifold \( \Omega \subset \mathbb{R}^n  \) supplied with a smooth metric \( \mathcal{M}(.) \). We denote it by \(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
 <p>Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh.
-More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \):</p>
-<p>\(\)</p>
+More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \) :</p>
+<p>\(  \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) =  \)</p>
 <figure style="text-align: center;">
   <img src="images/Riemmanian.png" alt="Isovalues of the fonction f(x) = lm(ox) for different Spaces" width="90%">
   <figcaption>Figure 1: Isovalues of the fonction f(x) = lm(ox) for different Spaces </figcaption>
@@ -256,22 +256,6 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

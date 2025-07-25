@@ -11,13 +11,13 @@ can defined related to a metric \\(  \mathcal{M} \\) as
 
 Under this notion, the Euclidean norm of a vector \\(  \textbf{u}  \text{ in } \mathbb{R}^n\\) according to \\(  \mathcal{M}\\) is defined as 
 
-\\[ \left\| \textbf{u} \right\| = \sqrt{<\textbf{u},\textbf{u} >_{\mathcal{M}} } = \sqrt{{^t}\textbf{u}\mathcal{M}\textbf{u}} \\]
+\\[ \left\| \textbf{u} \right\| = \sqrt{<\textbf{u},\textbf{u} >_{\mathcal{M}} } = \sqrt{  \textbf{u}^{t} \mathcal{M} \textbf{u} } \\]
 
 This formula allows us to measure the length of a vector \\(\textbf{u}\\) with repsect to a certain metric \\( \mathcal{M}\\).
 
 A metric \\(\mathcal{M}\\) can be geometrically represented by its associated unit ball, defined by 
 
-\\( \xi _{M} ={ p | \sqrt{{^t} \textbf{op} \mathcal{M} \textbf{op} }=1|  \} \\)
+\\( \xi _{M} ={ p | \sqrt{ \textbf{op}^{t} \mathcal{M} \textbf{op} }=1|  \} \\)
 
 
 <br><br>
@@ -31,7 +31,7 @@ A metric \\(\mathcal{M}\\) can be geometrically represented by its associated un
 An Euclidean metric space is a vector space supplied with a certain scalar product \\(<.,.>_{\mathcal{M}}\\) defined by a metric tensor \\(\mathcal{M}\\). We denote it \\( \(\mathbb{R}^n, \mathcal{M} \) \\).  
 The distance between two point \\(\textbf{p}\\) and \\(\textbf{q}\\) is given by:
 
- \\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{ {^t} \textbf{pq} \mathcal{M} \textbf{pq} }  \\] 
+ \\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \\] 
 
 
 Finaly the lenght of a segment \\( \textbf{pq} \\) is the distance between its extremities
