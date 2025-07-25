@@ -4,8 +4,10 @@ language = "en"
 src = "src"
 title = "Distributed Mesh Adapatation"
 
+
 [output.html]
 default-theme = "rust"
 preferred-dark-theme = "navy"
 smart-punctuation = true
 mathjax-support = true
+static-assets = ["images"]
