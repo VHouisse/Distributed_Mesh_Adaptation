@@ -1,6 +1,6 @@
 # Metric
 
-### 3.1 Metric:
+### 2.1.1 Definition:
 A metric tensor \\( \mathcal{M} \in \mathbb{R}^{n} \\) is an \\(n \times n \\) symmetric definite positive matrix.  
 \\( \mathcal{M} \\) is always diagonalizable and can be decomposed as \\( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \\) where \\(\mathcal{R}\\) and \\(\Delta\\) are the eigenvectors and the eigenvalues matrices of \\(\mathcal{M}\\), respectively.
 
@@ -27,7 +27,7 @@ A metric \\(\mathcal{M}\\) can be geometrically represented by its associated un
   <figcaption>Figure 1: Metric Unit Ball </figcaption>
 </figure>
 
-### Definition 3.2 
+### 2.1.2 Definition  
 An Euclidean metric space is a vector space supplied with a certain scalar product \\(<.,.>_{\mathcal{M}}\\) defined by a metric tensor \\(\mathcal{M}\\). We denote it \\( \(\mathbb{R}^n, \mathcal{M} \) \\).  
 The distance between two point \\(\textbf{p}\\) and \\(\textbf{q}\\) is given by:
 
@@ -38,7 +38,7 @@ Finaly the lenght of a segment \\( \textbf{pq} \\) is the distance between its e
 
 \\(    \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = d_{ \mathcal{M} } ( \textbf{p},\textbf{q} )  \\). 
 
-### Remark 3.2.1
+### 2.1.3 Remark 
 If the Metric defining the scalar product is the identity matrix, \\( \mathcal{M} = \mathbb{I} _{n} \\) then we get the standart Euclidean space \\( \( \mathbb{R}^n , \mathbb{I} _{n} \)\\) supplpied with the natural dot product \\(\\).
 
 <br><br>
@@ -51,7 +51,7 @@ The angle between two vectors \\(  \textbf{u} \\) and \\( \textbf{v} \\) is defi
 
 \\[ cos(\theta) = \frac{ <\textbf{u} , \textbf{v} > _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\\]
 
-### Definition 3.3 
+###  2.1.4 Definition
 A \\( \textit{Riemmanian}\\) metric space is a continuous manifold \\( \Omega \subset \mathbb{R}^n  \\) supplied with a smooth metric \\( \mathcal{M}(.) \\). We denote it by \\(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \\). 
 
 Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh. 

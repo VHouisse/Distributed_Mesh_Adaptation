@@ -200,14 +200,8 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="theoritical-foundations"><a class="header" href="#theoritical-foundations">Theoritical Foundations</a></h1>
 <p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux liés à l’adaptation de maillage dans sa généralité est essentielle. Cette section détaillera donc …</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="mesh-adaptation"><a class="header" href="#mesh-adaptation">Mesh Adaptation</a></h1>
-<p>The core advantage of using metric tensors in mesh generation and adaptation lies in their ability to impose specific directional stretching on mesh elements. This allows us to briefly detail our approach to anisotropic mesh generation: by defining a mesh size in each direction at every point of the domain using metric tensors, it’s then possible to generate a uniform unit mesh, thus specifying sizes directionally.</p>
-<p>More precisely, let \(\mathcal{M}(x)_{x \in \Omega }\) be a Riemmanian metric space. In three dimensions, the objective is to generate a mesh    \(\mathcal{H} \) for which each edge lenght is unit in the associated metric and each element is regular :</p>
-<p>\[   \forall \textbf{e} \in \mathcal{H} , \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
-<p>As a regular elements can not fill the entire domain \( \Omega \), the mesh generator can only create quasi-uniform mesh, i.e. the mesh elements are almost unit in the Riemmanian space. To quantify the fap to unity, differents tools can be used, for example, an element_quality function :
-\[ Q_\mathcal{M}\] \(\)</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
-<h3 id="31-metric"><a class="header" href="#31-metric">3.1 Metric:</a></h3>
+<h3 id="211-definition"><a class="header" href="#211-definition">2.1.1 Definition:</a></h3>
 <p>A metric tensor \( \mathcal{M} \in \mathbb{R}^{n} \) is an \(n \times n \) symmetric definite positive matrix.<br />
 \( \mathcal{M} \) is always diagonalizable and can be decomposed as \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \) where \(\mathcal{R}\) and \(\Delta\) are the eigenvectors and the eigenvalues matrices of \(\mathcal{M}\), respectively.</p>
 <p>From this definition, it follows up that the scalar product of two vectors in \(  \mathbb{R}^n \)
@@ -223,20 +217,20 @@ can defined related to a metric \(  \mathcal{M} \) as</p>
   <img src="Theoritical_Foundations/../images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
   <figcaption>Figure 1: Metric Unit Ball </figcaption>
 </figure>
-<h3 id="definition-32"><a class="header" href="#definition-32">Definition 3.2</a></h3>
+<h3 id="212-definition"><a class="header" href="#212-definition">2.1.2 Definition</a></h3>
 <p>An Euclidean metric space is a vector space supplied with a certain scalar product \(&lt;.,.&gt;_{\mathcal{M}}\) defined by a metric tensor \(\mathcal{M}\). We denote it \( (\mathbb{R}^n, \mathcal{M} ) \).<br />
 The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p>
 <p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \]</p>
 <p>Finaly the lenght of a segment \( \textbf{pq} \) is the distance between its extremities</p>
 <p>\(    \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = d_{ \mathcal{M} } ( \textbf{p},\textbf{q} )  \).</p>
-<h3 id="remark-321"><a class="header" href="#remark-321">Remark 3.2.1</a></h3>
+<h3 id="213-remark"><a class="header" href="#213-remark">2.1.3 Remark</a></h3>
 <p>If the Metric defining the scalar product is the identity matrix, \( \mathcal{M} = \mathbb{I} _{n} \) then we get the standart Euclidean space \( ( \mathbb{R}^n , \mathbb{I} _{n} )\) supplpied with the natural dot product \(\).</p>
 <p><br><br></p>
 <p>It is then possible to define volumes and angles in an Euclidean metric space. Let K be a bounded subset of \( \mathbb{R}^n \), the volume of an element K in metric \( \mathcal{M} \) is:</p>
 <p>\( |K| _{ \mathcal{M} }  = \int _{K} \sqrt{det( \mathcal{M} )} |K| _{ \mathbb{I} _{n}} \)</p>
 <p>The angle between two vectors \(  \textbf{u} \) and \( \textbf{v} \) is define by the unique real \( \theta \in [ 0 , \pi ] \) such that</p>
 <p>\[ cos(\theta) = \frac{ &lt;\textbf{u} , \textbf{v} &gt; _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\]</p>
-<h3 id="definition-33"><a class="header" href="#definition-33">Definition 3.3</a></h3>
+<h3 id="214-definition"><a class="header" href="#214-definition">2.1.4 Definition</a></h3>
 <p>A \( \textit{Riemmanian}\) metric space is a continuous manifold \( \Omega \subset \mathbb{R}^n  \) supplied with a smooth metric \( \mathcal{M}(.) \). We denote it by \(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
 <p>Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh.
 More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \) :</p>
@@ -248,8 +242,18 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
   Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
   Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
 </figure>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mesh-adaptation"><a class="header" href="#mesh-adaptation">Mesh Adaptation</a></h1>
+<p>The core advantage of using metric tensors in mesh generation and adaptation lies in their ability to impose specific directional stretching on mesh elements. This allows us to briefly detail our approach to anisotropic mesh generation: by defining a mesh size in each direction at every point of the domain using metric tensors, it’s then possible to generate a uniform unit mesh, thus specifying sizes directionally.</p>
+<p>More precisely, let \(\mathcal{M}(x)_{x \in \Omega }\) be a Riemmanian metric space. In three dimensions, the objective is to generate a mesh    \(\mathcal{H} \) for which each edge lenght is unit in the associated metric and each element is regular :</p>
+<p>\[   \forall \textbf{e} \in \mathcal{H} , \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
+<p>As a regular elements can not fill the entire domain \( \Omega \), the mesh generator can only create quasi-uniform mesh, i.e. the mesh elements are almost unit in the Riemmanian space. To quantify the fap to unity, differents tools can be used, for example, an element_quality function :
+\[ Q_\mathcal{M}\] \(\)</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="parallel-computing"><a class="header" href="#parallel-computing">Parallel Computing</a></h1>
+<p>Scaling
+Coeurs
+Etc …</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="work-environnement"><a class="header" href="#work-environnement">Work Environnement</a></h1>
+<p>This section presents the essential tools and the development environment employed throughout this thesis.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">Rust</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tucanos"><a class="header" href="#tucanos">Tucanos</a></h1>
 <p>Tucanos is a 2D and 3D anisotropic mesh adaptation library. It is based on the principles described in “Four-Dimensional Anisotropic Mesh Adaptation for Spacetime Numerical Simulations” by Philip Claude Caplan.</p>
@@ -261,9 +265,53 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
 <center><div style="break-before: page; page-break-before: always;"></div><h1 id="tools"><a class="header" href="#tools">Tools</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="first-explorations--contribution"><a class="header" href="#first-explorations--contribution">First Explorations &amp; Contribution</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="partitionners"><a class="header" href="#partitionners">Partitionners</a></h1>
+<p>Comme nous l’avons vu, la quantité de données induites par la résolution des équations de la CFD ainsi que la recherche de calcul de haute performance nous pousse à utiliser plusieurs unité de calcul. Pour cela il est impératif de partitionner le maillage sous-jacent au domaine de travail. Partitionner permet de diviser le domaine en autant de sous-domaines qu’il y a de coeurs disponibles, décomposant le problème initial en N sous-problèmes.</p>
+<p>Un bon partitionnement repose sur trois critères essentiels :</p>
+<p>Reduction des interdépendances : Minimiser les arêtes ou faces partagées entre les sous-domaines afin de limiter les communications coûteuses entre les unités de calcul.</p>
+<p>Preservation de la qualité : Assurer que la division ne dégrade pas la qualité des sous-maillages individuels</p>
+<p>Equilibrage de charge : Distribuer équitablement la charge de travail computationnel entre tous les processeurs afin d’eviter les goulots d’étranglement et maximiser la performance parallèle (CF Load balancing)</p>
+<h3 id="partitionnement-pour-le-remaillage--le-défi-des-interfaces"><a class="header" href="#partitionnement-pour-le-remaillage--le-défi-des-interfaces">Partitionnement pour le Remaillage : Le Défi des Interfaces</a></h3>
+<p>Dans le cadre du remaillage, la gestion des interfaces entre les partitions est un défi majeur, car ces frontières doivent être adaptées sans compromettre la continuité du maillage global ni l’efficacité parallèle. Deux approches principales peuvent être distinguées pour adresser ce problème</p>
+<h4 id="two-step-process-"><a class="header" href="#two-step-process-">Two-Step process :</a></h4>
+<p>Cette méthode débute par un premier partitionnement du maillage. Les interfaces de ces partitions initiales sont alors “gelées”, permettant à chaque processeur de remailler son sous-domaine interne de manière indépendante. Une fois cette première phase d’adaptation locale achevée, un second partitionnement est effectué sur l’ensemble du domaine, mais de manière à ce que les interfaces du premier partitionnement (celles qui étaient gelées) ne partagent aucun élément en commun avec les nouvelles interfaces du deuxième partitionnement. Cette stratégie garantit que la totalité du domaine, y compris les zones d’interface initialement gelées, soit effectivement remaillée, assurant ainsi une adaptation complète.</p>
+<center>
+<img src="Contributions/../images/Two_Step_Process.png" alt="Logo Tucanos" width="100%">
+</center>
+<br>
+<h4 id="hierarchical-interface-freezing-method-"><a class="header" href="#hierarchical-interface-freezing-method-">Hierarchical Interface Freezing Method :</a></h4>
+<p>Cette seconde approche est également basée sur le gel des interfaces, mais de manière itérative et hiérarchique. Le domaine est initialement partitionné et les interfaces sont gelées, permettant le remaillage indépendant de chaque sous-domaine. Une fois cette étape terminée, l’attention se porte sur les interfaces elles-mêmes : elles sont à leur tour partitionnées (en “gelant” les sous-interfaces nouvellement créées), puis remaillées. Ce processus de subdivision et de remaillage des interfaces peut être répété de manière récursive (gel des interfaces des interfaces, et ainsi de suite) jusqu’à atteindre un niveau de précision et de conformité satisfaisant sur l’ensemble des frontières.</p>
+<center>
+<img src="Contributions/../images/Freezing_Interface.png" alt="Logo Tucanos" width="80%">
+</center>
+<p>Au-delà des stratégies de gestio ndes interfaces pour le remaillage parallèle, la problématique fondamentale de la dibision initiale d’un maillage en sous-domaines demeure. Cette tâche est assurée par les algorithmes de partitionnement dont les objectifs ont été discutés plus tôt. Nous allons introduire ici une séléction des partitionneurs utilisés au sein de Tucanos, ainsi que ceux implémentés dans le cadre des travaux de thèse. On effectuera une analyse comparative de leurs performances sur un cas test :</p>
+<h4 id="1-hilbert-ball-partitionner"><a class="header" href="#1-hilbert-ball-partitionner">1. Hilbert Ball Partitionner</a></h4>
+<h4 id="2-bfs--bfs-with-restart-bfswr"><a class="header" href="#2-bfs--bfs-with-restart-bfswr">2. BFS &amp; BFS With Restart (BFSWR)</a></h4>
+<h4 id="3-metis-partitionner"><a class="header" href="#3-metis-partitionner">3. Metis Partitionner</a></h4>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="load-balancing"><a class="header" href="#load-balancing">Load Balancing</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-and-references"><a class="header" href="#appendix-and-references">Appendix and References</a></h1>
+<p>To further support the understanding of this research, this section provides essential complementary information and a comprehensive list of references that have been instrumental to our work.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="references"><a class="header" href="#references">References</a></h1>
+<ul>
+<li>
+<p>George, P. L., Borouchaki, H., Alauzet, F., Laug, P., Loseille, A., &amp; Maréchal, L. (2018). <strong>Maillage, modélisation géométrique et simulation numérique Volume 2</strong>.
+<br></p>
+</li>
+<li>
+<p>Loseille, A., &amp; Alauzet, F. (2011). <strong>Continuous Mesh Framework Part I: Well-Posed Continuous Interpolation Error</strong>. <em>SIAM Journal on Numerical Analysis</em>, 49(1), 38-60.
+<br></p>
+</li>
+<li>
+<p>Loseille, A., &amp; Alauzet, F. (2011). <strong>Continuous Mesh Framework Part II: Validations and Applications</strong>. <em>SIAM Journal on Numerical Analysis</em>, 49(1), 61-86.
+<br></p>
+</li>
+<li>
+<p>Caplan, P. C. (2019). <strong>Four-Dimensional Anisotropic Mesh Adaptation for Spacetime Numerical Simulations</strong>.
+<br></p>
+</li>
+<li>
+<p>Loseille, A., Alauzet, F., &amp; Menier, V. (2017). <strong>Unique cavity-based operator and hierarchical domain partitioning for fast parallel generation of anisotropic meshes</strong>.</p>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 
                     </main>

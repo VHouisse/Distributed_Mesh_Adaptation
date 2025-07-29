@@ -1,8 +1,8 @@
 # Summary
 - [General Context and Motivations](./Intro/Introduction.md)
 - [Theoritical Foundations](./Theoritical_Foundations/Theoritical_Foundations.md)
-  - [Mesh Adaptation](./Theoritical_Foundations/Mesh_Adaptation.md)
   - [Metrics](./Theoritical_Foundations/Metrics.md)
+  - [Mesh Adaptation](./Theoritical_Foundations/Mesh_Adaptation.md)
   - [Parallel Computing](./Theoritical_Foundations/Parallel_Computing.md)
 - [Work Environnement](./Work_Environnement/Work_Enviornnement.md)
   - [Rust](./Work_Environnement/Rust.md)
