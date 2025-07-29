@@ -23,7 +23,7 @@ A metric \\(\mathcal{M}\\) can be geometrically represented by its associated un
 <br><br>
 
 <figure style="text-align: center;">
-  <img src="images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
+  <img src="../images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
   <figcaption>Figure 1: Metric Unit Ball </figcaption>
 </figure>
 
@@ -58,10 +58,14 @@ Contrary to the Euclidean metric space case, the distance between two points, i.
 More precisely, in a Riemmanian metric space \\( \mathcal{M}(\textbf{x}) _{x \in \Omega} \\), the length of an edge \\( \textbf{pq} \\) is calculated using the straight line parametrization \\( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in \[0,1\]  \\) :
 
 
-\\(  \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) =  \\)
-
+\\[  \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) =  \int_{0}^{1} || \gamma (t) || \ dt = \int_{0}^{1} \sqrt{\textbf{pq}^t \mathcal{M}(\textbf{p}+t\textbf{pq})\textbf{pq}} \ dt \\]
 
 <figure style="text-align: center;">
-  <img src="images/Riemmanian.png" alt="Isovalues of the fonction f(x) = lm(ox) for different Spaces" width="90%">
-  <figcaption>Figure 1: Isovalues of the fonction f(x) = lm(ox) for different Spaces </figcaption>
+  <img src="../images/Riemmanian.png" alt="Isovalues of the fonction f(x) = lm(ox) for different Spaces" width="90%">
+  <figcaption> \( \textbf{Figure 2:} \)  Isovalues of the fonction \( f(x) = \mathcal{L}_m (ox) \) for different spaces.<br> 
+  Left, the standard Euclidean Space \(([-1,1]*[-1,1], \mathbb{I} _{2} ) \)<br>
+  Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
+  Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
 </figure>
+
+

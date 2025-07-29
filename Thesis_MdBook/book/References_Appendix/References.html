@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>General Context and Motivations - Distributed Mesh Adapatation</title>
+        <title>References - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -12,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -35,13 +35,13 @@
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "rust";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -108,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -143,7 +143,7 @@
                     <h1 class="menu-title">Distributed Mesh Adapatation</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -177,33 +177,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="1-contexte-général-et-motivations"><a class="header" href="#1-contexte-général-et-motivations">1. Contexte Général et Motivations</a></h1>
-<h2 id="11-le-défi-de-la-simulation-numérique-et-lessence-de-ladaptation-de-maillage"><a class="header" href="#11-le-défi-de-la-simulation-numérique-et-lessence-de-ladaptation-de-maillage">1.1 Le défi de la simulation numérique et l’essence de l’adaptation de maillage</a></h2>
-<p>Dans le domaine de l’ingénierie et de la science, la modélisation et la simulation numérique jouent un rôle prépondérant pour comprendre et prédire le comportement de phénomènes physiques complexes. Que ce soit pour simuler les écoulements d’air autour d’une aile d’avion, la propagation de la chaleur dans un réacteur, ou la déformation de structures sous contrainte, atteindre une haute-fidélité dans ces simulations est un défi fondamental.</p>
-<p>Résoudre numériquement les équations qui régissent ces phénomènes complexes impose une discrétisation préalable de l’espace et du temps. Pour cela, les maillages sont fondamentaux car ils permettent de décomposer la géométrie complexe induite par le problème en un ensemble fini d’éléments. Cette discrétisation, nécessaire, permet d’approximer des grandeurs physiques et donc de résoudre les équations sous jacente au problème de manière computationnelle.</p>
-<p>Bien que les maillages soient essentiels, leur conception statique révèle certaines limites face à la compléxité des phénomènes physiques, notamment dans l’étude de la dynamique des fluides. Par exemple, capturer l’ensemble de l’information issue des écoulements turbulents avec un maillage statique est presque impossible. En effet, ces phénomènes se caractérisent par des gradients physiques très intenses et des structures de mouvement très complexes dans des zones très spécifiques du domaine (couche limite, sillage …).</p>
-<p>L’approche d’un maillage statique et isotrope n’est donc pas optimale; il risque d’être insuffisamment raffiné là où une résolution très précise est cruciale et trop dense dans des zones moins critiques de l’écoulement. En plus de la perte d’information, ce déséquilibre entraine une surchage computationnelle injustifiée dans les régions où une moindre précision serait suffisante.</p>
-<p>Pour surmonter ces défis et optimiser l’efficatité des simulations numériques haute-fidélité, l’adaptation de maillage anisotrope est primordiale. Cette approche dynamique permet un ajustement intelligent de la densité et de l’orientation des éléments du maillage en fonction des caractéristiques de la solution et des erreurs d’approximations commises. L’anisotropie permet d’affiner la résolution en alignant la forme des éléments du maillage avec les directions des phénomènes physiques prédominants. En concentrant précisément les ressources de calcul là où elles sont nécessaires et en les étirant ailleurs, elle maximise la précision et minimise les coûts.</p>
-<p>Atteindre cette haute fidélité à l’échelle des applications industrielles modernes tel que celles de l’industrie de l’aéronautique exige de recourrir au calcul massivement parallèle. En effet, le volume de données et la compléxité des calculs deviennent colossaux, un maillage typique pour ce genre simulation peut compter des dizaines, voire des centaines de millions d’éléments.</p>
-<p>Garantir l’éfficatité des calculs sur un tel volume de données ne peut se faire que via l’exploitation du calcul parallèle. Cela implique de distribuer le maillage et les opérations de calcul intrinsèques, tel que les opérations d’adaptation, sur des milliers de coeurs de calcul différents. Cette dimension parallèle induit une surcouche de complexité ; il faut garantir une répartition équitable du temps de calcul et une communication efficace et minime entre chaque processeur ainsi que la conservation de la cohérence des calculs. C’est dans ce contexte de haute performance que les solutions d’adaptation de maillage doivent s’inscrire pour être réellement utile aux applications industrielles.</p>
-<h2 id="12-contexte-industriel-et-objectifs"><a class="header" href="#12-contexte-industriel-et-objectifs">1.2 Contexte Industriel et Objectifs</a></h2>
-<p>Le présent travail de thèse s’inscrit au sein d’une collaboration entre Airbus et le Cerfacs, dans le but de répondre à des besoins industiels concrets en dynamique des fluides numérique par le biais de la recherche appliquée. Au coeur de cette initiative se trouve CODA (Code ONERA DLR AIRBUS ), un outil de simulation numérique pour la dynamique des fluides massivement parallèle gérant des calculs de très grande envergure.
-L’objectif principal de cette thèse est de développer un cadre d’adaptation de maillage anisotrope parallèle pour CODA. Le but ultime est de réduire les délais de conception et d’élargir le champ d’exploration de design des aviosn dans les bureaux d’études d’Airbus.</p>
-<p>Pour y parvenir, une part essentielle de la thèse consistera à identifier et à implémenter des métriques anisotropes adaptées à la capture de phénomènes clés comme les couches limites et les chocs transsoniques, ainsi que des métriques “goal-based” exploitant la sensibilité adjointe. La mise en œuvre de ce workflow d’adaptation distribuée débutera par une version en ligne de commande, puis évoluera vers un couplage direct avec le module FSDM de CODA via l’API kalpaTARU C. L’efficacité du workflow sera validée à travers des applications concrètes sur des configurations d’avions représentatives (LAGOON, DPW).</p>
-<h2 id="13-feuille-de-route"><a class="header" href="#13-feuille-de-route">1.3 Feuille de Route</a></h2>
-<p>Ce MdBook a pour vocation de présenter l’intégralité des avancées et des résultats obtenus au cours de ma thèse de doctorat. Au fil des chapitres, il retracera l’évolution continue de ma thèse, de mes explorations intiailes aux résultats les plus récents. Chaque section abordera un aspect fondamental de ma recherche : l’acquisition de connaissances théoriques relatives à l’adaptation de maillage anisotropique, l’environnement de développement et les outils utilisés ainsi que l’ensemble de mes contributions scientifiques. L’objectif est de fournir une vision claire et structurée de l’état d’avancement de ma recherche, des défis rencontrés et des solutions développées tout au long de ces trois années, offrant ainsi un aperçu complet de mon parcours doctoral.</p>
-<p><br><br><br></p>
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <img src="../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
-    <img src="../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
-</div>
+                        <h1 id="references"><a class="header" href="#references">References</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../References_Appendix/Appendix_and_References.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="Theoritical_Foundations/Theoritical_Foundations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../References_Appendix/Appendix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -213,8 +197,11 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../References_Appendix/Appendix_and_References.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="Theoritical_Foundations/Theoritical_Foundations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../References_Appendix/Appendix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -245,13 +232,13 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

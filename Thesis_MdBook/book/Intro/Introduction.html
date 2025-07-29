@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Distributed Mesh Adapatation</title>
-        <meta name="robots" content="noindex">
+        <title>General Context and Motivations - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -13,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -36,13 +35,13 @@
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "rust";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -109,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -144,7 +143,7 @@
                     <h1 class="menu-title">Distributed Mesh Adapatation</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -195,82 +194,18 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
 <p>Ce MdBook a pour vocation de présenter l’intégralité des avancées et des résultats obtenus au cours de ma thèse de doctorat. Au fil des chapitres, il retracera l’évolution continue de ma thèse, de mes explorations intiailes aux résultats les plus récents. Chaque section abordera un aspect fondamental de ma recherche : l’acquisition de connaissances théoriques relatives à l’adaptation de maillage anisotropique, l’environnement de développement et les outils utilisés ainsi que l’ensemble de mes contributions scientifiques. L’objectif est de fournir une vision claire et structurée de l’état d’avancement de ma recherche, des défis rencontrés et des solutions développées tout au long de ces trois années, offrant ainsi un aperçu complet de mon parcours doctoral.</p>
 <p><br><br><br></p>
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <img src="Intro/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
-    <img src="Intro/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+    <img src="../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="theoritical-foundations"><a class="header" href="#theoritical-foundations">Theoritical Foundations</a></h1>
-<p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux liés à l’adaptation de maillage dans sa généralité est essentielle. Cette section détaillera donc …</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="mesh-adaptation"><a class="header" href="#mesh-adaptation">Mesh Adaptation</a></h1>
-<p>The core advantage of using metric tensors in mesh generation and adaptation lies in their ability to impose specific directional stretching on mesh elements. This allows us to briefly detail our approach to anisotropic mesh generation: by defining a mesh size in each direction at every point of the domain using metric tensors, it’s then possible to generate a uniform unit mesh, thus specifying sizes directionally.</p>
-<p>More precisely, let \(\mathcal{M}(x)_{x \in \Omega }\) be a Riemmanian metric space. In three dimensions, the objective is to generate a mesh    \(\mathcal{H} \) for which each edge lenght is unit in the associated metric and each element is regular :</p>
-<p>\[   \forall \textbf{e} \in \mathcal{H} , \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
-<p>As a regular elements can not fill the entire domain \( \Omega \), the mesh generator can only create quasi-uniform mesh, i.e. the mesh elements are almost unit in the Riemmanian space. To quantify the fap to unity, differents tools can be used, for example, an element_quality function :
-\[ Q_\mathcal{M}\] \(\)</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
-<h3 id="31-metric"><a class="header" href="#31-metric">3.1 Metric:</a></h3>
-<p>A metric tensor \( \mathcal{M} \in \mathbb{R}^{n} \) is an \(n \times n \) symmetric definite positive matrix.<br />
-\( \mathcal{M} \) is always diagonalizable and can be decomposed as \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \) where \(\mathcal{R}\) and \(\Delta\) are the eigenvectors and the eigenvalues matrices of \(\mathcal{M}\), respectively.</p>
-<p>From this definition, it follows up that the scalar product of two vectors in \(  \mathbb{R}^n \)
-can defined related to a metric \(  \mathcal{M} \) as</p>
-<p>\[  &lt;\textbf{u},\textbf{v}&gt;_{\mathcal{M}} = &lt;\textbf{u},\mathcal{M}\textbf{v} &gt; = {^t}\textbf{u}\mathcal{M}\textbf{v}\]</p>
-<p>Under this notion, the Euclidean norm of a vector \(  \textbf{u}  \text{ in } \mathbb{R}^n\) according to \(  \mathcal{M}\) is defined as</p>
-<p>\[ \left| \textbf{u} \right| = \sqrt{&lt;\textbf{u},\textbf{u} &gt;_{\mathcal{M}} } = \sqrt{  \textbf{u}^{t} \mathcal{M} \textbf{u} } \]</p>
-<p>This formula allows us to measure the length of a vector \(\textbf{u}\) with repsect to a certain metric \( \mathcal{M}\).</p>
-<p>A metric \(\mathcal{M}\) can be geometrically represented by its associated unit ball, defined by</p>
-<p>\( \xi _{M} ={ p | \sqrt{ \textbf{op}^{t} \mathcal{M} \textbf{op} }=1|  } \)</p>
-<p><br><br></p>
-<figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
-  <figcaption>Figure 1: Metric Unit Ball </figcaption>
-</figure>
-<h3 id="definition-32"><a class="header" href="#definition-32">Definition 3.2</a></h3>
-<p>An Euclidean metric space is a vector space supplied with a certain scalar product \(&lt;.,.&gt;_{\mathcal{M}}\) defined by a metric tensor \(\mathcal{M}\). We denote it \( (\mathbb{R}^n, \mathcal{M} ) \).<br />
-The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p>
-<p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \]</p>
-<p>Finaly the lenght of a segment \( \textbf{pq} \) is the distance between its extremities</p>
-<p>\(    \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = d_{ \mathcal{M} } ( \textbf{p},\textbf{q} )  \).</p>
-<h3 id="remark-321"><a class="header" href="#remark-321">Remark 3.2.1</a></h3>
-<p>If the Metric defining the scalar product is the identity matrix, \( \mathcal{M} = \mathbb{I} _{n} \) then we get the standart Euclidean space \( ( \mathbb{R}^n , \mathbb{I} _{n} )\) supplpied with the natural dot product \(\).</p>
-<p><br><br></p>
-<p>It is then possible to define volumes and angles in an Euclidean metric space. Let K be a bounded subset of \( \mathbb{R}^n \), the volume of an element K in metric \( \mathcal{M} \) is:</p>
-<p>\( |K| _{ \mathcal{M} }  = \int _{K} \sqrt{det( \mathcal{M} )} |K| _{ \mathbb{I} _{n}} \)</p>
-<p>The angle between two vectors \(  \textbf{u} \) and \( \textbf{v} \) is define by the unique real \( \theta \in [ 0 , \pi ] \) such that</p>
-<p>\[ cos(\theta) = \frac{ &lt;\textbf{u} , \textbf{v} &gt; _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\]</p>
-<h3 id="definition-33"><a class="header" href="#definition-33">Definition 3.3</a></h3>
-<p>A \( \textit{Riemmanian}\) metric space is a continuous manifold \( \Omega \subset \mathbb{R}^n  \) supplied with a smooth metric \( \mathcal{M}(.) \). We denote it by \(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
-<p>Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh.
-More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \) :</p>
-<p>\[  \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) =  \int_{0}^{1} || \gamma (t) || \ dt = \int_{0}^{1} \sqrt{\textbf{pq}^t \mathcal{M}(\textbf{p}+t\textbf{pq})\textbf{pq}} \ dt \]</p>
-<figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/Riemmanian.png" alt="Isovalues of the fonction f(x) = lm(ox) for different Spaces" width="90%">
-  <figcaption> \( \textbf{Figure 2:} \)  Isovalues of the fonction \( f(x) = \mathcal{L}_m (ox) \) for different spaces.<br> 
-  Left, the standard Euclidean Space \(([-1,1]*[-1,1], \mathbb{I} _{2} ) \)<br>
-  Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
-  Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
-</figure>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="parallel-computing"><a class="header" href="#parallel-computing">Parallel Computing</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="work-environnement"><a class="header" href="#work-environnement">Work Environnement</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">Rust</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="tucanos"><a class="header" href="#tucanos">Tucanos</a></h1>
-<p>Tucanos is a 2D and 3D anisotropic mesh adaptation library. It is based on the principles described in “Four-Dimensional Anisotropic Mesh Adaptation for Spacetime Numerical Simulations” by Philip Claude Caplan.</p>
-<p>The project is enterily coded in Rust, but it also has a Python interface.</p>
-<p>You can find more information and the source code for Tucanos on its official GitHub repository: <a href="https://github.com/tucanos/tucanos">https://github.com/tucanos/tucanos</a>.</p>
-<br>
-<center>
-<img src="Work_Environnement/../images/Tucanos.png" alt="Logo Tucanos" width="40%">
-<center><div style="break-before: page; page-break-before: always;"></div><h1 id="tools"><a class="header" href="#tools">Tools</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="first-explorations--contribution"><a class="header" href="#first-explorations--contribution">First Explorations &amp; Contribution</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="partitionners"><a class="header" href="#partitionners">Partitionners</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="load-balancing"><a class="header" href="#load-balancing">Load Balancing</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-and-references"><a class="header" href="#appendix-and-references">Appendix and References</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="references"><a class="header" href="#references">References</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
+                            <a rel="next prefetch" href="../Theoritical_Foundations/Theoritical_Foundations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -279,6 +214,9 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
+                    <a rel="next prefetch" href="../Theoritical_Foundations/Theoritical_Foundations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -307,23 +245,16 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
-        <script>
-        window.addEventListener('load', function() {
-            MathJax.Hub.Register.StartupHook('End', function() {
-                window.setTimeout(window.print, 100);
-            });
-        });
-        </script>
 
 
     </div>

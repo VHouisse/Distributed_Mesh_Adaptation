@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Context and Motivations - Distributed Mesh Adapatation</title>
+        <title>Metrics - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -12,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -35,13 +35,13 @@
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "rust";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -108,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -143,7 +143,7 @@
                     <h1 class="menu-title">Distributed Mesh Adapatation</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -177,26 +177,58 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="thesis-context-and-motivations"><a class="header" href="#thesis-context-and-motivations">Thesis Context and Motivations</a></h1>
-<h3 id="general-context"><a class="header" href="#general-context">General Context</a></h3>
-<p>The design of modern aircraft necessitates the development of increasingly complex concepts, both geometrically and physically. This requires appropriate numerical modeling that integrates multiphysics interactions, particularly between aerodynamics, propulsion systems, and various components and materials.</p>
-<p>Within this framework, Airbus, DLR, and ONERA launched a collaborative development initiative in 2018 for a common Computational Fluid Dynamics (CFD) software called CODA. This new CFD platform is designed for efficient parallel and heterogeneous architectures, allowing for the modular integration of advanced interoperable CFD components and methods.</p>
-<h3 id="importance-of-mesh-adapatation"><a class="header" href="#importance-of-mesh-adapatation">Importance of Mesh Adapatation</a></h3>
-<p>Auto-adaptive remeshing is critical for achieving autonomous and reliable CFD simulations. The currently used a priori mesh requirements strategy is set to evolve. Switching to an autonomous numerical error-driven strategy for CFD will be a game changer for design offices.</p>
-<p>This transition will lead to a drastic reduction in the overall lead time for CFD computations , and, coupled with numerical error certification, will allow aerodynamicists to significantly widen the space of exploration during the design phase.</p>
-<h3 id="role-of-metric-based-meshing"><a class="header" href="#role-of-metric-based-meshing">Role of Metric-Based Meshing</a></h3>
-<p>Automatic mesh adaptation requires a preliminary mesh focusing on the underlying geometry representation, and an associated metric field prescribing a desired mesh orientation and size. This metric field can be anisotropic (describing mesh size and orientation at a given spatial location, see figure 2(a-b)) or isotropic (describing an overall element size, see figure 2(a-b)). The remesher then produces a new mesh respecting this specified metric.</p>
-<p>Typically, the metric field is obtained from the numerical error in the output resulting from solving a partial differential equation (PDE). This motivates an iterative approach of constructing a metric field using the error in the output and adapting the mesh using this metric field to achieve an optimal mesh-error convergence. The remeshing tool used in this work creates geometry-conformal meshes using a metric-based Delaunay triangulation/tetrahedralization.</p>
-<h3 id="thesis-objectives"><a class="header" href="#thesis-objectives">Thesis Objectives</a></h3>
-<p>The main objective of this thesis is to develop a massevily parallel anisotropic mesh adaptation framework for the CODA CFD solver. The ultimate goal is lead time reduction and space exploration widening in aircraft design offices. This work particularly involves combining the existing kalpaTARU distributed mesh adaptation framework (developed at CERFACS) and the
-Tucanos metric-based remeshing library (developed at Airbus) with CODA, thus benefiting from years of effort devoted to the development of both open-source libraries.</p>
+                        <h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
+<h3 id="31-metric"><a class="header" href="#31-metric">3.1 Metric:</a></h3>
+<p>A metric tensor \( \mathcal{M} \in \mathbb{R}^{n} \) is an \(n \times n \) symmetric definite positive matrix.<br />
+\( \mathcal{M} \) is always diagonalizable and can be decomposed as \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \) where \(\mathcal{R}\) and \(\Delta\) are the eigenvectors and the eigenvalues matrices of \(\mathcal{M}\), respectively.</p>
+<p>From this definition, it follows up that the scalar product of two vectors in \(  \mathbb{R}^n \)
+can defined related to a metric \(  \mathcal{M} \) as</p>
+<p>\[  &lt;\textbf{u},\textbf{v}&gt;_{\mathcal{M}} = &lt;\textbf{u},\mathcal{M}\textbf{v} &gt; = {^t}\textbf{u}\mathcal{M}\textbf{v}\]</p>
+<p>Under this notion, the Euclidean norm of a vector \(  \textbf{u}  \text{ in } \mathbb{R}^n\) according to \(  \mathcal{M}\) is defined as</p>
+<p>\[ \left| \textbf{u} \right| = \sqrt{&lt;\textbf{u},\textbf{u} &gt;_{\mathcal{M}} } = \sqrt{  \textbf{u}^{t} \mathcal{M} \textbf{u} } \]</p>
+<p>This formula allows us to measure the length of a vector \(\textbf{u}\) with repsect to a certain metric \( \mathcal{M}\).</p>
+<p>A metric \(\mathcal{M}\) can be geometrically represented by its associated unit ball, defined by</p>
+<p>\( \xi _{M} ={ p | \sqrt{ \textbf{op}^{t} \mathcal{M} \textbf{op} }=1|  } \)</p>
+<p><br><br></p>
+<figure style="text-align: center;">
+  <img src="../images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
+  <figcaption>Figure 1: Metric Unit Ball </figcaption>
+</figure>
+<h3 id="definition-32"><a class="header" href="#definition-32">Definition 3.2</a></h3>
+<p>An Euclidean metric space is a vector space supplied with a certain scalar product \(&lt;.,.&gt;_{\mathcal{M}}\) defined by a metric tensor \(\mathcal{M}\). We denote it \( (\mathbb{R}^n, \mathcal{M} ) \).<br />
+The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p>
+<p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \]</p>
+<p>Finaly the lenght of a segment \( \textbf{pq} \) is the distance between its extremities</p>
+<p>\(    \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = d_{ \mathcal{M} } ( \textbf{p},\textbf{q} )  \).</p>
+<h3 id="remark-321"><a class="header" href="#remark-321">Remark 3.2.1</a></h3>
+<p>If the Metric defining the scalar product is the identity matrix, \( \mathcal{M} = \mathbb{I} _{n} \) then we get the standart Euclidean space \( ( \mathbb{R}^n , \mathbb{I} _{n} )\) supplpied with the natural dot product \(\).</p>
+<p><br><br></p>
+<p>It is then possible to define volumes and angles in an Euclidean metric space. Let K be a bounded subset of \( \mathbb{R}^n \), the volume of an element K in metric \( \mathcal{M} \) is:</p>
+<p>\( |K| _{ \mathcal{M} }  = \int _{K} \sqrt{det( \mathcal{M} )} |K| _{ \mathbb{I} _{n}} \)</p>
+<p>The angle between two vectors \(  \textbf{u} \) and \( \textbf{v} \) is define by the unique real \( \theta \in [ 0 , \pi ] \) such that</p>
+<p>\[ cos(\theta) = \frac{ &lt;\textbf{u} , \textbf{v} &gt; _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\]</p>
+<h3 id="definition-33"><a class="header" href="#definition-33">Definition 3.3</a></h3>
+<p>A \( \textit{Riemmanian}\) metric space is a continuous manifold \( \Omega \subset \mathbb{R}^n  \) supplied with a smooth metric \( \mathcal{M}(.) \). We denote it by \(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
+<p>Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh.
+More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \) :</p>
+<p>\[  \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) =  \int_{0}^{1} || \gamma (t) || \ dt = \int_{0}^{1} \sqrt{\textbf{pq}^t \mathcal{M}(\textbf{p}+t\textbf{pq})\textbf{pq}} \ dt \]</p>
+<figure style="text-align: center;">
+  <img src="../images/Riemmanian.png" alt="Isovalues of the fonction f(x) = lm(ox) for different Spaces" width="90%">
+  <figcaption> \( \textbf{Figure 2:} \)  Isovalues of the fonction \( f(x) = \mathcal{L}_m (ox) \) for different spaces.<br> 
+  Left, the standard Euclidean Space \(([-1,1]*[-1,1], \mathbb{I} _{2} ) \)<br>
+  Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
+  Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
+</figure>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../Theoritical_Foundations/Mesh_Adaptation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="Tucanos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../Theoritical_Foundations/Parallel_Computing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -206,14 +238,33 @@ Tucanos metric-based remeshing library (developed at Airbus) with CODA, thus ben
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../Theoritical_Foundations/Mesh_Adaptation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="Tucanos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../Theoritical_Foundations/Parallel_Computing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
@@ -222,13 +273,13 @@ Tucanos metric-based remeshing library (developed at Airbus) with CODA, thus ben
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
