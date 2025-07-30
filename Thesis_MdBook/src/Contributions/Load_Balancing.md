@@ -74,12 +74,55 @@ Avec :
 <img src="../images/Cas_general_bg.png" alt="Logo Tucanos" width="90%">
 </center>
 
+#Ajouter discussion operateur opti 
+
 Dans le cas général, il est possible d'avoir à insérer et à supprimmer localement des éléments de maillage pour l'adapatation d'un seul et même élément. En effet, cette situation survient, par exemple, lorsque deux métriques possèdent la même densité mais des axes orientés dans des directions différentes. 
 
 Une telle configuration impliquant un raffinement dans une direction et un dégrossissement dans une autre. Le cas général englobe toutes les situations et la métrique d'intersection sert de base commune pour l'adapatation. La charge de travail est donc déterminée par la formule suivante : 
 
 \\[ wrk(K)   = |K| \ ( \alpha  \ (d_{\cap} - d_{\mathcal{H}})  +  \beta  \ (d_{\cap} - d_{ T}) \ ) \\] 
 
-\\(\\)\\(\\)
+
+## Premiers Résultats et Observations
+Après l'implémentation initiale des concepts de partitionnement et d'estimation de charge, les premiers cas tests ont permis de dégager des observations cruciales concernant le comportement des algorithmes et la nature des défis liés à l'adaptation de maillage parallèle. Nous présentons ici les conclusions préliminaires tirées de ces expérimentations. 
+
+Les expérimentations ont été menées sur une série de configuration en deux et trois dimensions. 
+
+#### Ressources de Calcul : 
+    hyperlink to environnement de travail ? 
+
+
+#### Configuration 2D : 
+* \\( \Omega = [0,1]\times[0,1]\\)
+* \\(\mathcal{M}_T =  
+    \begin{bmatrix}0.01&0 \\\ 
+    0 & 0.01\\end{bmatrix} \\) si \\( (x,y) \in \mathcal{C}(o= (0.3,0.3), r=0.1) \\)  
+
+* \\( \mathcal{M}_T  = \mathcal{M} _{\mathcal{H}}\\) __sinon__
+* Partitionneurs : __Hilbert, BFS , BFSWR__
+
+
+#### Configuration 3D:
+
+* \\( \Omega = [0,1]^3\\)
+* \\(\mathcal{M}_T =  
+    \begin{bmatrix}0.01&0&0\\\\
+    0 & 0.01 & 0\\\\
+    0 & 0 & 0.01\\end{bmatrix} \\) si \\( (x,y,z) \in \mathcal{C}(o= (0.3,0.3,0.3), r=0.1) \\)  
+
+* \\( \mathcal{M}_T  = \mathcal{M} _{\mathcal{H}}\\) __sinon__
+* Partitionneurs : __Hilbert, BFS , BFSWR__
+* Nombre de partionneurs = 4 
+
+### 1. Coûts Uniforme 
+Les premières évaluations, où les coûts des opérateurs d'insertion \\(\alpha \\), de dégrossissement \\(\beta \\) et d'optimisation \\( \gamma \\) ont été fixés à 1, ont mis en lumière plusieurs tendances : 
+
+* #### Déséquilibre de charge par nombre de sommets : 
+  L'algorithme de partitionnement, tel qu'il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d'opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d'étranglement.
+* #### Propagation des opérations de remaillage : 
+   Nous avons également découvert qu'une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d'adaptation additionnelles.
+
+Ces premières observations mettent en évidence la nécessité de modifier l'algorithme d'estimation de la charge de travail de telle manière à ce qu'il prenne en compte le coût d'une opération mais également le coût induit par une telle opération ainsi que la quantité d'élément finale dans chaque partition.
+\\(\\)
 
 
