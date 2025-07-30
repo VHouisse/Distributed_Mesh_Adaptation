@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Tucanos - Distributed Mesh Adapatation</title>
+        <title>Planning - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -177,23 +177,48 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="tucanos"><a class="header" href="#tucanos">Tucanos</a></h1>
-<p>Tucanos is a 2D and 3D anisotropic mesh adaptation library. It is based on the principles described in “Four-Dimensional Anisotropic Mesh Adaptation for Spacetime Numerical Simulations” by Philip Claude Caplan.</p>
-<p>The project is enterily coded in Rust, but it also has a Python interface.</p>
-<p>You can find more information and the source code for Tucanos on its official GitHub repository: <a href="https://github.com/tucanos/tucanos">https://github.com/tucanos/tucanos</a>.</p>
-<br>
-<center>
-<img src="../images/Tucanos.png" alt="Logo Tucanos" width="40%">
-<center>
+                        <h1 id="organisation-des-travaux-de-recherche"><a class="header" href="#organisation-des-travaux-de-recherche">Organisation des travaux de recherche</a></h1>
+<ul>
+<li>
+<p><strong>[M1-M6]</strong> Immersion dans le logiciel CODA et son environnement, incluant l’environnement de développement, les outils de pré/post-traitement et l’environnement HPC  Td’Airbus. L’objectif est d’apprendre et de se former sur le logiciel CODA et de mettre en place le calcul de cas tests pertinents.</p>
+</li>
+<li>
+<p><strong>[M1-M6]</strong>  Réalisation d’une revue de littérature sur les métriques de maillage existantes pour les applications aéronautiques, la résolution près des parois, les écoulements turbulents, les écoulements transsoniques avec chocs, et les méthodes basées sur l’objectif utilisant la sensibilité adjointe.</p>
+</li>
+<li>
+<p><strong>[M4-M17]</strong>  L’implémentation du support de la métrique anisotrope sera réalisée dans kalpaTARU. Cela inclura l’extension du support existant de la métrique scalaire aux champs de métriques tensoriels, l’adaptation de l’interpolation de métrique distribuée existante aux champs tensoriels, et l’implémentation de critères de seuillage pour les champs tensoriels. Les tests seront effectués en utilisant l’infrastructure d’adaptation de maillage autonome existante.</p>
+</li>
+<li>
+<p><strong>[M7-M11]</strong> Apprentissage et formation sur l’utilisation et le développement de Tucanos afin de réaliser les développements nécessaires pour supporter l’adaptation de maillage distribuée. Cela implique le gel de l’adaptation des faces des processeurs, l’information de tag pour la gestion des indices globaux-locaux, et l’API C/Rust pour la nouvelle fonctionnalité créée.</p>
+</li>
+<li>
+<p><strong>[M11-M17]</strong> En Phase 1, Tucanos-kalpaTARU sera couplé via une interface en ligne de commande (CLI). Le principal travail de développement consistera à implémenter un plugin d’E/S pour les maillages CODA basé sur le plugin de maillage AVBP existant. La validation sera effectuée (adaptation de maillage statique) sur des maillages CODA simples avec des champs de métriques prescrits dans des fichiers HDF5.</p>
+</li>
+<li>
+<p><strong>[M17-M24]</strong> En Phase 2, nous réaliserons le couplage de la structure de données FSDM en utilisant l’interface C-API de Tucanos-kalpaTARU. Les tests et la validation seront effectués sur des cas tests avec diverses métriques prescrites implémentées dans CODA.</p>
+</li>
+<li>
+<p><strong>[M24-M30]</strong>  Les tests et la validation seront réalisés sur un cas test de production, à savoir la configuration de train d’atterrissage LAGOON et les configurations de Drag Prediction Workshop (DPW).</p>
+</li>
+<li>
+<p><strong>[M30-M36]</strong>  Réalisation des tâches de rédaction de thèse et communication des publications pour satisfaire aux exigences du doctorat.</p>
+</li>
+</ul>
+<p><br><br><br></p>
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <img src="../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+</div>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../Work_Environnement/Rust.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../Work_Environnement/Encadrement.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../Work_Environnement/Tools.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../Contributions/First_Explorations_and_Contributions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -203,11 +228,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../Work_Environnement/Rust.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../Work_Environnement/Encadrement.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../Work_Environnement/Tools.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../Contributions/First_Explorations_and_Contributions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

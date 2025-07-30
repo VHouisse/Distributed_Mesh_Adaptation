@@ -7,7 +7,7 @@ title = "Distributed Mesh Adapatation"
 
 [output.html]
 default-theme = "rust"
-preferred-dark-theme = "navy"
+preferred-dark-theme = "rust"
 smart-punctuation = true
 mathjax-support = true
 static-assets = ["images"]

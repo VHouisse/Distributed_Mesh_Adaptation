@@ -38,7 +38,7 @@
         <script>
             const path_to_root = "";
             const default_light_theme = "rust";
-            const default_dark_theme = "navy";
+            const default_dark_theme = "rust";
             window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
@@ -199,7 +199,18 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
     <img src="Intro/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="theoritical-foundations"><a class="header" href="#theoritical-foundations">Theoritical Foundations</a></h1>
-<p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux liés à l’adaptation de maillage dans sa généralité est essentielle. Cette section détaillera donc …</p>
+<p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux liés à l’adaptation de maillage dans sa généralité est essentielle. Cette section détaillera donc:</p>
+<ul>
+<li>
+<p><a href="Theoritical_Foundations/./Metrics.html">Metrics</a></p>
+</li>
+<li>
+<p><a href="Theoritical_Foundations/./Mesh_Adaptation.html">Mesh Adaptation</a></p>
+</li>
+<li>
+<p><a href="Theoritical_Foundations/./Parallel_Computing.html">Parallel Computing</a></p>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
 <h3 id="211-definition"><a class="header" href="#211-definition">2.1.1 Definition:</a></h3>
 <p>A metric tensor \( \mathcal{M} \in \mathbb{R}^{n} \) is an \(n \times n \) symmetric definite positive matrix.<br />
@@ -254,6 +265,9 @@ Coeurs
 Etc …</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="work-environnement"><a class="header" href="#work-environnement">Work Environnement</a></h1>
 <p>This section presents the essential tools and the development environment employed throughout this thesis.</p>
+<ul>
+<li><a href="Work_Environnement/./Tucanos.html">Tucanos</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">Rust</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tucanos"><a class="header" href="#tucanos">Tucanos</a></h1>
 <p>Tucanos is a 2D and 3D anisotropic mesh adaptation library. It is based on the principles described in “Four-Dimensional Anisotropic Mesh Adaptation for Spacetime Numerical Simulations” by Philip Claude Caplan.</p>
@@ -263,6 +277,62 @@ Etc …</p>
 <center>
 <img src="Work_Environnement/../images/Tucanos.png" alt="Logo Tucanos" width="40%">
 <center><div style="break-before: page; page-break-before: always;"></div><h1 id="tools"><a class="header" href="#tools">Tools</a></h1>
+<h3 id="mdbook--outil-de-documentation-et-de-suivi-de-thèse"><a class="header" href="#mdbook--outil-de-documentation-et-de-suivi-de-thèse">MdBook : Outil de Documentation et de Suivi de Thèse</a></h3>
+<p>Ce document lui-même est généré à l’aide de <strong>MdBook</strong>, un outil de publication de livres statiques basé sur Markdown. MdBook est un choix particulièrement pertinent pour ce projet de thèse pour plusieurs raisons. Sa syntaxe Markdown permet une rédaction claire et rapide, idéale pour la documentation technique et le suivi des avancées. Il offre un excellent support pour l’intégration d’<strong>équations mathématiques via MathJax</strong>, ainsi que pour l’<strong>affichage de graphiques et d’extraits de code</strong>, ce qui est essentiel pour une thèse en calcul scientifique. Développé en Rust, MdBook s’intègre naturellement à notre environnement de développement et permet un versionnement aisé du contenu via Git, assurant une traçabilité complète de nos travaux. Cet outil nous sert de carnet de bord dynamique, présentant l’intégralité des résultats et des réflexions tout au long de notre parcours doctoral.</p>
+<h3 id="mon-environnement-de-calcul-haute-performance--hpc5-à-toulouse"><a class="header" href="#mon-environnement-de-calcul-haute-performance--hpc5-à-toulouse">Mon Environnement de Calcul Haute Performance : HPC5 à Toulouse</a></h3>
+<p>[cite_start]Nos développements et expérimentations sont menés sur le cluster de calcul haute performance <strong>HPC5</strong>, l’environnement standard d’Airbus (depuis le Q1 2019) [cite: 1] pour les calculs d’ingénierie à très grande échelle. [cite_start]Conçu pour succéder à HPC4[cite: 1], HPC5 est une collection de grands clusters massivement parallèles, indispensable pour traiter des maillages de plusieurs centaines de millions d’éléments. [cite_start]Les besoins de calcul interactif sont quant à eux pris en charge via GISEH[cite: 1].</p>
+<p>[cite_start]Notre travail se concentre spécifiquement sur le cluster <strong><code>tou_b</code></strong>, qui est la partie <strong>développement et validation (DEV/VAL)</strong> de HPC5 située à Toulouse[cite: 1].</p>
+<p>[cite_start]Ce cluster <code>tou_b</code> est composé de nœuds de calcul basés sur l’architecture <strong>Intel Skylake</strong>[cite: 1]. Bien que notre environnement de travail interactif actuel (une machine virtuelle sous VMware) puisse présenter des configurations spécifiques (comme 8 cœurs CPU virtuels basés sur un Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz), les nœuds physiques du cluster <code>tou_b</code> sont configurés comme suit :</p>
+<ul>
+<li>[cite_start]<strong>Nœuds de calcul (Compute nodes - Type 5)</strong> : Chaque nœud contient 2 processeurs <strong>HPE BL460c Xeon-G 6142 Intel 16 Cores 2.6 GhZ</strong> [cite: 1][cite_start], offrant un total de <strong>32 cœurs physiques</strong> (16 cœurs par processeur)[cite: 1]. [cite_start]Ces nœuds sont équipés de <strong>96 Go de RAM</strong> (soit 3 Go par cœur) avec une vitesse de 2666 MHz[cite: 1]. [cite_start]Le cluster <code>tou_b</code> dispose de 96 de ces nœuds (de <code>touh1n0001</code> à <code>touh1n0096</code>)[cite: 1].</li>
+<li>[cite_start]<strong>Nœuds de calcul (Compute nodes - Type 6)</strong> : Également de type <code>HPE BL460c Xeon-G 6142 Intel 16 Cores 2.6 GhZ</code> [cite: 1][cite_start], ces nœuds offrent aussi <strong>32 cœurs physiques</strong>[cite: 1]. [cite_start]Leur principale distinction est leur mémoire : <strong>384 Go de RAM</strong> (soit 12 Go par cœur) à 2666 MHz[cite: 1]. [cite_start]Le cluster <code>tou_b</code> compte 16 de ces nœuds (de <code>touh2n0001</code> à <code>touh2n0016</code>)[cite: 1].</li>
+</ul>
+<p>[cite_start]Nos fichiers d’application sont accessibles via <code>/share/hpc5_devel</code>[cite: 1]. [cite_start]Pour la gestion des données massives, le site de Toulouse de HPC5 utilise un système de fichiers <strong>Lustre</strong> de 1874 TiB avec une bande passante agrégée de 38GB/s [cite: 1][cite_start], et un système <strong>Panasas</strong> de 525 TB (Raw Data 763 TB) avec une bande passante agrégée de 12.6 to 14.4 GB/s[cite: 1].</p>
+<p>[cite_start]La soumission et l’orchestration des tâches de calcul sont gérées par le <em>scheduler</em> <strong>IBM LSF (Version 10.1)</strong>[cite: 1]. [cite_start]Les développeurs peuvent cibler spécifiquement le cluster <code>tou_b</code> en utilisant l’option <code>-clusters tou_b</code> dans la commande <code>bsub</code> [cite: 1][cite_start], et demander des types de nœuds (type5 ou type6) en fonction des besoins en mémoire par cœur[cite: 1]. [cite_start]Les bibliothèques MPI disponibles incluent IBM Spectrum MPI (Version 10.1.1.0) et diverses versions d’Open MPI[cite: 1].</p>
+<p>Cet environnement de calcul haute performance nous permet de tester la scalabilité de nos algorithmes d’adaptation de maillage et de valider leur efficacité sur des configurations complexes, représentatives des défis industriels d’Airbus.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="encadrement"><a class="header" href="#encadrement">Encadrement</a></h1>
+<p>Le succès de ce projet de thèse repose sur un encadrement solide et multidisciplinaire, bénéficiant de l’expertise combinée de la recherche académique et des applications industrielles. Mes travaux sont dirigés par :</p>
+<ul>
+<li><strong>[Nom Prénom de l’encadrant Airbus]</strong> : Représentant Airbus, son expertise [spécifier un domaine d’expertise, ex: en CFD aéronautique, en développement logiciel industriel, en calcul parallèle] est cruciale pour l’alignement de la thèse avec les besoins et les outils du secteur.</li>
+<li><strong>[Nom Prénom de l’encadrant Cerfacs]</strong> : Représentant le Cerfacs, son apport en [spécifier un domaine d’expertise, ex: en méthodes numériques avancées, en algorithmes de maillage, en HPC] guide les fondations théoriques et l’innovation scientifique de la thèse.</li>
+</ul>
+<p><br><br><br></p>
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="organisation-des-travaux-de-recherche"><a class="header" href="#organisation-des-travaux-de-recherche">Organisation des travaux de recherche</a></h1>
+<ul>
+<li>
+<p><strong>[M1-M6]</strong> Immersion dans le logiciel CODA et son environnement, incluant l’environnement de développement, les outils de pré/post-traitement et l’environnement HPC  Td’Airbus. L’objectif est d’apprendre et de se former sur le logiciel CODA et de mettre en place le calcul de cas tests pertinents.</p>
+</li>
+<li>
+<p><strong>[M1-M6]</strong>  Réalisation d’une revue de littérature sur les métriques de maillage existantes pour les applications aéronautiques, la résolution près des parois, les écoulements turbulents, les écoulements transsoniques avec chocs, et les méthodes basées sur l’objectif utilisant la sensibilité adjointe.</p>
+</li>
+<li>
+<p><strong>[M4-M17]</strong>  L’implémentation du support de la métrique anisotrope sera réalisée dans kalpaTARU. Cela inclura l’extension du support existant de la métrique scalaire aux champs de métriques tensoriels, l’adaptation de l’interpolation de métrique distribuée existante aux champs tensoriels, et l’implémentation de critères de seuillage pour les champs tensoriels. Les tests seront effectués en utilisant l’infrastructure d’adaptation de maillage autonome existante.</p>
+</li>
+<li>
+<p><strong>[M7-M11]</strong> Apprentissage et formation sur l’utilisation et le développement de Tucanos afin de réaliser les développements nécessaires pour supporter l’adaptation de maillage distribuée. Cela implique le gel de l’adaptation des faces des processeurs, l’information de tag pour la gestion des indices globaux-locaux, et l’API C/Rust pour la nouvelle fonctionnalité créée.</p>
+</li>
+<li>
+<p><strong>[M11-M17]</strong> En Phase 1, Tucanos-kalpaTARU sera couplé via une interface en ligne de commande (CLI). Le principal travail de développement consistera à implémenter un plugin d’E/S pour les maillages CODA basé sur le plugin de maillage AVBP existant. La validation sera effectuée (adaptation de maillage statique) sur des maillages CODA simples avec des champs de métriques prescrits dans des fichiers HDF5.</p>
+</li>
+<li>
+<p><strong>[M17-M24]</strong> En Phase 2, nous réaliserons le couplage de la structure de données FSDM en utilisant l’interface C-API de Tucanos-kalpaTARU. Les tests et la validation seront effectués sur des cas tests avec diverses métriques prescrites implémentées dans CODA.</p>
+</li>
+<li>
+<p><strong>[M24-M30]</strong>  Les tests et la validation seront réalisés sur un cas test de production, à savoir la configuration de train d’atterrissage LAGOON et les configurations de Drag Prediction Workshop (DPW).</p>
+</li>
+<li>
+<p><strong>[M30-M36]</strong>  Réalisation des tâches de rédaction de thèse et communication des publications pour satisfaire aux exigences du doctorat.</p>
+</li>
+</ul>
+<p><br><br><br></p>
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="first-explorations--contribution"><a class="header" href="#first-explorations--contribution">First Explorations &amp; Contribution</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="partitionners"><a class="header" href="#partitionners">Partitionners</a></h1>
 <p>Comme nous l’avons vu, la quantité de données induites par la résolution des équations de la CFD ainsi que la recherche de calcul de haute performance nous pousse à utiliser plusieurs unité de calcul. Pour cela il est impératif de partitionner le maillage sous-jacent au domaine de travail. Partitionner permet de diviser le domaine en autant de sous-domaines qu’il y a de coeurs disponibles, décomposant le problème initial en N sous-problèmes.</p>
@@ -333,10 +403,66 @@ On analysera le travail dans deux configurations spécifiques et on généralise
 <center>
 <img src="Contributions/../images/Cas_general_bg.png" alt="Logo Tucanos" width="90%">
 </center>
+<p>#Ajouter discussion operateur opti</p>
 <p>Dans le cas général, il est possible d’avoir à insérer et à supprimmer localement des éléments de maillage pour l’adapatation d’un seul et même élément. En effet, cette situation survient, par exemple, lorsque deux métriques possèdent la même densité mais des axes orientés dans des directions différentes.</p>
 <p>Une telle configuration impliquant un raffinement dans une direction et un dégrossissement dans une autre. Le cas général englobe toutes les situations et la métrique d’intersection sert de base commune pour l’adapatation. La charge de travail est donc déterminée par la formule suivante :</p>
 <p>\[ wrk(K)   = |K| \ ( \alpha  \ (d_{\cap} - d_{\mathcal{H}})  +  \beta  \ (d_{\cap} - d_{ T}) \ ) \]</p>
-<p>\(\)\(\)</p>
+<h2 id="premiers-résultats-et-observations"><a class="header" href="#premiers-résultats-et-observations">Premiers Résultats et Observations</a></h2>
+<p>Après l’implémentation initiale des concepts de partitionnement et d’estimation de charge, les premiers cas tests ont permis de dégager des observations cruciales concernant le comportement des algorithmes et la nature des défis liés à l’adaptation de maillage parallèle. Nous présentons ici les conclusions préliminaires tirées de ces expérimentations.</p>
+<p>Les expérimentations ont été menées sur une série de configuration en deux et trois dimensions.</p>
+<h4 id="ressources-de-calcul-"><a class="header" href="#ressources-de-calcul-">Ressources de Calcul :</a></h4>
+<pre><code>hyperlink to environnement de travail ? 
+</code></pre>
+<h4 id="configuration-2d-"><a class="header" href="#configuration-2d-">Configuration 2D :</a></h4>
+<ul>
+<li>
+<p>\( \Omega = [0,1]\times[0,1]\)</p>
+</li>
+<li>
+<p>\(\mathcal{M}_T =<br />
+\begin{bmatrix}0.01&amp;0 \\
+0 &amp; 0.01\end{bmatrix} \) si \( (x,y) \in \mathcal{C}(o= (0.3,0.3), r=0.1) \)</p>
+</li>
+<li>
+<p>\( \mathcal{M}_T  = \mathcal{M} _{\mathcal{H}}\) <strong>sinon</strong></p>
+</li>
+<li>
+<p>Partitionneurs : <strong>Hilbert, BFS , BFSWR</strong></p>
+</li>
+</ul>
+<h4 id="configuration-3d"><a class="header" href="#configuration-3d">Configuration 3D:</a></h4>
+<ul>
+<li>
+<p>\( \Omega = [0,1]^3\)</p>
+</li>
+<li>
+<p>\(\mathcal{M}_T =<br />
+\begin{bmatrix}0.01&amp;0&amp;0\\
+0 &amp; 0.01 &amp; 0\\
+0 &amp; 0 &amp; 0.01\end{bmatrix} \) si \( (x,y,z) \in \mathcal{C}(o= (0.3,0.3,0.3), r=0.1) \)</p>
+</li>
+<li>
+<p>\( \mathcal{M}_T  = \mathcal{M} _{\mathcal{H}}\) <strong>sinon</strong></p>
+</li>
+<li>
+<p>Partitionneurs : <strong>Hilbert, BFS , BFSWR</strong></p>
+</li>
+<li>
+<p>Nombre de partionneurs = 4</p>
+</li>
+</ul>
+<h3 id="1-coûts-uniforme"><a class="header" href="#1-coûts-uniforme">1. Coûts Uniforme</a></h3>
+<p>Les premières évaluations, où les coûts des opérateurs d’insertion \(\alpha \), de dégrossissement \(\beta \) et d’optimisation \( \gamma \) ont été fixés à 1, ont mis en lumière plusieurs tendances :</p>
+<ul>
+<li>
+<h4 id="déséquilibre-de-charge-par-nombre-de-sommets-"><a class="header" href="#déséquilibre-de-charge-par-nombre-de-sommets-">Déséquilibre de charge par nombre de sommets :</a></h4>
+L’algorithme de partitionnement, tel qu’il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d’opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d’étranglement.</li>
+<li>
+<h4 id="propagation-des-opérations-de-remaillage-"><a class="header" href="#propagation-des-opérations-de-remaillage-">Propagation des opérations de remaillage :</a></h4>
+Nous avons également découvert qu’une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d’adaptation additionnelles.</li>
+</ul>
+<p>Ces premières observations mettent en évidence la nécessité de modifier l’algorithme d’estimation de la charge de travail de telle manière à ce qu’il prenne en compte le coût d’une opération mais également le coût induit par une telle opération ainsi que la quantité d’élément finale dans chaque partition.
+\(\)</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-and-references"><a class="header" href="#appendix-and-references">Appendix and References</a></h1>
 <p>To further support the understanding of this research, this section provides essential complementary information and a comprehensive list of references that have been instrumental to our work.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="references"><a class="header" href="#references">References</a></h1>

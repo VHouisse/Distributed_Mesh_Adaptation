@@ -37,7 +37,7 @@
         <script>
             const path_to_root = "../";
             const default_light_theme = "rust";
-            const default_dark_theme = "navy";
+            const default_dark_theme = "rust";
             window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
@@ -223,10 +223,66 @@ On analysera le travail dans deux configurations spécifiques et on généralise
 <center>
 <img src="../images/Cas_general_bg.png" alt="Logo Tucanos" width="90%">
 </center>
+<p>#Ajouter discussion operateur opti</p>
 <p>Dans le cas général, il est possible d’avoir à insérer et à supprimmer localement des éléments de maillage pour l’adapatation d’un seul et même élément. En effet, cette situation survient, par exemple, lorsque deux métriques possèdent la même densité mais des axes orientés dans des directions différentes.</p>
 <p>Une telle configuration impliquant un raffinement dans une direction et un dégrossissement dans une autre. Le cas général englobe toutes les situations et la métrique d’intersection sert de base commune pour l’adapatation. La charge de travail est donc déterminée par la formule suivante :</p>
 <p>\[ wrk(K)   = |K| \ ( \alpha  \ (d_{\cap} - d_{\mathcal{H}})  +  \beta  \ (d_{\cap} - d_{ T}) \ ) \]</p>
-<p>\(\)\(\)</p>
+<h2 id="premiers-résultats-et-observations"><a class="header" href="#premiers-résultats-et-observations">Premiers Résultats et Observations</a></h2>
+<p>Après l’implémentation initiale des concepts de partitionnement et d’estimation de charge, les premiers cas tests ont permis de dégager des observations cruciales concernant le comportement des algorithmes et la nature des défis liés à l’adaptation de maillage parallèle. Nous présentons ici les conclusions préliminaires tirées de ces expérimentations.</p>
+<p>Les expérimentations ont été menées sur une série de configuration en deux et trois dimensions.</p>
+<h4 id="ressources-de-calcul-"><a class="header" href="#ressources-de-calcul-">Ressources de Calcul :</a></h4>
+<pre><code>hyperlink to environnement de travail ? 
+</code></pre>
+<h4 id="configuration-2d-"><a class="header" href="#configuration-2d-">Configuration 2D :</a></h4>
+<ul>
+<li>
+<p>\( \Omega = [0,1]\times[0,1]\)</p>
+</li>
+<li>
+<p>\(\mathcal{M}_T =<br />
+\begin{bmatrix}0.01&amp;0 \\
+0 &amp; 0.01\end{bmatrix} \) si \( (x,y) \in \mathcal{C}(o= (0.3,0.3), r=0.1) \)</p>
+</li>
+<li>
+<p>\( \mathcal{M}_T  = \mathcal{M} _{\mathcal{H}}\) <strong>sinon</strong></p>
+</li>
+<li>
+<p>Partitionneurs : <strong>Hilbert, BFS , BFSWR</strong></p>
+</li>
+</ul>
+<h4 id="configuration-3d"><a class="header" href="#configuration-3d">Configuration 3D:</a></h4>
+<ul>
+<li>
+<p>\( \Omega = [0,1]^3\)</p>
+</li>
+<li>
+<p>\(\mathcal{M}_T =<br />
+\begin{bmatrix}0.01&amp;0&amp;0\\
+0 &amp; 0.01 &amp; 0\\
+0 &amp; 0 &amp; 0.01\end{bmatrix} \) si \( (x,y,z) \in \mathcal{C}(o= (0.3,0.3,0.3), r=0.1) \)</p>
+</li>
+<li>
+<p>\( \mathcal{M}_T  = \mathcal{M} _{\mathcal{H}}\) <strong>sinon</strong></p>
+</li>
+<li>
+<p>Partitionneurs : <strong>Hilbert, BFS , BFSWR</strong></p>
+</li>
+<li>
+<p>Nombre de partionneurs = 4</p>
+</li>
+</ul>
+<h3 id="1-coûts-uniforme"><a class="header" href="#1-coûts-uniforme">1. Coûts Uniforme</a></h3>
+<p>Les premières évaluations, où les coûts des opérateurs d’insertion \(\alpha \), de dégrossissement \(\beta \) et d’optimisation \( \gamma \) ont été fixés à 1, ont mis en lumière plusieurs tendances :</p>
+<ul>
+<li>
+<h4 id="déséquilibre-de-charge-par-nombre-de-sommets-"><a class="header" href="#déséquilibre-de-charge-par-nombre-de-sommets-">Déséquilibre de charge par nombre de sommets :</a></h4>
+L’algorithme de partitionnement, tel qu’il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d’opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d’étranglement.</li>
+<li>
+<h4 id="propagation-des-opérations-de-remaillage-"><a class="header" href="#propagation-des-opérations-de-remaillage-">Propagation des opérations de remaillage :</a></h4>
+Nous avons également découvert qu’une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d’adaptation additionnelles.</li>
+</ul>
+<p>Ces premières observations mettent en évidence la nécessité de modifier l’algorithme d’estimation de la charge de travail de telle manière à ce qu’il prenne en compte le coût d’une opération mais également le coût induit par une telle opération ainsi que la quantité d’élément finale dans chaque partition.
+\(\)</p>
 
                     </main>
 

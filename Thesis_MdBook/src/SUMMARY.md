@@ -8,6 +8,8 @@
   - [Rust](./Work_Environnement/Rust.md)
   - [Tucanos](./Work_Environnement/Tucanos.md)
   - [Tools](./Work_Environnement/Tools.md)
+  - [Encadrement](./Work_Environnement/Encadrement.md)
+  - [Planning](./Work_Environnement/Planning_previsionnel.md)
 - [First Explorations & Contribution](./Contributions/First_Explorations_and_Contributions.md)
   - [Partitionners](./Contributions/Partitionners.md)
   - [Load Balancing](./Contributions/Load_Balancing.md)

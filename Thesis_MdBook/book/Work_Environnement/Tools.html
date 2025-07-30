@@ -37,7 +37,7 @@
         <script>
             const path_to_root = "../";
             const default_light_theme = "rust";
-            const default_dark_theme = "navy";
+            const default_dark_theme = "rust";
             window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
@@ -178,6 +178,19 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="tools"><a class="header" href="#tools">Tools</a></h1>
+<h3 id="mdbook--outil-de-documentation-et-de-suivi-de-thèse"><a class="header" href="#mdbook--outil-de-documentation-et-de-suivi-de-thèse">MdBook : Outil de Documentation et de Suivi de Thèse</a></h3>
+<p>Ce document lui-même est généré à l’aide de <strong>MdBook</strong>, un outil de publication de livres statiques basé sur Markdown. MdBook est un choix particulièrement pertinent pour ce projet de thèse pour plusieurs raisons. Sa syntaxe Markdown permet une rédaction claire et rapide, idéale pour la documentation technique et le suivi des avancées. Il offre un excellent support pour l’intégration d’<strong>équations mathématiques via MathJax</strong>, ainsi que pour l’<strong>affichage de graphiques et d’extraits de code</strong>, ce qui est essentiel pour une thèse en calcul scientifique. Développé en Rust, MdBook s’intègre naturellement à notre environnement de développement et permet un versionnement aisé du contenu via Git, assurant une traçabilité complète de nos travaux. Cet outil nous sert de carnet de bord dynamique, présentant l’intégralité des résultats et des réflexions tout au long de notre parcours doctoral.</p>
+<h3 id="mon-environnement-de-calcul-haute-performance--hpc5-à-toulouse"><a class="header" href="#mon-environnement-de-calcul-haute-performance--hpc5-à-toulouse">Mon Environnement de Calcul Haute Performance : HPC5 à Toulouse</a></h3>
+<p>[cite_start]Nos développements et expérimentations sont menés sur le cluster de calcul haute performance <strong>HPC5</strong>, l’environnement standard d’Airbus (depuis le Q1 2019) [cite: 1] pour les calculs d’ingénierie à très grande échelle. [cite_start]Conçu pour succéder à HPC4[cite: 1], HPC5 est une collection de grands clusters massivement parallèles, indispensable pour traiter des maillages de plusieurs centaines de millions d’éléments. [cite_start]Les besoins de calcul interactif sont quant à eux pris en charge via GISEH[cite: 1].</p>
+<p>[cite_start]Notre travail se concentre spécifiquement sur le cluster <strong><code>tou_b</code></strong>, qui est la partie <strong>développement et validation (DEV/VAL)</strong> de HPC5 située à Toulouse[cite: 1].</p>
+<p>[cite_start]Ce cluster <code>tou_b</code> est composé de nœuds de calcul basés sur l’architecture <strong>Intel Skylake</strong>[cite: 1]. Bien que notre environnement de travail interactif actuel (une machine virtuelle sous VMware) puisse présenter des configurations spécifiques (comme 8 cœurs CPU virtuels basés sur un Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz), les nœuds physiques du cluster <code>tou_b</code> sont configurés comme suit :</p>
+<ul>
+<li>[cite_start]<strong>Nœuds de calcul (Compute nodes - Type 5)</strong> : Chaque nœud contient 2 processeurs <strong>HPE BL460c Xeon-G 6142 Intel 16 Cores 2.6 GhZ</strong> [cite: 1][cite_start], offrant un total de <strong>32 cœurs physiques</strong> (16 cœurs par processeur)[cite: 1]. [cite_start]Ces nœuds sont équipés de <strong>96 Go de RAM</strong> (soit 3 Go par cœur) avec une vitesse de 2666 MHz[cite: 1]. [cite_start]Le cluster <code>tou_b</code> dispose de 96 de ces nœuds (de <code>touh1n0001</code> à <code>touh1n0096</code>)[cite: 1].</li>
+<li>[cite_start]<strong>Nœuds de calcul (Compute nodes - Type 6)</strong> : Également de type <code>HPE BL460c Xeon-G 6142 Intel 16 Cores 2.6 GhZ</code> [cite: 1][cite_start], ces nœuds offrent aussi <strong>32 cœurs physiques</strong>[cite: 1]. [cite_start]Leur principale distinction est leur mémoire : <strong>384 Go de RAM</strong> (soit 12 Go par cœur) à 2666 MHz[cite: 1]. [cite_start]Le cluster <code>tou_b</code> compte 16 de ces nœuds (de <code>touh2n0001</code> à <code>touh2n0016</code>)[cite: 1].</li>
+</ul>
+<p>[cite_start]Nos fichiers d’application sont accessibles via <code>/share/hpc5_devel</code>[cite: 1]. [cite_start]Pour la gestion des données massives, le site de Toulouse de HPC5 utilise un système de fichiers <strong>Lustre</strong> de 1874 TiB avec une bande passante agrégée de 38GB/s [cite: 1][cite_start], et un système <strong>Panasas</strong> de 525 TB (Raw Data 763 TB) avec une bande passante agrégée de 12.6 to 14.4 GB/s[cite: 1].</p>
+<p>[cite_start]La soumission et l’orchestration des tâches de calcul sont gérées par le <em>scheduler</em> <strong>IBM LSF (Version 10.1)</strong>[cite: 1]. [cite_start]Les développeurs peuvent cibler spécifiquement le cluster <code>tou_b</code> en utilisant l’option <code>-clusters tou_b</code> dans la commande <code>bsub</code> [cite: 1][cite_start], et demander des types de nœuds (type5 ou type6) en fonction des besoins en mémoire par cœur[cite: 1]. [cite_start]Les bibliothèques MPI disponibles incluent IBM Spectrum MPI (Version 10.1.1.0) et diverses versions d’Open MPI[cite: 1].</p>
+<p>Cet environnement de calcul haute performance nous permet de tester la scalabilité de nos algorithmes d’adaptation de maillage et de valider leur efficacité sur des configurations complexes, représentatives des défis industriels d’Airbus.</p>
 
                     </main>
 
@@ -187,7 +200,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../Contributions/First_Explorations_and_Contributions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../Work_Environnement/Encadrement.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -201,7 +214,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../Contributions/First_Explorations_and_Contributions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../Work_Environnement/Encadrement.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
