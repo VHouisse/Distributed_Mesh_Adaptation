@@ -1,26 +1,47 @@
 # Tools
 
+### L'environnement HPC
+
+Mes travaux de thèse sont ancrés au sein d'un cluster de calcul haute performantce (HPC). Cet environnement possède une architecture robuste conçue pour répondre aux exigences des calculs massifs liés aux activités d'ingénierie AIRBUS. L'environnement est composé de noeuds de calcul optimisé en terme de puissance et de mémoire.
+La machine utilisée est composée de deux types de noeuds calcul : 
+
+<br>
+
+| Caractéristiques \ Types | Type 1  | Type 2    |
+|---------|---------|---------|
+| Processeurs    | 2 Xeon-G 6142    |  2 Xeon-G 6142       |
+| Coeurs physiques par processeurs| 16 (HT) |16 (HT)|
+|Base Clock Speed | 1.6 Ghz | 1.6 Ghz|
+|Memory Speed |2666 Mhz|2666 Mhz|
+|RAM| 96GB| 384 GB |
+|Stockage local | 1 TB HDD | 3.8 TB SSD|
+
+<br>
+
+La machine comprend 110 noeuds de Type 1 et 16 de Type2.
+
+L'ensemble du cluster est géré par LSF (Load Sharing Facility) qui alloue dynamiquement des ressources critiques en fonction des requêtes soumises.
+
+
 ### MdBook : Outil de Documentation et de Suivi de Thèse
 
-Ce document lui-même est généré à l'aide de **MdBook**, un outil de publication de livres statiques basé sur Markdown. MdBook est un choix particulièrement pertinent pour ce projet de thèse pour plusieurs raisons. Sa syntaxe Markdown permet une rédaction claire et rapide, idéale pour la documentation technique et le suivi des avancées. Il offre un excellent support pour l'intégration d'**équations mathématiques via MathJax**, ainsi que pour l'**affichage de graphiques et d'extraits de code**, ce qui est essentiel pour une thèse en calcul scientifique. Développé en Rust, MdBook s'intègre naturellement à notre environnement de développement et permet un versionnement aisé du contenu via Git, assurant une traçabilité complète de nos travaux. Cet outil nous sert de carnet de bord dynamique, présentant l'intégralité des résultats et des réflexions tout au long de notre parcours doctoral.
+Ce document lui-même est généré à l'aide de **MdBook**, un outil de publication de livres statiques basé sur Markdown.
+MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertinentes pour la documentation d'une thèse en calcul scientifique :
 
+* Sa syntaxe Markdown est légère et aide à se concentrer sur le contenu.
 
-### Mon Environnement de Calcul Haute Performance : HPC5 à Toulouse
+* Il inclut un support de recherche intégré.
 
-[cite_start]Nos développements et expérimentations sont menés sur le cluster de calcul haute performance **HPC5**, l'environnement standard d'Airbus (depuis le Q1 2019) [cite: 1] pour les calculs d'ingénierie à très grande échelle. [cite_start]Conçu pour succéder à HPC4[cite: 1], HPC5 est une collection de grands clusters massivement parallèles, indispensable pour traiter des maillages de plusieurs centaines de millions d'éléments. [cite_start]Les besoins de calcul interactif sont quant à eux pris en charge via GISEH[cite: 1].
+* La coloration syntaxique pour les blocs de code est prise en charge pour de nombreux langages différents.
 
-[cite_start]Notre travail se concentre spécifiquement sur le cluster **`tou_b`**, qui est la partie **développement et validation (DEV/VAL)** de HPC5 située à Toulouse[cite: 1].
+* Des fichiers de thème permettent de personnaliser le formatage de la sortie.
 
-[cite_start]Ce cluster `tou_b` est composé de nœuds de calcul basés sur l'architecture **Intel Skylake**[cite: 1]. Bien que notre environnement de travail interactif actuel (une machine virtuelle sous VMware) puisse présenter des configurations spécifiques (comme 8 cœurs CPU virtuels basés sur un Intel(R) Xeon(R) Gold 6248R CPU @ 3.00GHz), les nœuds physiques du cluster `tou_b` sont configurés comme suit :
+* Les préprocesseurs peuvent fournir des extensions pour une syntaxe personnalisée et modifier le contenu.
 
-* [cite_start]**Nœuds de calcul (Compute nodes - Type 5)** : Chaque nœud contient 2 processeurs **HPE BL460c Xeon-G 6142 Intel 16 Cores 2.6 GhZ** [cite: 1][cite_start], offrant un total de **32 cœurs physiques** (16 cœurs par processeur)[cite: 1]. [cite_start]Ces nœuds sont équipés de **96 Go de RAM** (soit 3 Go par cœur) avec une vitesse de 2666 MHz[cite: 1]. [cite_start]Le cluster `tou_b` dispose de 96 de ces nœuds (de `touh1n0001` à `touh1n0096`)[cite: 1].
-* [cite_start]**Nœuds de calcul (Compute nodes - Type 6)** : Également de type `HPE BL460c Xeon-G 6142 Intel 16 Cores 2.6 GhZ` [cite: 1][cite_start], ces nœuds offrent aussi **32 cœurs physiques**[cite: 1]. [cite_start]Leur principale distinction est leur mémoire : **384 Go de RAM** (soit 12 Go par cœur) à 2666 MHz[cite: 1]. [cite_start]Le cluster `tou_b` compte 16 de ces nœuds (de `touh2n0001` à `touh2n0016`)[cite: 1].
+* Les backends peuvent rendre la sortie dans plusieurs formats.
 
-[cite_start]Nos fichiers d'application sont accessibles via `/share/hpc5_devel`[cite: 1]. [cite_start]Pour la gestion des données massives, le site de Toulouse de HPC5 utilise un système de fichiers **Lustre** de 1874 TiB avec une bande passante agrégée de 38GB/s [cite: 1][cite_start], et un système **Panasas** de 525 TB (Raw Data 763 TB) avec une bande passante agrégée de 12.6 to 14.4 GB/s[cite: 1].
+* Écrit en Rust, MdBook est conçu pour la vitesse, la sécurité et la simplicité.
 
-[cite_start]La soumission et l'orchestration des tâches de calcul sont gérées par le *scheduler* **IBM LSF (Version 10.1)**[cite: 1]. [cite_start]Les développeurs peuvent cibler spécifiquement le cluster `tou_b` en utilisant l'option `-clusters tou_b` dans la commande `bsub` [cite: 1][cite_start], et demander des types de nœuds (type5 ou type6) en fonction des besoins en mémoire par cœur[cite: 1]. [cite_start]Les bibliothèques MPI disponibles incluent IBM Spectrum MPI (Version 10.1.1.0) et diverses versions d'Open MPI[cite: 1].
+* Il permet également le test automatisé des exemples de code Rust qui sera très utile pour certaines fonctionnalités implémentées dans Tucanos.
 
-Cet environnement de calcul haute performance nous permet de tester la scalabilité de nos algorithmes d'adaptation de maillage et de valider leur efficacité sur des configurations complexes, représentatives des défis industriels d'Airbus.
-
-
-
+**MdBook** : <https://rust-lang.github.io/mdBook/index.html>.
