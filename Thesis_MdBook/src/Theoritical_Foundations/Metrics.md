@@ -1,6 +1,6 @@
 # Metric
 
-### 2.1.1 Definition:
+### 2.1.1 Definition : Metric
 A metric tensor \\( \mathcal{M} \in \mathbb{R}^{n} \\) is an \\(n \times n \\) symmetric definite positive matrix.  
 \\( \mathcal{M} \\) is always diagonalizable and can be decomposed as \\( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \\) where \\(\mathcal{R}\\) and \\(\Delta\\) are the eigenvectors and the eigenvalues matrices of \\(\mathcal{M}\\), respectively.
 
@@ -27,7 +27,7 @@ A metric \\(\mathcal{M}\\) can be geometrically represented by its associated un
   <figcaption>Figure 1: Metric Unit Ball </figcaption>
 </figure>
 
-### 2.1.2 Definition  
+### 2.1.2 Definition : Euclidean Metric Space  
 An Euclidean metric space is a vector space supplied with a certain scalar product \\(<.,.>_{\mathcal{M}}\\) defined by a metric tensor \\(\mathcal{M}\\). We denote it \\( \(\mathbb{R}^n, \mathcal{M} \) \\).  
 The distance between two point \\(\textbf{p}\\) and \\(\textbf{q}\\) is given by:
 
@@ -51,7 +51,7 @@ The angle between two vectors \\(  \textbf{u} \\) and \\( \textbf{v} \\) is defi
 
 \\[ cos(\theta) = \frac{ <\textbf{u} , \textbf{v} > _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\\]
 
-###  2.1.4 Definition
+###  2.1.4 Definition : Riemmanian Metric Space
 A \\( \textit{Riemmanian}\\) metric space is a continuous manifold \\( \Omega \subset \mathbb{R}^n  \\) supplied with a smooth metric \\( \mathcal{M}(.) \\). We denote it by \\(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \\). 
 
 Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh. 
@@ -67,5 +67,8 @@ More precisely, in a Riemmanian metric space \\( \mathcal{M}(\textbf{x}) _{x \in
   Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
   Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
 </figure>
+
+
+### TODO Operations on Metric / Intersection / Interpolation / Gradation etc ... 
 
 

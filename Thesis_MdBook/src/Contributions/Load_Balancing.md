@@ -119,10 +119,15 @@ Les premières évaluations, où les coûts des opérateurs d'insertion \\(\alph
 
 * #### Déséquilibre de charge par nombre de sommets : 
   L'algorithme de partitionnement, tel qu'il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d'opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d'étranglement.
-* #### Propagation des opérations de remaillage : 
-   Nous avons également découvert qu'une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d'adaptation additionnelles.
 
-Ces premières observations mettent en évidence la nécessité de modifier l'algorithme d'estimation de la charge de travail de telle manière à ce qu'il prenne en compte le coût d'une opération mais également le coût induit par une telle opération ainsi que la quantité d'élément finale dans chaque partition.
+* #### Propagation des opérations de remaillage : 
+   Nous avons également découvert qu'une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d'adaptation additionnelles. Cela semble être également vrai si l'on prend une métrique de degrossissement.
+
+* #### Poids non Réalistes
+  En plus de ne pas prendre en comtpe les opérations induites, les poids ne reflétent pas assez le coût propre à l'opération d'adaptation. 
+
+
+Ces premières observations mettent en évidence la nécessité de modifier l'algorithme d'estimation de la charge de travail de telle manière à ce que les poids soient le reflet du coût computationnel de l'opération auquel il est associé mais également du coût computationnel des autres opérations engendrées par l'effet d'une opération d'adaptation. Il faudra également que l'algortihme prenne en compte le nombre de sommets par partition.
 \\(\\)
 
 

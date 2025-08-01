@@ -8,7 +8,7 @@ Le succès de ce projet de thèse repose sur un encadrement solide et multidisci
 
 * **Jerome Robert** : Encadrant AIRBUS
 
-* **Jean-Christophe Jouhaud** : Directeur de thèse et représentant CERFACS
+* **Jean-Christophe Jouhaud** : Directeur de thèse  CERFACS
 
 * **Michael Rudgyard**: Encadrant CERFACS
 

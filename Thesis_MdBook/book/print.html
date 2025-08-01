@@ -184,35 +184,50 @@
 <p>Résoudre numériquement les équations qui régissent ces phénomènes complexes impose une discrétisation préalable de l’espace et du temps. Pour cela, les maillages sont fondamentaux car ils permettent de décomposer la géométrie complexe induite par le problème en un ensemble fini d’éléments. Cette discrétisation, nécessaire, permet d’approximer des grandeurs physiques et donc de résoudre les équations sous jacente au problème de manière computationnelle.</p>
 <p>Bien que les maillages soient essentiels, leur conception statique révèle certaines limites face à la compléxité des phénomènes physiques, notamment dans l’étude de la dynamique des fluides. Par exemple, capturer l’ensemble de l’information issue des écoulements turbulents avec un maillage statique est presque impossible. En effet, ces phénomènes se caractérisent par des gradients physiques très intenses et des structures de mouvement très complexes dans des zones très spécifiques du domaine (couche limite, sillage …).</p>
 <p>L’approche d’un maillage statique et isotrope n’est donc pas optimale; il risque d’être insuffisamment raffiné là où une résolution très précise est cruciale et trop dense dans des zones moins critiques de l’écoulement. En plus de la perte d’information, ce déséquilibre entraine une surchage computationnelle injustifiée dans les régions où une moindre précision serait suffisante.</p>
-<p>Pour surmonter ces défis et optimiser l’efficatité des simulations numériques haute-fidélité, l’adaptation de maillage anisotrope est primordiale. Cette approche dynamique permet un ajustement intelligent de la densité et de l’orientation des éléments du maillage en fonction des caractéristiques de la solution et des erreurs d’approximations commises. L’anisotropie permet d’affiner la résolution en alignant la forme des éléments du maillage avec les directions des phénomènes physiques prédominants. En concentrant précisément les ressources de calcul là où elles sont nécessaires et en les étirant ailleurs, elle maximise la précision et minimise les coûts.</p>
-<p>Atteindre cette haute fidélité à l’échelle des applications industrielles modernes tel que celles de l’industrie de l’aéronautique exige de recourrir au calcul massivement parallèle. En effet, le volume de données et la compléxité des calculs deviennent colossaux, un maillage typique pour ce genre simulation peut compter des dizaines, voire des centaines de millions d’éléments.</p>
-<p>Garantir l’éfficatité des calculs sur un tel volume de données ne peut se faire que via l’exploitation du calcul parallèle. Cela implique de distribuer le maillage et les opérations de calcul intrinsèques, tel que les opérations d’adaptation, sur des milliers de coeurs de calcul différents. Cette dimension parallèle induit une surcouche de complexité ; il faut garantir une répartition équitable du temps de calcul et une communication efficace et minime entre chaque processeur ainsi que la conservation de la cohérence des calculs. C’est dans ce contexte de haute performance que les solutions d’adaptation de maillage doivent s’inscrire pour être réellement utile aux applications industrielles.</p>
+<p>Pour surmonter ces défis et optimiser l’efficatité des simulations numériques haute-fidélité, l’adaptation de maillage anisotrope est primordiale. Cette approche dynamique permet un ajustement intelligent de la densité et de l’orientation des éléments du maillage en fonction des caractéristiques de la solution et des erreurs d’approximations commises. L’adaptation anisotropique permet d’affiner la résolution en alignant la forme des éléments du maillage avec les directions des phénomènes physiques prédominants. En concentrant précisément les ressources de calcul là où elles sont nécessaires elle maximise la précision et minimise les coûts computationnels.</p>
+<p>Atteindre cette haute fidélité à l’échelle des applications industrielles modernes tel que celles de l’industrie de l’aéronautique exige de recourrir au calcul massivement parallèle. En effet, le volume de données et la compléxité des calculs sont colossaux et un maillage typique pour une simulation CFD peut compter des dizaines, voire des centaines de millions d’éléments.</p>
+<p>Garantir l’éfficatité des calculs sur un tel volume de données ne peut se faire que via l’exploitation du calcul parallèle. Cela implique de distribuer le maillage et les opérations de calcul intrinsèques, tel que les opérations d’adaptation, sur plusieurs coeurs de calcul différents. Cette dimension parallèle induit une surcouche de complexité ; il faut garantir une répartition équitable du temps de calcul et une communication efficace et minime entre chaque processeur ainsi que la conservation de la cohérence des calculs. C’est dans ce contexte de haute performance que les solutions d’adaptation de maillage doivent s’inscrire pour être réellement utile aux applications industrielles.</p>
 <h2 id="12-contexte-industriel-et-objectifs"><a class="header" href="#12-contexte-industriel-et-objectifs">1.2 Contexte Industriel et Objectifs</a></h2>
 <p>Le présent travail de thèse s’inscrit au sein d’une collaboration entre Airbus et le Cerfacs, dans le but de répondre à des besoins industiels concrets en dynamique des fluides numérique par le biais de la recherche appliquée. Au coeur de cette initiative se trouve CODA (Code ONERA DLR AIRBUS ), un outil de simulation numérique pour la dynamique des fluides massivement parallèle gérant des calculs de très grande envergure.
 L’objectif principal de cette thèse est de développer un cadre d’adaptation de maillage anisotrope parallèle pour CODA. Le but ultime est de réduire les délais de conception et d’élargir le champ d’exploration de design des aviosn dans les bureaux d’études d’Airbus.</p>
-<p>Pour y parvenir, une part essentielle de la thèse consistera à identifier et à implémenter des métriques anisotropes adaptées à la capture de phénomènes clés comme les couches limites et les chocs transsoniques, ainsi que des métriques “goal-based” exploitant la sensibilité adjointe. La mise en œuvre de ce workflow d’adaptation distribuée débutera par une version en ligne de commande, puis évoluera vers un couplage direct avec le module FSDM de CODA via l’API kalpaTARU C. L’efficacité du workflow sera validée à travers des applications concrètes sur des configurations d’avions représentatives (LAGOON, DPW).</p>
+<!-- Pour y parvenir, une part essentielle de la thèse consistera à identifier et à implémenter des métriques anisotropes adaptées à la capture de phénomènes clés comme les couches limites et les chocs transsoniques, ainsi que des métriques "goal-based" exploitant la sensibilité adjointe. La mise en œuvre de ce workflow d'adaptation distribuée débutera par une version en ligne de commande, puis évoluera vers un couplage direct avec le module FSDM de CODA via l'API kalpaTARU C. L'efficacité du workflow sera validée à travers des applications concrètes sur des configurations d'avions représentatives (LAGOON, DPW). -->
 <h2 id="13-feuille-de-route"><a class="header" href="#13-feuille-de-route">1.3 Feuille de Route</a></h2>
-<p>Ce MdBook a pour vocation de présenter l’intégralité des avancées et des résultats obtenus au cours de ma thèse de doctorat. Au fil des chapitres, il retracera l’évolution continue de ma thèse, de mes explorations intiailes aux résultats les plus récents. Chaque section abordera un aspect fondamental de ma recherche : l’acquisition de connaissances théoriques relatives à l’adaptation de maillage anisotropique, l’environnement de développement et les outils utilisés ainsi que l’ensemble de mes contributions scientifiques. L’objectif est de fournir une vision claire et structurée de l’état d’avancement de ma recherche, des défis rencontrés et des solutions développées tout au long de ces trois années, offrant ainsi un aperçu complet de mon parcours doctoral.</p>
+<p>Ce MdBook a pour vocation de présenter l’intégralité des avancées et des résultats obtenus au cours de ma thèse de doctorat. Au fil des chapitres, il retracera l’évolution continue de ma thèse, de mes explorations intiailes aux résultats les plus récents. Chaque section abordera un aspect fondamental de ma recherche : l’acquisition de connaissances théoriques relatives à l’adaptation de maillage anisotropique, l’environnement de développement et les outils utilisés ainsi que l’ensemble de mes contributions scientifiques. L’objectif est de fournir une vision claire et structurée de l’état d’avancement de ma recherche, des défis rencontrés et des solutions développées tout au long de ces trois années.</p>
 <p><br><br><br></p>
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
     <img src="Intro/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
     <img src="Intro/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="theoritical-foundations"><a class="header" href="#theoritical-foundations">Theoritical Foundations</a></h1>
-<p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux liés à l’adaptation de maillage dans sa généralité est essentielle. Cette section détaillera donc:</p>
-<ul>
+<p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux de la dynamique des fluides numérique et de l’adaptation de maillage est essentielle</p>
+<h2 id="une-bref-rappel-du-workflow-cfd-"><a class="header" href="#une-bref-rappel-du-workflow-cfd-">Une bref rappel du WorkFlow CFD :</a></h2>
+<p>Comme indiqué lors de l’introduction la Computational Fluid Dynamics (CFD) est une discipline clé pour la simulation de phénomènes aéronautiques complexes.</p>
+<p>Son workflow typique comprend plusieurs étapes :</p>
+<ol>
 <li>
-<p><a href="Theoritical_Foundations/./Metrics.html">Metrics</a></p>
+<p>la formulation du problème physique en équations mathématiques ( Equations de Naviers-Stokes )</p>
 </li>
 <li>
-<p><a href="Theoritical_Foundations/./Mesh_Adaptation.html">Mesh Adaptation</a></p>
+<p>la discrétisation du domaine physique en un maillage “initial” pour transformer les équations continues en un système discret</p>
 </li>
 <li>
-<p><a href="Theoritical_Foundations/./Parallel_Computing.html">Parallel Computing</a></p>
+<p>la résolution numérique de ce système</p>
 </li>
-</ul>
+<li>
+<p>L’analyse d’erreur de la solution</p>
+</li>
+<li>
+<p>l’adaptation de ce maillage en conséquence dans le but de converger vers un maillage et une solution optimale pour le problème donné.</p>
+</li>
+</ol>
+<center>
+<img src="Theoritical_Foundations/../images/Schema_Remesh_bg.png" alt="Logo Tucanos" width="100%">
+</center>
+<p>L’analyse d’erreur, qui succède à la résolution CFD, est le moteur de l’adaptation de maillage. <br> De cette analyse découle un champ de métrique, une entité qui précise comment le maillage doit être modifié pour minimiser les erreurs sur le maillage intial. Pour bien saisir ce mécanisme, il est fondamental de comprendre ce qu’est une métrique et comment elle définit un granularité spatiale. (Voir section sur les métriques : <a href="Theoritical_Foundations/./Metrics.html">Metrics</a>) <br></p>
+<p>Une fois cette métrique cible établie, il devient nécessaire de savoir comment la traduire en actions concrètes sur le maillage. La section sur <strong>l’Adaptation de Maillage</strong> explicitera les opérations géométriques et topologiques qui transforment le maillage pour qu’il réponde aux spécifications de la métrique (voir section <a href="Theoritical_Foundations/./Mesh_Adaptation.html">Mesh Adaptation</a>)</p>
+<p>Finalement, pour que l’ensemble de ce processus d’adaptation soit viable et performant pour les applications industrielles à grande échelle, une maîtrise du Calcul Parallèle est indispensable. On expliquera certains aspects de la discipline et on montrera de quelle manière on souhaite l’utiliser dans le cadre de la thèse. (voir section <a href="Theoritical_Foundations/./Parallel_Computing.html">Parallel_Computing</a>)</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
-<h3 id="211-definition"><a class="header" href="#211-definition">2.1.1 Definition:</a></h3>
+<h3 id="211-definition--metric"><a class="header" href="#211-definition--metric">2.1.1 Definition : Metric</a></h3>
 <p>A metric tensor \( \mathcal{M} \in \mathbb{R}^{n} \) is an \(n \times n \) symmetric definite positive matrix.<br />
 \( \mathcal{M} \) is always diagonalizable and can be decomposed as \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \) where \(\mathcal{R}\) and \(\Delta\) are the eigenvectors and the eigenvalues matrices of \(\mathcal{M}\), respectively.</p>
 <p>From this definition, it follows up that the scalar product of two vectors in \(  \mathbb{R}^n \)
@@ -228,7 +243,7 @@ can defined related to a metric \(  \mathcal{M} \) as</p>
   <img src="Theoritical_Foundations/../images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
   <figcaption>Figure 1: Metric Unit Ball </figcaption>
 </figure>
-<h3 id="212-definition"><a class="header" href="#212-definition">2.1.2 Definition</a></h3>
+<h3 id="212-definition--euclidean-metric-space"><a class="header" href="#212-definition--euclidean-metric-space">2.1.2 Definition : Euclidean Metric Space</a></h3>
 <p>An Euclidean metric space is a vector space supplied with a certain scalar product \(&lt;.,.&gt;_{\mathcal{M}}\) defined by a metric tensor \(\mathcal{M}\). We denote it \( (\mathbb{R}^n, \mathcal{M} ) \).<br />
 The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p>
 <p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \]</p>
@@ -241,7 +256,7 @@ The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p
 <p>\( |K| _{ \mathcal{M} }  = \int _{K} \sqrt{det( \mathcal{M} )} |K| _{ \mathbb{I} _{n}} \)</p>
 <p>The angle between two vectors \(  \textbf{u} \) and \( \textbf{v} \) is define by the unique real \( \theta \in [ 0 , \pi ] \) such that</p>
 <p>\[ cos(\theta) = \frac{ &lt;\textbf{u} , \textbf{v} &gt; _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\]</p>
-<h3 id="214-definition"><a class="header" href="#214-definition">2.1.4 Definition</a></h3>
+<h3 id="214-definition--riemmanian-metric-space"><a class="header" href="#214-definition--riemmanian-metric-space">2.1.4 Definition : Riemmanian Metric Space</a></h3>
 <p>A \( \textit{Riemmanian}\) metric space is a continuous manifold \( \Omega \subset \mathbb{R}^n  \) supplied with a smooth metric \( \mathcal{M}(.) \). We denote it by \(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
 <p>Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh.
 More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \) :</p>
@@ -253,22 +268,52 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
   Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
   Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
 </figure>
+<h3 id="todo-operations-on-metric--intersection--interpolation--gradation-etc-"><a class="header" href="#todo-operations-on-metric--intersection--interpolation--gradation-etc-">TODO Operations on Metric / Intersection / Interpolation / Gradation etc …</a></h3>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="mesh-adaptation"><a class="header" href="#mesh-adaptation">Mesh Adaptation</a></h1>
-<p>The core advantage of using metric tensors in mesh generation and adaptation lies in their ability to impose specific directional stretching on mesh elements. This allows us to briefly detail our approach to anisotropic mesh generation: by defining a mesh size in each direction at every point of the domain using metric tensors, it’s then possible to generate a uniform unit mesh, thus specifying sizes directionally.</p>
-<p>More precisely, let \(\mathcal{M}(x)_{x \in \Omega }\) be a Riemmanian metric space. In three dimensions, the objective is to generate a mesh    \(\mathcal{H} \) for which each edge lenght is unit in the associated metric and each element is regular :</p>
-<p>\[   \forall \textbf{e} \in \mathcal{H} , \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
-<p>As a regular elements can not fill the entire domain \( \Omega \), the mesh generator can only create quasi-uniform mesh, i.e. the mesh elements are almost unit in the Riemmanian space. To quantify the fap to unity, differents tools can be used, for example, an element_quality function :
-\[ Q_\mathcal{M}\] \(\)</p>
+<p>En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d’appliquer des modifications localement dans le but d’atteindre un maillage cible, on parle alors d’adaptation. Dans les deux approches, le nouveau maillage est construit d’après une <strong>métrique</strong> issue de l’analyse d’erreur.</p>
+<p>En comparaison au remaillage, l’adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d’éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d’éléments du maillage.</p>
+<p>Par ailleurs, le remaillage rend complexe le transfert des valeurs de champ de l’ancien maillage vers le nouveau. Cette procédure nécessite des algorithmes de recherche spatiale et a tendance à s’appuyer sur des opérateurs de remappage qui sont diffusifs et/ou soumis à des exigences de conservation globale.</p>
+<p>L’adaptation quant à elle permet une exécution locale du transfert de solution. Le raffinement divise les entités parentes et est capable de transférer la solution de manière exacte en utilisant l’interpolation par fonctions de forme. De plus, les autres opérations sont confinées à une cavité locale, ce qui rend toute recherche rapid et les effets diffusifs ainsi que les ajustements de conservation sont localisés.</p>
+<p>Nous nous concentrerons sur le processus d’adaptation de maillage puisqu’il semble que ce dernier possède plus d’avantages que le remaillage total.</p>
+<p>On rapelle donc que l’objectif ultime de l’adaptation de maillage (que ce soit par remaillage ou par des opérations d’adaptation locale) est de garantir que le maillage, après modification, se conforme aussi étroitement que possible au champ de métrique cible dérivé de l’analyse d’erreur.</p>
+<p>Soit \(\mathcal{M}(x)_{x \in \Omega }\) un espace métrique riemannien. L’objectif est de générer un maillage  \(\mathcal{H} \)  pour lequel chaque longueur d’arête est unitaire dans la métrique associée et chaque élément est régulier :</p>
+<p>\[   \forall \textbf{e} \in \mathcal{H} , \ \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
+<p>Comme les éléments réguliers ne peuvent pas remplir entièrement le domaine \( \Omega \), l’adaptation de maillage ne peut créer que des maillages quasi-uniformes, c’est-à-dire des éléments de maillage qui sont presque unitaires dans l’espace riemannien. Pour quantifier l’écart à l’unité, différents outils peuvent être utilisés, dont  par exemple, une fonction de qualité d’élément :</p>
+<p>\[ Q_\mathcal{M} = … \]</p>
+<p>On a vu que la taille de la boule unité associée à la métrique \(\mathcal{M}\) dans la direction de son \(i^{\textbf{ème}}\) vecteur propre est donnée par \( h_i = \lambda_i^{-1\setminus2} \). Ainsi on peut déduire que la taille voulue dans la direction \(\textbf{e}\) est :</p>
+<p>\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\]</p>
+<p>Pour atteindre le maillage conformément à la métrique donnée plusieurs opérations de remaillage sont utilisées.</p>
+<h3 id="definition--cavité"><a class="header" href="#definition--cavité">Definition : Cavité</a></h3>
+<p>Définition de la cavité</p>
+<h3 id="definition--swap"><a class="header" href="#definition--swap">Definition : Swap</a></h3>
+<p>Swap</p>
+<h3 id="definition--split"><a class="header" href="#definition--split">Definition : Split</a></h3>
+<p>Split</p>
+<h3 id="definition--collapse"><a class="header" href="#definition--collapse">Definition : Collapse</a></h3>
+<p>Collapse</p>
+<h3 id="definition--smooth"><a class="header" href="#definition--smooth">Definition : Smooth</a></h3>
+<p>Smooth</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="parallel-computing"><a class="header" href="#parallel-computing">Parallel Computing</a></h1>
-<p>Scaling
-Coeurs
-Etc …</p>
+<h2 id="mpi"><a class="header" href="#mpi">MPI</a></h2>
+<h2 id="rayon"><a class="header" href="#rayon">RAYON</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="work-environnement"><a class="header" href="#work-environnement">Work Environnement</a></h1>
-<p>This section presents the essential tools and the development environment employed throughout this thesis.</p>
+<p>La mise en oeuvre des concepts théoriques de l’adaptation de maillage anisotrope dans un envrionnement de calcul massivement parallèle nécessite un écosystème précis.
+Cette section détaille les composants clés de notre environnement de travail. N
+ous y présenterons Tucanos, l’outil d’adaptation de maillage interne (développé chez Airbus par Xavier Garnaud et Jerome Robert ) qui constitute la base de nos recherches et développements, le cluster de calcul HPC,le logiciel de visualisation Paraview, la plateforme Mdbook utilisée pour cette documentation ainsi que l’équipe d’encadrement et le planning prévisionnel de la thèse.</p>
 <ul>
-<li><a href="Work_Environnement/./Tucanos.html">Tucanos</a></li>
+<li>
+<p><a href="Work_Environnement/./Tucanos.html">Tucanos</a></p>
+</li>
+<li>
+<p><a href="Work_Environnement/./Tools.html">Outils</a></p>
+</li>
+<li>
+<p><a href="Work_Environnement/./Planning_previsionnel.html">Planning Previsionnel</a></p>
+</li>
+<li>
+<p><a href="Work_Environnement/./Encadrement.html">Encadrement</a></p>
+</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">Rust</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tucanos"><a class="header" href="#tucanos">Tucanos</a></h1>
 <p>Tucanos is a 2D and 3D anisotropic mesh adaptation library. It is based on the principles described in “Four-Dimensional Anisotropic Mesh Adaptation for Spacetime Numerical Simulations” by Philip Claude Caplan.</p>
 <p>The project is enterily coded in Rust, but it also has a Python interface.</p>
@@ -292,6 +337,7 @@ La machine utilisée est composée de deux types de noeuds calcul :</p>
 </div><br>
 <p>La machine comprend 110 noeuds de Type 1 et 16 de Type2.</p>
 <p>L’ensemble du cluster est géré par LSF (Load Sharing Facility) qui alloue dynamiquement des ressources critiques en fonction des requêtes soumises.</p>
+<h3 id="paraview"><a class="header" href="#paraview">Paraview</a></h3>
 <h3 id="mdbook--outil-de-documentation-et-de-suivi-de-thèse"><a class="header" href="#mdbook--outil-de-documentation-et-de-suivi-de-thèse">MdBook : Outil de Documentation et de Suivi de Thèse</a></h3>
 <p>Ce document lui-même est généré à l’aide de <strong>MdBook</strong>, un outil de publication de livres statiques basé sur Markdown.
 MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertinentes pour la documentation d’une thèse en calcul scientifique :</p>
@@ -322,33 +368,6 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
 </li>
 </ul>
 <p><strong>MdBook</strong> : <a href="https://rust-lang.github.io/mdBook/index.html">https://rust-lang.github.io/mdBook/index.html</a>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="encadrement"><a class="header" href="#encadrement">Encadrement</a></h1>
-<p>Le succès de ce projet de thèse repose sur un encadrement solide et multidisciplinaire, bénéficiant de l’expertise combinée d’Airbus et du Centre Européen de recherche et de formation en Calcul Scientifque (CERFACS) :</p>
-<ul>
-<li>
-<p><strong>Laraufie Romain</strong> : Encadrant principal AIRBUS</p>
-</li>
-<li>
-<p><strong>Xavier Garnaud</strong> : Encadrant AIRBUS</p>
-</li>
-<li>
-<p><strong>Jerome Robert</strong> : Encadrant AIRBUS</p>
-</li>
-<li>
-<p><strong>Jean-Christophe Jouhaud</strong> : Directeur de thèse et représentant CERFACS</p>
-</li>
-<li>
-<p><strong>Michael Rudgyard</strong>: Encadrant CERFACS</p>
-</li>
-<li>
-<p><strong>Jens-Dominik Mueller</strong> : Encadrant CERFACS</p>
-</li>
-</ul>
-<p><br><br><br></p>
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
-    <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
-</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="organisation-des-travaux-de-recherche"><a class="header" href="#organisation-des-travaux-de-recherche">Organisation des travaux de recherche</a></h1>
 <ul>
 <li>
@@ -381,6 +400,33 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
     <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
     <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="encadrement"><a class="header" href="#encadrement">Encadrement</a></h1>
+<p>Le succès de ce projet de thèse repose sur un encadrement solide et multidisciplinaire, bénéficiant de l’expertise combinée d’Airbus et du Centre Européen de recherche et de formation en Calcul Scientifque (CERFACS) :</p>
+<ul>
+<li>
+<p><strong>Laraufie Romain</strong> : Encadrant principal AIRBUS</p>
+</li>
+<li>
+<p><strong>Xavier Garnaud</strong> : Encadrant AIRBUS</p>
+</li>
+<li>
+<p><strong>Jerome Robert</strong> : Encadrant AIRBUS</p>
+</li>
+<li>
+<p><strong>Jean-Christophe Jouhaud</strong> : Directeur de thèse  CERFACS</p>
+</li>
+<li>
+<p><strong>Michael Rudgyard</strong>: Encadrant CERFACS</p>
+</li>
+<li>
+<p><strong>Jens-Dominik Mueller</strong> : Encadrant CERFACS</p>
+</li>
+</ul>
+<p><br><br><br></p>
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="first-explorations--contribution"><a class="header" href="#first-explorations--contribution">First Explorations &amp; Contribution</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="partitionners"><a class="header" href="#partitionners">Partitionners</a></h1>
 <p>Comme nous l’avons vu, la quantité de données induites par la résolution des équations de la CFD ainsi que la recherche de calcul de haute performance nous pousse à utiliser plusieurs unité de calcul. Pour cela il est impératif de partitionner le maillage sous-jacent au domaine de travail. Partitionner permet de diviser le domaine en autant de sous-domaines qu’il y a de coeurs disponibles, décomposant le problème initial en N sous-problèmes.</p>
@@ -401,10 +447,33 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
 <center>
 <img src="Contributions/../images/Freezing_Interface.png" alt="Logo Tucanos" width="80%">
 </center>
-<p>Au-delà des stratégies de gestio ndes interfaces pour le remaillage parallèle, la problématique fondamentale de la dibision initiale d’un maillage en sous-domaines demeure. Cette tâche est assurée par les algorithmes de partitionnement dont les objectifs ont été discutés plus tôt. Nous allons introduire ici une séléction des partitionneurs utilisés au sein de Tucanos, ainsi que ceux implémentés dans le cadre des travaux de thèse. On effectuera une analyse comparative de leurs performances sur un cas test :</p>
+<p>Au-delà des stratégies de gestion des interfaces pour le remaillage parallèle, la problématique fondamentale de la division initiale d’un maillage en sous-domaines demeure. Cette tâche est assurée par les algorithmes de partitionnement dont les objectifs ont été discutés plus tôt. Nous allons introduire ici une séléction des partitionneurs utilisés au sein de Tucanos, ainsi que ceux implémentés dans le cadre des travaux de thèse. On effectuera une analyse comparative de leurs performances sur un cas test :</p>
+<p>Les deux partitionneurs ci-dessous sont basés sur une renumérotation préalable des sommets d’après une courbe de Hilbert. Chaque sommet du maillage se voit attribuer un indice de Hilbert en fonction de sa position spatiale sur la courbe. C’est une opération de compléxité linéaire, facilement parallélisable. Les partitionnements suivants se basent donc sur la liste des indices de Hilbert qui a la forme suivante :</p>
+<pre><code>[ Hilbert_1 = element_i, Hilbert_2 = element_j,  ... ]
+</code></pre>
+<p>Considérant qu’à l’issue de chaque partitionnement, on souhaite obtenir n partitons avec un nombre d’éléments par partition très proche, sans load Balancing.</p>
 <h4 id="1-hilbert-ball-partitionner"><a class="header" href="#1-hilbert-ball-partitionner">1. Hilbert Ball Partitionner</a></h4>
-<h4 id="2-bfs--bfs-with-restart-bfswr"><a class="header" href="#2-bfs--bfs-with-restart-bfswr">2. BFS &amp; BFS With Restart (BFSWR)</a></h4>
-<h4 id="3-metis-partitionner"><a class="header" href="#3-metis-partitionner">3. Metis Partitionner</a></h4>
+<p>On commence par lister les éléments partageant le sommet n°1 d’après la liste d’indices de Hilbert, cette liste d’éléments appelée boule du sommet 1, chacun de ces éléments est ajouté à la partition n°1. Puis on fait de même avec le sommet n°2, on liste et on ajoute les éléments de la boule du sommet 2 qui n’ont pas encore été ajouté à une partition, et ainsi de suite … A chaque fois que l’on ajoute un élément à une partition, on vérifie que le nombre d’éléments dans la partition_i que l’on est en train de remplir n’excède pas le montant d’éléments par partition voulu. Si tel est le cas alors l’élément est ajouté à la partition_i+1.</p>
+<p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode de Hilbert pour n=4 partitions:</p>
+<center>
+<img src="Contributions/../images/Hilbert_bg.png" alt="HilbertBall Partitionnement" width="50%">
+</center>
+<p>quality=2.13e-2</p>
+<h4 id="2-bfs"><a class="header" href="#2-bfs">2. BFS</a></h4>
+<p>Cette méthode s’appuie non pas sur une renumérotation par Hilbert des sommets mais sur une renumérotation par éléments. On considère alors le premier élément de cette liste d’éléments, qu’on appellera élément <strong>racine</strong>, on ajoute chacun des éléments voisins à une file d’attente. Puis chaque élément de la file d’attente est ajouté à la partition courante et on ajoute également ses voisins (si ils n’ont pas déjà été assignés) à la file d’attente. La méthode avance donc par front. De la même manière que pour la méthode de la boule de Hilbert, chaque fois qu’un élément est ajouté à une partition, on s’assure que le montant d’élément dans la partition courante n’excède pas le nombre d’éléments voulu par partition.</p>
+<p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions:</p>
+<center>
+<img src="Contributions/../images/BFS_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
+</center>
+<p>quality=6.52e-2</p>
+<h4 id="3-bfs-with-restart-bfswr"><a class="header" href="#3-bfs-with-restart-bfswr">3. BFS With Restart (BFSWR)</a></h4>
+<p>Cette méthode utilise la même logique que celle du BFS, mais lorsque qu’une partition excède le nombre d’éléments par partition voulu, la file d’attente est vidée et le prochain élément <strong>racine</strong> devient le dernier élément contenu dans la file avant d’être vidée.</p>
+<p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions:</p>
+<center>
+<img src="Contributions/../images/BFSWR_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
+</center>
+<p>quality=3.32e-2</p>
+<h4 id="4-metis"><a class="header" href="#4-metis">4. Metis</a></h4>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="load-balancing"><a class="header" href="#load-balancing">Load Balancing</a></h1>
 <p>Une stratégie efficace de partitonnement devrait également faire en sorte d’équilibrer la charge de calcul entre les différents processeurs. Chaque travail de remaillage étant effectué indépendamment sur les différentes partitions, la performance globale d’une parallélisation de l’algorithme de remaillage sera limitée par la partition ayant la plus grosse charge computationnelle.</p>
 <p>Cette charge de travail dépend des opérations de remaillage utilisées (insertion, collapse, swap, smoothing), de la métrique cible \(\mathcal{M}(x)_{x \in \Omega}\), du maillage initial \(\mathcal{H}\) et de sa métrique induite \( (\mathcal{M} _{\mathcal{H}}(x)) _{x \in \Omega} \) avec \(\Omega\) le domaine à remailler.</p>
@@ -504,12 +573,18 @@ On analysera le travail dans deux configurations spécifiques et on généralise
 <ul>
 <li>
 <h4 id="déséquilibre-de-charge-par-nombre-de-sommets-"><a class="header" href="#déséquilibre-de-charge-par-nombre-de-sommets-">Déséquilibre de charge par nombre de sommets :</a></h4>
-L’algorithme de partitionnement, tel qu’il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d’opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d’étranglement.</li>
+<p>L’algorithme de partitionnement, tel qu’il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d’opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d’étranglement.</p>
+</li>
 <li>
 <h4 id="propagation-des-opérations-de-remaillage-"><a class="header" href="#propagation-des-opérations-de-remaillage-">Propagation des opérations de remaillage :</a></h4>
-Nous avons également découvert qu’une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d’adaptation additionnelles.</li>
+<p>Nous avons également découvert qu’une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d’adaptation additionnelles. Cela semble être également vrai si l’on prend une métrique de degrossissement.</p>
+</li>
+<li>
+<h4 id="poids-non-réalistes"><a class="header" href="#poids-non-réalistes">Poids non Réalistes</a></h4>
+<p>En plus de ne pas prendre en comtpe les opérations induites, les poids ne reflétent pas assez le coût propre à l’opération d’adaptation.</p>
+</li>
 </ul>
-<p>Ces premières observations mettent en évidence la nécessité de modifier l’algorithme d’estimation de la charge de travail de telle manière à ce qu’il prenne en compte le coût d’une opération mais également le coût induit par une telle opération ainsi que la quantité d’élément finale dans chaque partition.
+<p>Ces premières observations mettent en évidence la nécessité de modifier l’algorithme d’estimation de la charge de travail de telle manière à ce que les poids soient le reflet du coût computationnel de l’opération auquel il est associé mais également du coût computationnel des autres opérations engendrées par l’effet d’une opération d’adaptation. Il faudra également que l’algortihme prenne en compte le nombre de sommets par partition.
 \(\)</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-and-references"><a class="header" href="#appendix-and-references">Appendix and References</a></h1>
 <p>To further support the understanding of this research, this section provides essential complementary information and a comprehensive list of references that have been instrumental to our work.</p>

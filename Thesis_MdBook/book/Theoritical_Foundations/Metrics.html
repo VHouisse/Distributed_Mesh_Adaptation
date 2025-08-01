@@ -178,7 +178,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
-<h3 id="211-definition"><a class="header" href="#211-definition">2.1.1 Definition:</a></h3>
+<h3 id="211-definition--metric"><a class="header" href="#211-definition--metric">2.1.1 Definition : Metric</a></h3>
 <p>A metric tensor \( \mathcal{M} \in \mathbb{R}^{n} \) is an \(n \times n \) symmetric definite positive matrix.<br />
 \( \mathcal{M} \) is always diagonalizable and can be decomposed as \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \) where \(\mathcal{R}\) and \(\Delta\) are the eigenvectors and the eigenvalues matrices of \(\mathcal{M}\), respectively.</p>
 <p>From this definition, it follows up that the scalar product of two vectors in \(  \mathbb{R}^n \)
@@ -194,7 +194,7 @@ can defined related to a metric \(  \mathcal{M} \) as</p>
   <img src="../images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
   <figcaption>Figure 1: Metric Unit Ball </figcaption>
 </figure>
-<h3 id="212-definition"><a class="header" href="#212-definition">2.1.2 Definition</a></h3>
+<h3 id="212-definition--euclidean-metric-space"><a class="header" href="#212-definition--euclidean-metric-space">2.1.2 Definition : Euclidean Metric Space</a></h3>
 <p>An Euclidean metric space is a vector space supplied with a certain scalar product \(&lt;.,.&gt;_{\mathcal{M}}\) defined by a metric tensor \(\mathcal{M}\). We denote it \( (\mathbb{R}^n, \mathcal{M} ) \).<br />
 The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p>
 <p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \]</p>
@@ -207,7 +207,7 @@ The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p
 <p>\( |K| _{ \mathcal{M} }  = \int _{K} \sqrt{det( \mathcal{M} )} |K| _{ \mathbb{I} _{n}} \)</p>
 <p>The angle between two vectors \(  \textbf{u} \) and \( \textbf{v} \) is define by the unique real \( \theta \in [ 0 , \pi ] \) such that</p>
 <p>\[ cos(\theta) = \frac{ &lt;\textbf{u} , \textbf{v} &gt; _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\]</p>
-<h3 id="214-definition"><a class="header" href="#214-definition">2.1.4 Definition</a></h3>
+<h3 id="214-definition--riemmanian-metric-space"><a class="header" href="#214-definition--riemmanian-metric-space">2.1.4 Definition : Riemmanian Metric Space</a></h3>
 <p>A \( \textit{Riemmanian}\) metric space is a continuous manifold \( \Omega \subset \mathbb{R}^n  \) supplied with a smooth metric \( \mathcal{M}(.) \). We denote it by \(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
 <p>Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh.
 More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \) :</p>
@@ -219,6 +219,7 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
   Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
   Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
 </figure>
+<h3 id="todo-operations-on-metric--intersection--interpolation--gradation-etc-"><a class="header" href="#todo-operations-on-metric--intersection--interpolation--gradation-etc-">TODO Operations on Metric / Intersection / Interpolation / Gradation etc …</a></h3>
 
                     </main>
 

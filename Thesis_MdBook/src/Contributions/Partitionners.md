@@ -35,10 +35,47 @@ Cette seconde approche est également basée sur le gel des interfaces, mais de 
 </center>
 
 
-Au-delà des stratégies de gestio ndes interfaces pour le remaillage parallèle, la problématique fondamentale de la dibision initiale d'un maillage en sous-domaines demeure. Cette tâche est assurée par les algorithmes de partitionnement dont les objectifs ont été discutés plus tôt. Nous allons introduire ici une séléction des partitionneurs utilisés au sein de Tucanos, ainsi que ceux implémentés dans le cadre des travaux de thèse. On effectuera une analyse comparative de leurs performances sur un cas test : 
+Au-delà des stratégies de gestion des interfaces pour le remaillage parallèle, la problématique fondamentale de la division initiale d'un maillage en sous-domaines demeure. Cette tâche est assurée par les algorithmes de partitionnement dont les objectifs ont été discutés plus tôt. Nous allons introduire ici une séléction des partitionneurs utilisés au sein de Tucanos, ainsi que ceux implémentés dans le cadre des travaux de thèse. On effectuera une analyse comparative de leurs performances sur un cas test : 
 
+Les deux partitionneurs ci-dessous sont basés sur une renumérotation préalable des sommets d'après une courbe de Hilbert. Chaque sommet du maillage se voit attribuer un indice de Hilbert en fonction de sa position spatiale sur la courbe. C'est une opération de compléxité linéaire, facilement parallélisable. Les partitionnements suivants se basent donc sur la liste des indices de Hilbert qui a la forme suivante : 
+
+    [ Hilbert_1 = element_i, Hilbert_2 = element_j,  ... ]
+Considérant qu'à l'issue de chaque partitionnement, on souhaite obtenir n partitons avec un nombre d'éléments par partition très proche, sans load Balancing.
 
 #### 1. Hilbert Ball Partitionner
-#### 2. BFS & BFS With Restart (BFSWR) 
-#### 3. Metis Partitionner 
+On commence par lister les éléments partageant le sommet n°1 d'après la liste d'indices de Hilbert, cette liste d'éléments appelée boule du sommet 1, chacun de ces éléments est ajouté à la partition n°1. Puis on fait de même avec le sommet n°2, on liste et on ajoute les éléments de la boule du sommet 2 qui n'ont pas encore été ajouté à une partition, et ainsi de suite ... A chaque fois que l'on ajoute un élément à une partition, on vérifie que le nombre d'éléments dans la partition_i que l'on est en train de remplir n'excède pas le montant d'éléments par partition voulu. Si tel est le cas alors l'élément est ajouté à la partition_i+1.
 
+
+Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode de Hilbert pour n=4 partitions: 
+
+<center>
+<img src="../images/Hilbert_bg.png" alt="HilbertBall Partitionnement" width="50%">
+</center>
+
+quality=2.13e-2
+
+#### 2. BFS 
+
+Cette méthode s'appuie non pas sur une renumérotation par Hilbert des sommets mais sur une renumérotation par éléments. On considère alors le premier élément de cette liste d'éléments, qu'on appellera élément __racine__, on ajoute chacun des éléments voisins à une file d'attente. Puis chaque élément de la file d'attente est ajouté à la partition courante et on ajoute également ses voisins (si ils n'ont pas déjà été assignés) à la file d'attente. La méthode avance donc par front. De la même manière que pour la méthode de la boule de Hilbert, chaque fois qu'un élément est ajouté à une partition, on s'assure que le montant d'élément dans la partition courante n'excède pas le nombre d'éléments voulu par partition.
+
+Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions: 
+
+<center>
+<img src="../images/BFS_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
+</center>
+
+quality=6.52e-2
+
+
+#### 3. BFS With Restart (BFSWR) 
+Cette méthode utilise la même logique que celle du BFS, mais lorsque qu'une partition excède le nombre d'éléments par partition voulu, la file d'attente est vidée et le prochain élément __racine__ devient le dernier élément contenu dans la file avant d'être vidée.
+
+Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions:
+
+<center>
+<img src="../images/BFSWR_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
+</center>
+
+quality=3.32e-2
+
+#### 4. Metis 

@@ -276,12 +276,18 @@ On analysera le travail dans deux configurations spécifiques et on généralise
 <ul>
 <li>
 <h4 id="déséquilibre-de-charge-par-nombre-de-sommets-"><a class="header" href="#déséquilibre-de-charge-par-nombre-de-sommets-">Déséquilibre de charge par nombre de sommets :</a></h4>
-L’algorithme de partitionnement, tel qu’il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d’opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d’étranglement.</li>
+<p>L’algorithme de partitionnement, tel qu’il est actuellement implémenté, génère des partitions déséquilibrées en termes de charge computationnelle effective.En effet, les zones identifiées comme nécessitant un travail de remaillage intense concentrent un nombre réduit de sommets par partition, mais un volume d’opérations élevé. Inversement, les partitions situées en dehors de ces zones à forte activité se retrouvent avec un nombre de sommets plus important, mais un travail de remaillage proportionnellement plus faible. Ce déséquilibre entraîne une conséquence majeure : les temps de vérification de faisabilité des opérations de remaillage sur les partitions à fort nombre de sommets deviennent supérieurs aux temps de réalisation des opérations de remaillage sur les partitions à faible nombre de sommets, créant ainsi des goulots d’étranglement.</p>
+</li>
 <li>
 <h4 id="propagation-des-opérations-de-remaillage-"><a class="header" href="#propagation-des-opérations-de-remaillage-">Propagation des opérations de remaillage :</a></h4>
-Nous avons également découvert qu’une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d’adaptation additionnelles.</li>
+<p>Nous avons également découvert qu’une métrique spécifiquement calibrée pour induire uniquement des opérations de pur raffinement (split) engendraient de nouvelles opérations de remaillage par la suite. En effet les splits effectués créent de nouveaux éléments, qui ne respectant pas forcément les conditions de qualité minimum et par conséquent qui engendrent des opérations d’adaptation additionnelles. Cela semble être également vrai si l’on prend une métrique de degrossissement.</p>
+</li>
+<li>
+<h4 id="poids-non-réalistes"><a class="header" href="#poids-non-réalistes">Poids non Réalistes</a></h4>
+<p>En plus de ne pas prendre en comtpe les opérations induites, les poids ne reflétent pas assez le coût propre à l’opération d’adaptation.</p>
+</li>
 </ul>
-<p>Ces premières observations mettent en évidence la nécessité de modifier l’algorithme d’estimation de la charge de travail de telle manière à ce qu’il prenne en compte le coût d’une opération mais également le coût induit par une telle opération ainsi que la quantité d’élément finale dans chaque partition.
+<p>Ces premières observations mettent en évidence la nécessité de modifier l’algorithme d’estimation de la charge de travail de telle manière à ce que les poids soient le reflet du coût computationnel de l’opération auquel il est associé mais également du coût computationnel des autres opérations engendrées par l’effet d’une opération d’adaptation. Il faudra également que l’algortihme prenne en compte le nombre de sommets par partition.
 \(\)</p>
 
                     </main>
