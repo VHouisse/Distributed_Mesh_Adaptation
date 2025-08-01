@@ -1,4 +1,4 @@
-# Theoritical Foundations
+# Fondations Théoriques
 
 Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux de la dynamique des fluides numérique et de l'adaptation de maillage est essentielle
 

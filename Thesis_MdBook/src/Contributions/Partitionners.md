@@ -1,4 +1,4 @@
-# Partitionners
+# Partitionneurs
 
 Comme nous l'avons vu, la quantité de données induites par la résolution des équations de la CFD ainsi que la recherche de calcul de haute performance nous pousse à utiliser plusieurs unité de calcul. Pour cela il est impératif de partitionner le maillage sous-jacent au domaine de travail. Partitionner permet de diviser le domaine en autant de sous-domaines qu'il y a de coeurs disponibles, décomposant le problème initial en N sous-problèmes.
 

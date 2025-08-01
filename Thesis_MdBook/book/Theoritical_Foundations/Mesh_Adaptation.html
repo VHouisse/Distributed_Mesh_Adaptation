@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mesh Adaptation - Distributed Mesh Adapatation</title>
+        <title>Adaptation de maillage - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -177,7 +177,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="mesh-adaptation"><a class="header" href="#mesh-adaptation">Mesh Adaptation</a></h1>
+                        <h1 id="adaptation-de-maillage"><a class="header" href="#adaptation-de-maillage">Adaptation de Maillage</a></h1>
 <p>En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d’appliquer des modifications localement dans le but d’atteindre un maillage cible, on parle alors d’adaptation. Dans les deux approches, le nouveau maillage est construit d’après une <strong>métrique</strong> issue de l’analyse d’erreur.</p>
 <p>En comparaison au remaillage, l’adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d’éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d’éléments du maillage.</p>
 <p>Par ailleurs, le remaillage rend complexe le transfert des valeurs de champ de l’ancien maillage vers le nouveau. Cette procédure nécessite des algorithmes de recherche spatiale et a tendance à s’appuyer sur des opérateurs de remappage qui sont diffusifs et/ou soumis à des exigences de conservation globale.</p>

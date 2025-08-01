@@ -1,4 +1,4 @@
-# Parallel Computing
+# Calcul Parallèle
 
 
 ## MPI

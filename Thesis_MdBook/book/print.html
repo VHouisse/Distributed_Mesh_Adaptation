@@ -198,7 +198,7 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
     <img src="Intro/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
     <img src="Intro/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="theoritical-foundations"><a class="header" href="#theoritical-foundations">Theoritical Foundations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fondations-théoriques"><a class="header" href="#fondations-théoriques">Fondations Théoriques</a></h1>
 <p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux de la dynamique des fluides numérique et de l’adaptation de maillage est essentielle</p>
 <h2 id="une-bref-rappel-du-workflow-cfd-"><a class="header" href="#une-bref-rappel-du-workflow-cfd-">Une bref rappel du WorkFlow CFD :</a></h2>
 <p>Comme indiqué lors de l’introduction la Computational Fluid Dynamics (CFD) est une discipline clé pour la simulation de phénomènes aéronautiques complexes.</p>
@@ -226,50 +226,52 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
 <p>L’analyse d’erreur, qui succède à la résolution CFD, est le moteur de l’adaptation de maillage. <br> De cette analyse découle un champ de métrique, une entité qui précise comment le maillage doit être modifié pour minimiser les erreurs sur le maillage intial. Pour bien saisir ce mécanisme, il est fondamental de comprendre ce qu’est une métrique et comment elle définit un granularité spatiale. (Voir section sur les métriques : <a href="Theoritical_Foundations/./Metrics.html">Metrics</a>) <br></p>
 <p>Une fois cette métrique cible établie, il devient nécessaire de savoir comment la traduire en actions concrètes sur le maillage. La section sur <strong>l’Adaptation de Maillage</strong> explicitera les opérations géométriques et topologiques qui transforment le maillage pour qu’il réponde aux spécifications de la métrique (voir section <a href="Theoritical_Foundations/./Mesh_Adaptation.html">Mesh Adaptation</a>)</p>
 <p>Finalement, pour que l’ensemble de ce processus d’adaptation soit viable et performant pour les applications industrielles à grande échelle, une maîtrise du Calcul Parallèle est indispensable. On expliquera certains aspects de la discipline et on montrera de quelle manière on souhaite l’utiliser dans le cadre de la thèse. (voir section <a href="Theoritical_Foundations/./Parallel_Computing.html">Parallel_Computing</a>)</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
-<h3 id="211-definition--metric"><a class="header" href="#211-definition--metric">2.1.1 Definition : Metric</a></h3>
-<p>A metric tensor \( \mathcal{M} \in \mathbb{R}^{n} \) is an \(n \times n \) symmetric definite positive matrix.<br />
-\( \mathcal{M} \) is always diagonalizable and can be decomposed as \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \) where \(\mathcal{R}\) and \(\Delta\) are the eigenvectors and the eigenvalues matrices of \(\mathcal{M}\), respectively.</p>
-<p>From this definition, it follows up that the scalar product of two vectors in \(  \mathbb{R}^n \)
-can defined related to a metric \(  \mathcal{M} \) as</p>
-<p>\[  &lt;\textbf{u},\textbf{v}&gt;_{\mathcal{M}} = &lt;\textbf{u},\mathcal{M}\textbf{v} &gt; = {^t}\textbf{u}\mathcal{M}\textbf{v}\]</p>
-<p>Under this notion, the Euclidean norm of a vector \(  \textbf{u}  \text{ in } \mathbb{R}^n\) according to \(  \mathcal{M}\) is defined as</p>
-<p>\[ \left| \textbf{u} \right| = \sqrt{&lt;\textbf{u},\textbf{u} &gt;_{\mathcal{M}} } = \sqrt{  \textbf{u}^{t} \mathcal{M} \textbf{u} } \]</p>
-<p>This formula allows us to measure the length of a vector \(\textbf{u}\) with repsect to a certain metric \( \mathcal{M}\).</p>
-<p>A metric \(\mathcal{M}\) can be geometrically represented by its associated unit ball, defined by</p>
-<p>\( \xi _{M} ={ p | \sqrt{ \textbf{op}^{t} \mathcal{M} \textbf{op} }=1|  } \)</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="métrique"><a class="header" href="#métrique">Métrique</a></h1>
+<h3 id="211-définition--métrique"><a class="header" href="#211-définition--métrique">2.1.1 Définition : Métrique</a></h3>
+<p>Un <strong>tenseur métrique</strong> \( \mathcal{M} \in \mathbb{R}^{n} \) est une matrice \( n \times n \) symétrique définie positive.
+\( \mathcal{M} \) est toujours diagonalisable et peut être décomposée comme \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \), où \( \mathcal{R} \) et \( \Delta \) sont respectivement les matrices des vecteurs propres et des valeurs propres de \( \mathcal{M} \).</p>
+<p>De cette définition, il s’ensuit que le <strong>produit scalaire</strong> de deux vecteurs dans \( \mathbb{R}^n \) peut être défini par rapport à une métrique \( \mathcal{M} \) comme suit :</p>
+<p>\[ &lt;\textbf{u},\textbf{v}&gt;_{\mathcal{M}} = &lt;\textbf{u},\mathcal{M}\textbf{v} &gt; = {^t}\textbf{u}\mathcal{M}\textbf{v} \]</p>
+<p>Dans ce cadre, la <strong>norme euclidienne</strong> d’un vecteur \( \textbf{u} \text{ dans } \mathbb{R}^n \) selon \( \mathcal{M} \) est définie comme :</p>
+<p>\[ \left| \textbf{u} \right| = \sqrt{&lt;\textbf{u},\textbf{u} &gt;_{\mathcal{M}} } = \sqrt{ \textbf{u}^{t} \mathcal{M} \textbf{u} } \]</p>
+<p>Cette formule nous permet de mesurer la longueur d’un vecteur \( \textbf{u} \) par rapport à une certaine métrique \( \mathcal{M} \).</p>
+<p>Une métrique \( \mathcal{M} \) peut être représentée géométriquement par sa <strong>boule unité</strong> associée, définie par :</p>
+<p>\( \xi _{M} ={ p | \sqrt{ \textbf{op}^{t} \mathcal{M} \textbf{op} }=1| } \)</p>
 <p><br><br></p>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/Metric_1.png" alt="Anisotropic metric tensor" width="90%">
-  <figcaption>Figure 1: Metric Unit Ball </figcaption>
+  <img src="Theoritical_Foundations/../images/Metric_1.png" alt="Tenseur métrique anisotrope" width="90%">
+  <figcaption>Figure 1: Boule unité métrique</figcaption>
 </figure>
-<h3 id="212-definition--euclidean-metric-space"><a class="header" href="#212-definition--euclidean-metric-space">2.1.2 Definition : Euclidean Metric Space</a></h3>
-<p>An Euclidean metric space is a vector space supplied with a certain scalar product \(&lt;.,.&gt;_{\mathcal{M}}\) defined by a metric tensor \(\mathcal{M}\). We denote it \( (\mathbb{R}^n, \mathcal{M} ) \).<br />
-The distance between two point \(\textbf{p}\) and \(\textbf{q}\) is given by:</p>
-<p>\[  d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{  \textbf{pq}^{t} \mathcal{M} \textbf{pq} }  \]</p>
-<p>Finaly the lenght of a segment \( \textbf{pq} \) is the distance between its extremities</p>
-<p>\(    \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = d_{ \mathcal{M} } ( \textbf{p},\textbf{q} )  \).</p>
-<h3 id="213-remark"><a class="header" href="#213-remark">2.1.3 Remark</a></h3>
-<p>If the Metric defining the scalar product is the identity matrix, \( \mathcal{M} = \mathbb{I} _{n} \) then we get the standart Euclidean space \( ( \mathbb{R}^n , \mathbb{I} _{n} )\) supplpied with the natural dot product \(\).</p>
+<h3 id="212-définition--espace-métrique-euclidien"><a class="header" href="#212-définition--espace-métrique-euclidien">2.1.2 Définition : Espace métrique euclidien</a></h3>
+<p>Un <strong>espace métrique euclidien</strong> est un espace vectoriel muni d’un certain produit scalaire \( &lt;.,.&gt;_{\mathcal{M}} \) défini par un tenseur métrique \( \mathcal{M} \). On le note \( ( \mathbb{R}^n, \mathcal{M} ) \).
+La <strong>distance</strong> entre deux points \( \textbf{p} \) et \( \textbf{q} \) est donnée par :</p>
+<p>\[ d_{ \mathcal{M} }( \textbf{p},\textbf{q} ) = \sqrt{ \textbf{pq}^{t} \mathcal{M} \textbf{pq} } \]</p>
+<p>Enfin, la <strong>longueur</strong> d’un segment \( \textbf{pq} \) est la distance entre ses extrémités :</p>
+<p>\[ \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = d_{ \mathcal{M} } ( \textbf{p},\textbf{q} ) \]</p>
+<h3 id="213-remarque"><a class="header" href="#213-remarque">2.1.3 Remarque</a></h3>
+<p>Si la métrique définissant le produit scalaire est la matrice identité, \( \mathcal{M} = \mathbb{I} _{n} \), alors nous obtenons l’<strong>espace euclidien</strong> standard \( ( \mathbb{R}^n , \mathbb{I} _{n} ) \) muni du produit scalaire naturel.</p>
 <p><br><br></p>
-<p>It is then possible to define volumes and angles in an Euclidean metric space. Let K be a bounded subset of \( \mathbb{R}^n \), the volume of an element K in metric \( \mathcal{M} \) is:</p>
-<p>\( |K| _{ \mathcal{M} }  = \int _{K} \sqrt{det( \mathcal{M} )} |K| _{ \mathbb{I} _{n}} \)</p>
-<p>The angle between two vectors \(  \textbf{u} \) and \( \textbf{v} \) is define by the unique real \( \theta \in [ 0 , \pi ] \) such that</p>
-<p>\[ cos(\theta) = \frac{ &lt;\textbf{u} , \textbf{v} &gt; _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}}  ||\textbf{v}|| _{\mathcal{M}}}\]</p>
-<h3 id="214-definition--riemmanian-metric-space"><a class="header" href="#214-definition--riemmanian-metric-space">2.1.4 Definition : Riemmanian Metric Space</a></h3>
-<p>A \( \textit{Riemmanian}\) metric space is a continuous manifold \( \Omega \subset \mathbb{R}^n  \) supplied with a smooth metric \( \mathcal{M}(.) \). We denote it by \(  \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
-<p>Contrary to the Euclidean metric space case, the distance between two points, i.e., the shortest path, is no more the straight line but it is given by a geodesic. Nevertheless, in the context of mesh generation or mesh adaptation, we rae not interested in the distance between two points but in the lenght of a path fiven by an edge of the mesh.
-More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), the length of an edge \( \textbf{pq} \) is calculated using the straight line parametrization \( \gamma(t) = \textbf{p} + t \textbf{pq}, \ t \in [0,1]  \) :</p>
-<p>\[  \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) =  \int_{0}^{1} || \gamma (t) || \ dt = \int_{0}^{1} \sqrt{\textbf{pq}^t \mathcal{M}(\textbf{p}+t\textbf{pq})\textbf{pq}} \ dt \]</p>
+<p>Il est alors possible de définir des <strong>volumes</strong> et des <strong>angles</strong> dans un espace métrique euclidien. Soit K un sous-ensemble borné de \( \mathbb{R}^n \), le volume d’un élément K dans la métrique \( \mathcal{M} \) est :</p>
+<p>\[ |K| _{ \mathcal{M} } = \int _{K} \sqrt{det( \mathcal{M} )} |K| _{ \mathbb{I} _{n}} \]</p>
+<p>L’<strong>angle</strong> entre deux vecteurs \( \textbf{u} \) et \( \textbf{v} \) est défini par l’unique réel \( \theta \in [ 0 , \pi ] \) tel que :</p>
+<p>\[ cos(\theta) = \frac{ &lt;\textbf{u} , \textbf{v} &gt; _{\mathcal{M}} }{||\textbf{u}|| _{\mathcal{M}} ||\textbf{v}|| _{\mathcal{M}}} \]</p>
+<h3 id="214-définition--espace-métrique-riemannien"><a class="header" href="#214-définition--espace-métrique-riemannien">2.1.4 Définition : Espace métrique riemannien</a></h3>
+<p>Un <strong>espace métrique riemannien</strong> est une variété continue \( \Omega \subset \mathbb{R}^n \) munie d’une métrique lisse \( \mathcal{M}(.) \). On le note par \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \).</p>
+<p>Contrairement au cas de l’espace métrique euclidien, la distance entre deux points, c’est-à-dire le chemin le plus court, n’est plus la ligne droite, mais est donnée par une <strong>géodésique</strong>. Néanmoins, dans le contexte de la génération ou de l’adaptation de maillage, nous ne sommes pas intéressés par la distance entre deux points, mais par la longueur d’un chemin donné par une arête du maillage.
+Plus précisément, dans un espace métrique riemannien \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), la longueur d’une arête \( \textbf{pq} \) est calculée en utilisant la paramétrisation en ligne droite \( \gamma(t) = \textbf{p} + t \textbf{pq}, t \in [0,1] \) :</p>
+<p>\[ \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = \int_{0}^{1} || \gamma (t) || \ dt = \int_{0}^{1} \sqrt{\textbf{pq}^t \mathcal{M}(\textbf{p}+t\textbf{pq})\textbf{pq}} \ dt \]</p>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/Riemmanian.png" alt="Isovalues of the fonction f(x) = lm(ox) for different Spaces" width="90%">
-  <figcaption> \( \textbf{Figure 2:} \)  Isovalues of the fonction \( f(x) = \mathcal{L}_m (ox) \) for different spaces.<br> 
-  Left, the standard Euclidean Space \(([-1,1]*[-1,1], \mathbb{I} _{2} ) \)<br>
-  Midlle, an Euclidean metric Space \(([-1,1]*[-1,1], \mathcal{M} ) \)<br>
-  Right, a Riemmanian Metric Space \( (\mathcal{M}(x))_{x \in [-1,1]^2}\) </figcaption>
+  <img src="Theoritical_Foundations/../images/Riemmanian.png" alt="Isovaleurs de la fonction f(x) = Lm(ox) pour différents espaces" width="90%">
+  <figcaption> \\( \textbf{Figure 2:} \\) Isovaleurs de la fonction \\( f(x) = \mathcal{L}_m (ox) \\) pour différents espaces.
+  <br>
+  À gauche, l'espace euclidien standard \\( ([-1,1]*[-1,1], \mathbb{I} _{2} ) \\)
+  <br>
+  Au milieu, un espace métrique euclidien \\( ([-1,1]*[-1,1], \mathcal{M} ) \\)
+  <br>
+  À droite, un espace métrique riemannien \\( (\mathcal{M}(x))_{x \in [-1,1]^2} \\) </figcaption>
 </figure>
-<h3 id="todo-operations-on-metric--intersection--interpolation--gradation-etc-"><a class="header" href="#todo-operations-on-metric--intersection--interpolation--gradation-etc-">TODO Operations on Metric / Intersection / Interpolation / Gradation etc …</a></h3>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="mesh-adaptation"><a class="header" href="#mesh-adaptation">Mesh Adaptation</a></h1>
+<h3 id="todo-opérations-sur-la-métrique--intersection--interpolation--gradation-etc"><a class="header" href="#todo-opérations-sur-la-métrique--intersection--interpolation--gradation-etc">TODO Opérations sur la métrique / Intersection / Interpolation / Gradation etc…</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="adaptation-de-maillage"><a class="header" href="#adaptation-de-maillage">Adaptation de Maillage</a></h1>
 <p>En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d’appliquer des modifications localement dans le but d’atteindre un maillage cible, on parle alors d’adaptation. Dans les deux approches, le nouveau maillage est construit d’après une <strong>métrique</strong> issue de l’analyse d’erreur.</p>
 <p>En comparaison au remaillage, l’adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d’éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d’éléments du maillage.</p>
 <p>Par ailleurs, le remaillage rend complexe le transfert des valeurs de champ de l’ancien maillage vers le nouveau. Cette procédure nécessite des algorithmes de recherche spatiale et a tendance à s’appuyer sur des opérateurs de remappage qui sont diffusifs et/ou soumis à des exigences de conservation globale.</p>
@@ -293,10 +295,10 @@ More precisely, in a Riemmanian metric space \( \mathcal{M}(\textbf{x}) _{x \in 
 <p>Collapse</p>
 <h3 id="definition--smooth"><a class="header" href="#definition--smooth">Definition : Smooth</a></h3>
 <p>Smooth</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="parallel-computing"><a class="header" href="#parallel-computing">Parallel Computing</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="calcul-parallèle"><a class="header" href="#calcul-parallèle">Calcul Parallèle</a></h1>
 <h2 id="mpi"><a class="header" href="#mpi">MPI</a></h2>
 <h2 id="rayon"><a class="header" href="#rayon">RAYON</a></h2>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="work-environnement"><a class="header" href="#work-environnement">Work Environnement</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="environnement-de-travail"><a class="header" href="#environnement-de-travail">Environnement de travail</a></h1>
 <p>La mise en oeuvre des concepts théoriques de l’adaptation de maillage anisotrope dans un envrionnement de calcul massivement parallèle nécessite un écosystème précis.
 Cette section détaille les composants clés de notre environnement de travail. N
 ous y présenterons Tucanos, l’outil d’adaptation de maillage interne (développé chez Airbus par Xavier Garnaud et Jerome Robert ) qui constitute la base de nos recherches et développements, le cluster de calcul HPC,le logiciel de visualisation Paraview, la plateforme Mdbook utilisée pour cette documentation ainsi que l’équipe d’encadrement et le planning prévisionnel de la thèse.</p>
@@ -321,7 +323,7 @@ ous y présenterons Tucanos, l’outil d’adaptation de maillage interne (déve
 <br>
 <center>
 <img src="Work_Environnement/../images/Tucanos.png" alt="Logo Tucanos" width="40%">
-<center><div style="break-before: page; page-break-before: always;"></div><h1 id="tools"><a class="header" href="#tools">Tools</a></h1>
+<center><div style="break-before: page; page-break-before: always;"></div><h1 id="outils-utilisés"><a class="header" href="#outils-utilisés">Outils Utilisés</a></h1>
 <h3 id="lenvironnement-hpc"><a class="header" href="#lenvironnement-hpc">L’environnement HPC</a></h3>
 <p>Mes travaux de thèse sont ancrés au sein d’un cluster de calcul haute performantce (HPC). Cet environnement possède une architecture robuste conçue pour répondre aux exigences des calculs massifs liés aux activités d’ingénierie AIRBUS. L’environnement est composé de noeuds de calcul optimisé en terme de puissance et de mémoire.
 La machine utilisée est composée de deux types de noeuds calcul :</p>
@@ -427,8 +429,8 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
     <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
     <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="first-explorations--contribution"><a class="header" href="#first-explorations--contribution">First Explorations &amp; Contribution</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="partitionners"><a class="header" href="#partitionners">Partitionners</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="recherche--premiers-résultats"><a class="header" href="#recherche--premiers-résultats">Recherche &amp; Premiers Résultats</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="partitionneurs"><a class="header" href="#partitionneurs">Partitionneurs</a></h1>
 <p>Comme nous l’avons vu, la quantité de données induites par la résolution des équations de la CFD ainsi que la recherche de calcul de haute performance nous pousse à utiliser plusieurs unité de calcul. Pour cela il est impératif de partitionner le maillage sous-jacent au domaine de travail. Partitionner permet de diviser le domaine en autant de sous-domaines qu’il y a de coeurs disponibles, décomposant le problème initial en N sous-problèmes.</p>
 <p>Un bon partitionnement repose sur trois critères essentiels :</p>
 <p>Reduction des interdépendances : Minimiser les arêtes ou faces partagées entre les sous-domaines afin de limiter les communications coûteuses entre les unités de calcul.</p>
@@ -587,7 +589,7 @@ On analysera le travail dans deux configurations spécifiques et on généralise
 <p>Ces premières observations mettent en évidence la nécessité de modifier l’algorithme d’estimation de la charge de travail de telle manière à ce que les poids soient le reflet du coût computationnel de l’opération auquel il est associé mais également du coût computationnel des autres opérations engendrées par l’effet d’une opération d’adaptation. Il faudra également que l’algortihme prenne en compte le nombre de sommets par partition.
 \(\)</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-and-references"><a class="header" href="#appendix-and-references">Appendix and References</a></h1>
-<p>To further support the understanding of this research, this section provides essential complementary information and a comprehensive list of references that have been instrumental to our work.</p>
+<p>Afin de faciliter la compréhension de cette recherche, cette section fournit des informations complémentaires essentielles ainsi qu’une liste exhaustive des références qui ont été déterminantes pour notre travail.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="references"><a class="header" href="#references">References</a></h1>
 <ul>
 <li>

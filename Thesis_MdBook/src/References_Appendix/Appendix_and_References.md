@@ -1,2 +1,2 @@
 # Appendix and References
-To further support the understanding of this research, this section provides essential complementary information and a comprehensive list of references that have been instrumental to our work.
+Afin de faciliter la compréhension de cette recherche, cette section fournit des informations complémentaires essentielles ainsi qu'une liste exhaustive des références qui ont été déterminantes pour notre travail.

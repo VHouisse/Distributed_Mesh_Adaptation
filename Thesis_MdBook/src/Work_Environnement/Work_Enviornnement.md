@@ -1,4 +1,4 @@
-# Work Environnement
+# Environnement de travail 
 
 La mise en oeuvre des concepts théoriques de l'adaptation de maillage anisotrope dans un envrionnement de calcul massivement parallèle nécessite un écosystème précis.
 Cette section détaille les composants clés de notre environnement de travail. N
