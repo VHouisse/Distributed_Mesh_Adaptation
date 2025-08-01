@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - Distributed Mesh Adapatation</title>
-        <base href="/">
+        <title>Adaptation de maillage - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -13,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -36,13 +35,13 @@
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "rust";
             const default_dark_theme = "rust";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -109,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -144,7 +143,7 @@
                     <h1 class="menu-title">Distributed Mesh Adapatation</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -178,14 +177,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="adaptation-de-maillage"><a class="header" href="#adaptation-de-maillage">Adaptation de Maillage</a></h1>
+<p>En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d’appliquer des modifications localement dans le but d’atteindre un maillage cible, on parle alors d’adaptation. Dans les deux approches, le nouveau maillage est construit d’après une <strong>métrique</strong> issue de l’analyse d’erreur.</p>
+<p>En comparaison au remaillage, l’adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d’éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d’éléments du maillage.</p>
+<p>Par ailleurs, le remaillage rend complexe le transfert des valeurs de champ de l’ancien maillage vers le nouveau. Cette procédure nécessite des algorithmes de recherche spatiale et a tendance à s’appuyer sur des opérateurs de remappage qui sont diffusifs et/ou soumis à des exigences de conservation globale.</p>
+<p>L’adaptation quant à elle permet une exécution locale du transfert de solution. Le raffinement divise les entités parentes et est capable de transférer la solution de manière exacte en utilisant l’interpolation par fonctions de forme. De plus, les autres opérations sont confinées à une cavité locale, ce qui rend toute recherche rapid et les effets diffusifs ainsi que les ajustements de conservation sont localisés.</p>
+<p>Nous nous concentrerons sur le processus d’adaptation de maillage puisqu’il semble que ce dernier possède plus d’avantages que le remaillage total.</p>
+<p>On rapelle donc que l’objectif ultime de l’adaptation de maillage (que ce soit par remaillage ou par des opérations d’adaptation locale) est de garantir que le maillage, après modification, se conforme aussi étroitement que possible au champ de métrique cible dérivé de l’analyse d’erreur.</p>
+<p>Soit \(\mathcal{M}(x)_{x \in \Omega }\) un espace métrique riemannien. L’objectif est de générer un maillage  \(\mathcal{H} \)  pour lequel chaque longueur d’arête est unitaire dans la métrique associée et chaque élément est régulier :</p>
+<p>\[   \forall \textbf{e} \in \mathcal{H} , \ \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
+<p>Comme les éléments réguliers ne peuvent pas remplir entièrement le domaine \( \Omega \), l’adaptation de maillage ne peut créer que des maillages quasi-uniformes, c’est-à-dire des éléments de maillage qui sont presque unitaires dans l’espace riemannien. Pour quantifier l’écart à l’unité, différents outils peuvent être utilisés, dont  par exemple, une fonction de qualité d’élément :</p>
+<p>\[ Q_\mathcal{M} = … \]</p>
+<p>On a vu que la taille de la boule unité associée à la métrique \(\mathcal{M}\) dans la direction de son \(i^{\textbf{ème}}\) vecteur propre est donnée par \( h_i = \lambda_i^{-1\setminus2} \). Ainsi on peut déduire que la taille voulue dans la direction \(\textbf{e}\) est :</p>
+<p>\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\]</p>
+<p>Pour atteindre le maillage conformément à la métrique donnée plusieurs opérations de remaillage sont utilisées.</p>
+<h3 id="definition--cavité"><a class="header" href="#definition--cavité">Definition : Cavité</a></h3>
+<p>Définition de la cavité</p>
+<h3 id="definition--swap"><a class="header" href="#definition--swap">Definition : Swap</a></h3>
+<p>Swap</p>
+<h3 id="definition--split"><a class="header" href="#definition--split">Definition : Split</a></h3>
+<p>Split</p>
+<h3 id="definition--collapse"><a class="header" href="#definition--collapse">Definition : Collapse</a></h3>
+<p>Collapse</p>
+<h3 id="definition--smooth"><a class="header" href="#definition--smooth">Definition : Smooth</a></h3>
+<p>Smooth</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../Theoritical_Foundations/Metrics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../Theoritical_Foundations/Parallel_Computing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -193,7 +220,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../Theoritical_Foundations/Metrics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../Theoritical_Foundations/Parallel_Computing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -206,13 +239,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
