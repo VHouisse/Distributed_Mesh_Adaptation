@@ -67,4 +67,54 @@ Plus précisément, dans un espace métrique riemannien \\( \mathcal{M}(\textbf{
   À droite, un espace métrique riemannien \\( (\mathcal{M}(x))_{x \in [-1,1]^2} \\) </figcaption>
 </figure>
 
-### TODO Opérations sur la métrique / Intersection / Interpolation / Gradation etc...
+
+
+## Opérations sur les Métriques 
+Construire une métrique qui soit adaptée au remaillage peut nécesiter de combiner des informations provenant de différentes sources et/ou d'imposer des contraintes, comme par exemple une longueur d'arête minimale/maximale, une variation des métriques au sein du maillage controlée ... Pour cela, il est important de définir les différentes opérations mahématiques qu'il est possible d'effectuer sur les métriques. 
+
+### Intersection de Métrique : 
+Soient deux métriques \\( \mathcal{M}_ 1 \\) et \\( \mathcal{M}_ 2 \\), l'intersection \\( \mathcal{M}_ {1 \cap 2}\\) correspond à une métrique qui impose les plus grand tailles dans toutes directions qui restent plus petites que celles imposées par  \\(\mathcal M_1\\) et \\(\mathcal M_2\\). Géométriquement, la métrique intersection \\( \mathcal{M}_ {1 \cap 2}\\) a comme ellipse associée la plus grande ellipse contenue dans l'intersection des ellipse de \\( \mathcal{M}_ 1 \\) et \\( \mathcal{M}_ 2 \\).
+\\[ \mathcal M_{1 \cap 2} = \arg \min \{ \det (\mathcal M) |  \mathcal M \in \mathcal S^+ t.q. \mathcal M\ge \mathcal M_1, \mathcal M\ge \mathcal M_2\} \\] 
+
+
+<figure style="text-align: center;">
+  <img src="../images/Intersection.png" alt="Isovaleurs de la fonction f(x) = Lm(ox) pour différents espaces" width="90%">
+  <figcaption>  $$ \text{Intersection de deux métriques, en rouge la métrique intersectee  } \mathcal{M}_{1 \cap 2}$$. </figcaption>
+</figure>
+
+Le calcul d'intersection est réalisé comme suit :
+
+soit \\( P = (e_0 | ... | e_d) \\) les vecteurs propres généralisés de \\( (M_0, M_1) \\) :
+
+\\[ \mathcal M_0 \mathcal P = \Lambda \mathcal M_1 \mathcal P \\]
+
+alors
+
+\\[ \mathcal M_i = \mathcal P^{-1, T} \Lambda^{(i)} \mathcal P^{(-1)} \\]
+
+avec \\( \Lambda^{(i)}{jk} = e_j^T \mathcal M_i e_k \delta_{jk} \\).
+
+L'intersection est alors
+
+\\[ \mathcal M_0 \cap \mathcal M_1 = \mathcal P^{-1, T} \Lambda^{(i,j)} \mathcal P^{-1} \\]
+
+avec \\( \Lambda^{(i,j)}{jk} = \max(\Lambda^{(i)}{jk}, \Lambda^{(j)}_{jk}) \\)
+
+
+## Graduation de la métrique
+
+Il est parfois souhaitable de contrôler l'évolution des longueurs d'arêtes d'un élément à l'autre. Cette idée peut être traduite en contraintes sur la variation du champ de métrique. (voir *Size gradation control of anisotropic meshes*, F. Alauzet, 2010 [pdf](https://pages.saclay.inria.fr/frederic.alauzet/download/Alauzet_Size%20gradation%20control%20of%20anisotropic%20meshes.pdf)), résumée comme suit :
+
+* La graduation sur une arête \\( \mathbf e_{i,j} = \mathbf x_j - \mathbf x_i \\) est (avec \\( a = l_{\mathcal M_i} (\mathbf e_{i,j}) / l_{\mathcal M_j} (\mathbf e_{i,j}) \\) )
+\\[ \max\left(a, \frac{1}{a} \right)^\frac{1}{l_\mathcal M(\mathbf e_{i,j})} \\]
+
+* Étant donné une métrique \\( \mathcal M(\mathbf x) = R^T \ diag(s_1^2, \cdots s_d^2) \ R \\), il est possible de propager un champ en n'importe quelle position \\( \mathbf y \\) comme
+\\[ \mathcal M_s(\mathbf x, \mathbf y) = R^T \  diag(\eta_1^2 s_1^2, \cdots \eta_d^2s_d^2) \  R \\]
+avec \\( \eta_i = 1 + s_i \|\mathbf y - \mathbf x\|_2\log(\beta) \\) de sorte que la graduation le long de \\( \mathbf y - \mathbf x \\) soit \\( \beta \\).
+
+* En pratique, une graduation maximale est imposée le long d'une arête \\( \mathbf e_{i,j} = \mathbf x_j - \mathbf x_i \\), en modifiant \\( \mathcal M_j \\) en
+\\[ \widetilde{\mathcal M_j} = \mathcal M_j \cap \mathcal M_s(\mathbf x_i, \mathbf x_j) \\]
+et
+\\[ \widetilde{\mathcal M_i} = \mathcal M_i \cap \mathcal M_s(\mathbf x_j, \mathbf x_i) \\]
+
+* Atteindre une graduation maximale sur toutes les arêtes du maillage nécessiterait \\( \^2 \\) opérations ; en pratique, l'opération ci-dessus n'est appliquée qu'un petit nombre de fois sur l'ensemble des arêtes du maillage.

@@ -190,17 +190,51 @@
 <p>\[ Q_\mathcal{M} = … \]</p>
 <p>On a vu que la taille de la boule unité associée à la métrique \(\mathcal{M}\) dans la direction de son \(i^{\textbf{ème}}\) vecteur propre est donnée par \( h_i = \lambda_i^{-1\setminus2} \). Ainsi on peut déduire que la taille voulue dans la direction \(\textbf{e}\) est :</p>
 <p>\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\]</p>
-<p>Pour atteindre le maillage conformément à la métrique donnée plusieurs opérations de remaillage sont utilisées.</p>
+<p>Après adaptation du maillage l’idée est donc d’obtenir des arêtes qui sont de taille unitaire pour leur champ de métrique associé, tout en garantissant la meilleure qualité possible des éléments. Pour cela , plusieurs opérations d’adaptation sont utilisées en vérifiant après chaque modification la validité topologique de l’adaptation. Voici les différentes opérations utilisées :</p>
 <h3 id="definition--cavité"><a class="header" href="#definition--cavité">Definition : Cavité</a></h3>
-<p>Définition de la cavité</p>
+<p>Etant donné une entité de maillage \( e \) (un sommet ou une arête dans le cas présent), la cavité \( \mathcal{C}(e) \) est l’ensemble des éléments de maillage qui contiennent l’entité \( e \).</p>
+<p>Une cavité \( \mathcal{C}(e) \) peut être remplie à partir d’un sommet \( \mathbf v \) comme l’ensemble des éléments créés à partir de \( \mathbf v \) et des faces de la frontière de la cavité \( \partial \mathcal{C}(e) \) (orientées vers l’extérieur).</p>
+<p>\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \]</p>
 <h3 id="definition--swap"><a class="header" href="#definition--swap">Definition : Swap</a></h3>
-<p>Swap</p>
+<figure style="text-align: center;">
+  <img src="../images/swap.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>swap</strong> operation aims at improving the quality of the elements.</p>
+<p>It can however introduce</p>
+<ul>
+<li>“long” or “short” edges</li>
+<li>a poor representation of the geometry that will be difficult to recovered later</li>
+<li>inconsistent tagging</li>
+</ul>
+<p>These 3 criteria have to be assessed to determine if a <strong>swap</strong> operation is accepted or not</p>
 <h3 id="definition--split"><a class="header" href="#definition--split">Definition : Split</a></h3>
-<p>Split</p>
+<figure style="text-align: center;">
+  <img src="../images/split.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>split</strong> operations aims at splitting “long” edges. It is applied to edges whose length
+(in metric space) is larger than \(l_0 &gt; \sqrt{2}\).</p>
+<p>It can however introduce</p>
+<ul>
+<li>“short” edges</li>
+<li>element of low quality (including invalid elements)</li>
+</ul>
+<p>These 2 criteria have to be assessed to determine if a <strong>split</strong> operation is accepted or not</p>
+<p>When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.</p>
 <h3 id="definition--collapse"><a class="header" href="#definition--collapse">Definition : Collapse</a></h3>
-<p>Collapse</p>
+<figure style="text-align: center;">
+  <img src="../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>collapse</strong> operation aims at removing “small” edges. It is applied to edges whose length (in metric space) is smaller than \( l_0 &lt; 1/\sqrt{2} \).</p>
+<p>It can however introduce</p>
+<ul>
+<li>“long” edges</li>
+<li>element of low quality (including invalid elements)</li>
+<li>a poor representation of the geometry that will be difficult to recovered later</li>
+</ul>
+<p>These 3 criteria have to be assessed to determine if a <strong>collapse</strong> operation is accepted or not</p>
 <h3 id="definition--smooth"><a class="header" href="#definition--smooth">Definition : Smooth</a></h3>
-<p>Smooth</p>
+<p>The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.</p>
+<p>In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity or one of its children are considered for smoothing. A projection step is still required for boundary vertices to ensure the consistency with the CAD model.</p>
 
                     </main>
 

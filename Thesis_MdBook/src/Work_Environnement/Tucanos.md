@@ -9,5 +9,5 @@ You can find more information and the source code for Tucanos on its official Gi
 <br>
 
 <center>
-<img src="../images/Tucanos.png" alt="Logo Tucanos" width="40%">
+<img src="../images/tucano.svg" alt="Logo Tucanos" width="30%">
 <center>

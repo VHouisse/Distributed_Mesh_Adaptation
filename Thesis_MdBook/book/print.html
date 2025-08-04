@@ -270,7 +270,46 @@ Plus précisément, dans un espace métrique riemannien \( \mathcal{M}(\textbf{x
   <br>
   À droite, un espace métrique riemannien \\( (\mathcal{M}(x))_{x \in [-1,1]^2} \\) </figcaption>
 </figure>
-<h3 id="todo-opérations-sur-la-métrique--intersection--interpolation--gradation-etc"><a class="header" href="#todo-opérations-sur-la-métrique--intersection--interpolation--gradation-etc">TODO Opérations sur la métrique / Intersection / Interpolation / Gradation etc…</a></h3>
+<h2 id="opérations-sur-les-métriques"><a class="header" href="#opérations-sur-les-métriques">Opérations sur les Métriques</a></h2>
+<p>Construire une métrique qui soit adaptée au remaillage peut nécesiter de combiner des informations provenant de différentes sources et/ou d’imposer des contraintes, comme par exemple une longueur d’arête minimale/maximale, une variation des métriques au sein du maillage controlée … Pour cela, il est important de définir les différentes opérations mahématiques qu’il est possible d’effectuer sur les métriques.</p>
+<h3 id="intersection-de-métrique-"><a class="header" href="#intersection-de-métrique-">Intersection de Métrique :</a></h3>
+<p>Soient deux métriques \( \mathcal{M}_ 1 \) et \( \mathcal{M}_ 2 \), l’intersection \( \mathcal{M}_ {1 \cap 2}\) correspond à une métrique qui impose les plus grand tailles dans toutes directions qui restent plus petites que celles imposées par  \(\mathcal M_1\) et \(\mathcal M_2\). Géométriquement, la métrique intersection \( \mathcal{M}_ {1 \cap 2}\) a comme ellipse associée la plus grande ellipse contenue dans l’intersection des ellipse de \( \mathcal{M}_ 1 \) et \( \mathcal{M}_ 2 \).
+\[ \mathcal M_{1 \cap 2} = \arg \min { \det (\mathcal M) |  \mathcal M \in \mathcal S^+ t.q. \mathcal M\ge \mathcal M_1, \mathcal M\ge \mathcal M_2} \]</p>
+<figure style="text-align: center;">
+  <img src="Theoritical_Foundations/../images/Intersection.png" alt="Isovaleurs de la fonction f(x) = Lm(ox) pour différents espaces" width="90%">
+  <figcaption>  $$ \text{Intersection de deux métriques, en rouge la métrique intersectee  } \mathcal{M}_{1 \cap 2}$$. </figcaption>
+</figure>
+<p>Le calcul d’intersection est réalisé comme suit :</p>
+<p>soit \( P = (e_0 | … | e_d) \) les vecteurs propres généralisés de \( (M_0, M_1) \) :</p>
+<p>\[ \mathcal M_0 \mathcal P = \Lambda \mathcal M_1 \mathcal P \]</p>
+<p>alors</p>
+<p>\[ \mathcal M_i = \mathcal P^{-1, T} \Lambda^{(i)} \mathcal P^{(-1)} \]</p>
+<p>avec \( \Lambda^{(i)}{jk} = e_j^T \mathcal M_i e_k \delta_{jk} \).</p>
+<p>L’intersection est alors</p>
+<p>\[ \mathcal M_0 \cap \mathcal M_1 = \mathcal P^{-1, T} \Lambda^{(i,j)} \mathcal P^{-1} \]</p>
+<p>avec \( \Lambda^{(i,j)}{jk} = \max(\Lambda^{(i)}{jk}, \Lambda^{(j)}_{jk}) \)</p>
+<h2 id="graduation-de-la-métrique"><a class="header" href="#graduation-de-la-métrique">Graduation de la métrique</a></h2>
+<p>Il est parfois souhaitable de contrôler l’évolution des longueurs d’arêtes d’un élément à l’autre. Cette idée peut être traduite en contraintes sur la variation du champ de métrique. (voir <em>Size gradation control of anisotropic meshes</em>, F. Alauzet, 2010 <a href="https://pages.saclay.inria.fr/frederic.alauzet/download/Alauzet_Size%20gradation%20control%20of%20anisotropic%20meshes.pdf">pdf</a>), résumée comme suit :</p>
+<ul>
+<li>
+<p>La graduation sur une arête \( \mathbf e_{i,j} = \mathbf x_j - \mathbf x_i \) est (avec \( a = l_{\mathcal M_i} (\mathbf e_{i,j}) / l_{\mathcal M_j} (\mathbf e_{i,j}) \) )
+\[ \max\left(a, \frac{1}{a} \right)^\frac{1}{l_\mathcal M(\mathbf e_{i,j})} \]</p>
+</li>
+<li>
+<p>Étant donné une métrique \( \mathcal M(\mathbf x) = R^T \ diag(s_1^2, \cdots s_d^2) \ R \), il est possible de propager un champ en n’importe quelle position \( \mathbf y \) comme
+\[ \mathcal M_s(\mathbf x, \mathbf y) = R^T \  diag(\eta_1^2 s_1^2, \cdots \eta_d^2s_d^2) \  R \]
+avec \( \eta_i = 1 + s_i |\mathbf y - \mathbf x|_2\log(\beta) \) de sorte que la graduation le long de \( \mathbf y - \mathbf x \) soit \( \beta \).</p>
+</li>
+<li>
+<p>En pratique, une graduation maximale est imposée le long d’une arête \( \mathbf e_{i,j} = \mathbf x_j - \mathbf x_i \), en modifiant \( \mathcal M_j \) en
+\[ \widetilde{\mathcal M_j} = \mathcal M_j \cap \mathcal M_s(\mathbf x_i, \mathbf x_j) \]
+et
+\[ \widetilde{\mathcal M_i} = \mathcal M_i \cap \mathcal M_s(\mathbf x_j, \mathbf x_i) \]</p>
+</li>
+<li>
+<p>Atteindre une graduation maximale sur toutes les arêtes du maillage nécessiterait \( ^2 \) opérations ; en pratique, l’opération ci-dessus n’est appliquée qu’un petit nombre de fois sur l’ensemble des arêtes du maillage.</p>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="adaptation-de-maillage"><a class="header" href="#adaptation-de-maillage">Adaptation de Maillage</a></h1>
 <p>En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d’appliquer des modifications localement dans le but d’atteindre un maillage cible, on parle alors d’adaptation. Dans les deux approches, le nouveau maillage est construit d’après une <strong>métrique</strong> issue de l’analyse d’erreur.</p>
 <p>En comparaison au remaillage, l’adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d’éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d’éléments du maillage.</p>
@@ -284,17 +323,51 @@ Plus précisément, dans un espace métrique riemannien \( \mathcal{M}(\textbf{x
 <p>\[ Q_\mathcal{M} = … \]</p>
 <p>On a vu que la taille de la boule unité associée à la métrique \(\mathcal{M}\) dans la direction de son \(i^{\textbf{ème}}\) vecteur propre est donnée par \( h_i = \lambda_i^{-1\setminus2} \). Ainsi on peut déduire que la taille voulue dans la direction \(\textbf{e}\) est :</p>
 <p>\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\]</p>
-<p>Pour atteindre le maillage conformément à la métrique donnée plusieurs opérations de remaillage sont utilisées.</p>
+<p>Après adaptation du maillage l’idée est donc d’obtenir des arêtes qui sont de taille unitaire pour leur champ de métrique associé, tout en garantissant la meilleure qualité possible des éléments. Pour cela , plusieurs opérations d’adaptation sont utilisées en vérifiant après chaque modification la validité topologique de l’adaptation. Voici les différentes opérations utilisées :</p>
 <h3 id="definition--cavité"><a class="header" href="#definition--cavité">Definition : Cavité</a></h3>
-<p>Définition de la cavité</p>
+<p>Etant donné une entité de maillage \( e \) (un sommet ou une arête dans le cas présent), la cavité \( \mathcal{C}(e) \) est l’ensemble des éléments de maillage qui contiennent l’entité \( e \).</p>
+<p>Une cavité \( \mathcal{C}(e) \) peut être remplie à partir d’un sommet \( \mathbf v \) comme l’ensemble des éléments créés à partir de \( \mathbf v \) et des faces de la frontière de la cavité \( \partial \mathcal{C}(e) \) (orientées vers l’extérieur).</p>
+<p>\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \]</p>
 <h3 id="definition--swap"><a class="header" href="#definition--swap">Definition : Swap</a></h3>
-<p>Swap</p>
+<figure style="text-align: center;">
+  <img src="Theoritical_Foundations/../images/swap.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>swap</strong> operation aims at improving the quality of the elements.</p>
+<p>It can however introduce</p>
+<ul>
+<li>“long” or “short” edges</li>
+<li>a poor representation of the geometry that will be difficult to recovered later</li>
+<li>inconsistent tagging</li>
+</ul>
+<p>These 3 criteria have to be assessed to determine if a <strong>swap</strong> operation is accepted or not</p>
 <h3 id="definition--split"><a class="header" href="#definition--split">Definition : Split</a></h3>
-<p>Split</p>
+<figure style="text-align: center;">
+  <img src="Theoritical_Foundations/../images/split.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>split</strong> operations aims at splitting “long” edges. It is applied to edges whose length
+(in metric space) is larger than \(l_0 &gt; \sqrt{2}\).</p>
+<p>It can however introduce</p>
+<ul>
+<li>“short” edges</li>
+<li>element of low quality (including invalid elements)</li>
+</ul>
+<p>These 2 criteria have to be assessed to determine if a <strong>split</strong> operation is accepted or not</p>
+<p>When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.</p>
 <h3 id="definition--collapse"><a class="header" href="#definition--collapse">Definition : Collapse</a></h3>
-<p>Collapse</p>
+<figure style="text-align: center;">
+  <img src="Theoritical_Foundations/../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>collapse</strong> operation aims at removing “small” edges. It is applied to edges whose length (in metric space) is smaller than \( l_0 &lt; 1/\sqrt{2} \).</p>
+<p>It can however introduce</p>
+<ul>
+<li>“long” edges</li>
+<li>element of low quality (including invalid elements)</li>
+<li>a poor representation of the geometry that will be difficult to recovered later</li>
+</ul>
+<p>These 3 criteria have to be assessed to determine if a <strong>collapse</strong> operation is accepted or not</p>
 <h3 id="definition--smooth"><a class="header" href="#definition--smooth">Definition : Smooth</a></h3>
-<p>Smooth</p>
+<p>The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.</p>
+<p>In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity or one of its children are considered for smoothing. A projection step is still required for boundary vertices to ensure the consistency with the CAD model.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="calcul-parallèle"><a class="header" href="#calcul-parallèle">Calcul Parallèle</a></h1>
 <h2 id="mpi"><a class="header" href="#mpi">MPI</a></h2>
 <h2 id="rayon"><a class="header" href="#rayon">RAYON</a></h2>
@@ -322,7 +395,7 @@ ous y présenterons Tucanos, l’outil d’adaptation de maillage interne (déve
 <p>You can find more information and the source code for Tucanos on its official GitHub repository: <a href="https://github.com/tucanos/tucanos">https://github.com/tucanos/tucanos</a>.</p>
 <br>
 <center>
-<img src="Work_Environnement/../images/Tucanos.png" alt="Logo Tucanos" width="40%">
+<img src="Work_Environnement/../images/tucano.svg" alt="Logo Tucanos" width="30%">
 <center><div style="break-before: page; page-break-before: always;"></div><h1 id="outils-utilisés"><a class="header" href="#outils-utilisés">Outils Utilisés</a></h1>
 <h3 id="lenvironnement-hpc"><a class="header" href="#lenvironnement-hpc">L’environnement HPC</a></h3>
 <p>Mes travaux de thèse sont ancrés au sein d’un cluster de calcul haute performantce (HPC). Cet environnement possède une architecture robuste conçue pour répondre aux exigences des calculs massifs liés aux activités d’ingénierie AIRBUS. L’environnement est composé de noeuds de calcul optimisé en terme de puissance et de mémoire.

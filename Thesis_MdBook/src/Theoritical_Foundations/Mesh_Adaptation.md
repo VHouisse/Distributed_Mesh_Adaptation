@@ -25,16 +25,71 @@ On a vu que la taille de la boule unité associée à la métrique \\(\mathcal{M
 \\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\\]
 
 
-Pour atteindre le maillage conformément à la métrique donnée plusieurs opérations de remaillage sont utilisées. 
+Après adaptation du maillage l'idée est donc d'obtenir des arêtes qui sont de taille unitaire pour leur champ de métrique associé, tout en garantissant la meilleure qualité possible des éléments. Pour cela , plusieurs opérations d'adaptation sont utilisées en vérifiant après chaque modification la validité topologique de l'adaptation. Voici les différentes opérations utilisées : 
 
 ### Definition : Cavité 
-Définition de la cavité
+
+Etant donné une entité de maillage \\( e \\) (un sommet ou une arête dans le cas présent), la cavité \\( \mathcal{C}(e) \\) est l'ensemble des éléments de maillage qui contiennent l'entité \\( e \\).
+
+Une cavité \\( \mathcal{C}(e) \\) peut être remplie à partir d'un sommet \\( \mathbf v \\) comme l'ensemble des éléments créés à partir de \\( \mathbf v \\) et des faces de la frontière de la cavité \\( \partial \mathcal{C}(e) \\) (orientées vers l'extérieur).
+
+\\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \\]
+
 ### Definition : Swap
-Swap 
+
+<figure style="text-align: center;">
+  <img src="../images/swap.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+
+The __swap__ operation aims at improving the quality of the elements. 
+
+It can however introduce
+- "long" or "short" edges
+- a poor representation of the geometry that will be difficult to recovered later
+- inconsistent tagging
+
+These 3 criteria have to be assessed to determine if a __swap__ operation is accepted or not
+
 ### Definition : Split
-Split 
+
+
+
+<figure style="text-align: center;">
+  <img src="../images/split.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+
+The __split__ operations aims at splitting "long" edges. It is applied to edges whose length
+(in metric space) is larger than \\(l_0 > \sqrt{2}\\). 
+
+It can however introduce
+- "short" edges
+- element of low quality (including invalid elements)
+
+These 2 criteria have to be assessed to determine if a __split__ operation is accepted or not
+
+
+When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model. 
+
 ### Definition : Collapse
-Collapse
+
+<figure style="text-align: center;">
+  <img src="../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+
+
+The __collapse__ operation aims at removing "small" edges. It is applied to edges whose length (in metric space) is smaller than \\( l_0 < 1/\sqrt{2} \\). 
+
+It can however introduce
+- "long" edges
+- element of low quality (including invalid elements)
+- a poor representation of the geometry that will be difficult to recovered later
+
+These 3 criteria have to be assessed to determine if a __collapse__ operation is accepted or not
+
 ### Definition : Smooth
-Smooth 
+
+The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.
+
+In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity or one of its children are considered for smoothing. A projection step is still required for boundary vertices to ensure the consistency with the CAD model.
+
 
