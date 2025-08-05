@@ -4,36 +4,32 @@
 name: Déploiement mdBook sur Pages
 
 on:
-  # Déclenché par les pushes sur la branche 'main'
   push:
     branches: ["main"]
 
-  # Permet de lancer ce workflow manuellement depuis l'onglet Actions
   workflow_dispatch:
 
-# Permet au GITHUB_TOKEN d'écrire sur les GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Permet un seul déploiement concurrent
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Tâche de construction
   build:
     runs-on: ubuntu-latest
     env:
-      MDBOOK_VERSION: 0.5.0-alpha.1  # Version de mdBook à utiliser
+      MDBOOK_VERSION: 0.4.40 # Version de mdBook stable
     steps:
       - uses: actions/checkout@v4
 
       - name: Installer mdBook
         run: |
-          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
+          # Commande 'curl' corrigée
+          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
           rustup update
           cargo install --version ${MDBOOK_VERSION} mdbook
 
@@ -49,7 +45,6 @@ jobs:
         with:
           path: './book'
 
-  # Tâche de déploiement
   deploy:
     environment:
       name: github-pages
