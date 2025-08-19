@@ -101,7 +101,7 @@ L'intersection est alors
 avec \\( \Lambda^{(i,j)}{jk} = \max(\Lambda^{(i)}{jk}, \Lambda^{(j)}_{jk}) \\)
 
 
-## Graduation de la métrique
+## Gradation de la métrique
 
 Il est parfois souhaitable de contrôler l'évolution des longueurs d'arêtes d'un élément à l'autre. Cette idée peut être traduite en contraintes sur la variation du champ de métrique. (voir *Size gradation control of anisotropic meshes*, F. Alauzet, 2010 [pdf](https://pages.saclay.inria.fr/frederic.alauzet/download/Alauzet_Size%20gradation%20control%20of%20anisotropic%20meshes.pdf)), résumée comme suit :
 
