@@ -48,7 +48,11 @@ It can however introduce
 - a poor representation of the geometry that will be difficult to recovered later
 - inconsistent tagging
 
-These 3 criteria have to be assessed to determine if a __swap__ operation is accepted or not
+These 3 criteria have to be assessed to determine if a __swap__ operation is accepted or not.
+
+Un swap modifilocalement la connectivité d'un maillage sans ajouter ni retirer de sommets. Cette opération peut échouer pour diverses raisons. Elle est impossible pour des raisons topologiques si l'arête à modifier n'a qu'un seul élément adjacent ou si elle se situe sur une frontière fixe. De la même manière, l'opération échoue si la topologie des sommets est incompatible.
+
+Le swap est également rejeté lorsque les contraintes de qualité et géométriques ne sont pas respectées. L'opération n'est pas effectuée si la qualité du maillage est déjà supérieure au seuil requis, ou si elle risque de compromettre la régularité de la surface en créant, par exemple, un angle de normales trop grand. Plus précisément, les nouveaux éléments résultant du swap doivent respecter une qualité minimale et des limites de longueur d'arête prédéfinies. Enfin, le swap est considéré comme un échec si la modification proposée ne change rien à la connectivité de la cavité.
 
 ### Definition : Split
 
@@ -66,9 +70,10 @@ It can however introduce
 - element of low quality (including invalid elements)
 
 These 2 criteria have to be assessed to determine if a __split__ operation is accepted or not
+When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.
 
 
-When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model. 
+Ainsi pour qu'un split soit effectué sur une arête jugée trop longue, celle-ci ne doit pas se trouver sur une frontière fixe, et la modification ne doit pas engendrer un maillage de mauvaise qualité ou des arêtes trop courtes. Si l'une de ces conditions n'est pas remplie, l'opération échoue. L'opération est validée et s'effectue si toutes les conditions sont respectées et qu'elle a pour effet d'améliorer la qualité du maillage.
 
 ### Definition : Collapse
 
@@ -84,7 +89,9 @@ It can however introduce
 - element of low quality (including invalid elements)
 - a poor representation of the geometry that will be difficult to recovered later
 
-These 3 criteria have to be assessed to determine if a __collapse__ operation is accepted or not
+These 3 criteria have to be assessed to determine if a __collapse__ operation is accepted or not.
+
+De la même manière que pour un split, un collapse sur une arête jugée trop courte ne peut être effectué que sous certaines conditions. L'opération est d'abord soumise à des vérifications de faisabilité. Elle échoue si l'arête se trouve sur une frontière fixe, si la modification risque de dégrader la qualité du maillage résultant ou si elle engendre une géométrie des sommets non régulière.
 
 ### Definition : Smooth
 

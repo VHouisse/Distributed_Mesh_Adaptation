@@ -79,3 +79,22 @@ Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la m
 quality=3.32e-2
 
 #### 4. Metis 
+
+METIS est une bibliothèque logicielle largement reconnue, conçue pour le partitionnement de graphes. Dans le contexte de l'adaptation de maillage, elle est utilisée pour décomposer un maillage en sous-domaines en le représentant comme un graphe dual, où chaque élément du maillage correspond à un nœud du graphe. La division du maillage est ensuite obtenue en partitionnant ce graphe. METIS propose deux algorithmes principaux avec des objectifs similaires : le partitionnement Kway et le partitionnement Récursif (Recursive Bisection), qui visent tous deux à minimiser les interdépendances entre les partitions pour optimiser l'efficacité du calcul parallèle.
+
+### Metis Kway 
+
+<center>
+<img src="../images/Metis_Kway_2D_bg.png" alt="MetisKway Partitionnement" width="50%">
+</center>
+
+
+##### Ajout discussion autour de la qualité des partitions 
+
+### Metis Recursive
+
+<center>
+<img src="../images/Metis_Recursive_2D_bg.png" alt="Metis Recursive Partitionnement" width="50%">
+</center>
+
+##### Ajout discussion autour de la qualité des partitions 

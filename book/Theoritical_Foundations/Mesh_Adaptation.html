@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Partitionneurs - Distributed Mesh Adapatation</title>
+        <title>Adaptation de maillage - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -177,73 +177,74 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="partitionneurs"><a class="header" href="#partitionneurs">Partitionneurs</a></h1>
-<p>Comme nous l’avons vu, la quantité de données induites par la résolution des équations de la CFD ainsi que la recherche de calcul de haute performance nous pousse à utiliser plusieurs unité de calcul. Pour cela il est impératif de partitionner le maillage sous-jacent au domaine de travail. Partitionner permet de diviser le domaine en autant de sous-domaines qu’il y a de coeurs disponibles, décomposant le problème initial en N sous-problèmes.</p>
-<p>Un bon partitionnement repose sur trois critères essentiels :</p>
-<p>Reduction des interdépendances : Minimiser les arêtes ou faces partagées entre les sous-domaines afin de limiter les communications coûteuses entre les unités de calcul.</p>
-<p>Preservation de la qualité : Assurer que la division ne dégrade pas la qualité des sous-maillages individuels</p>
-<p>Equilibrage de charge : Distribuer équitablement la charge de travail computationnel entre tous les processeurs afin d’eviter les goulots d’étranglement et maximiser la performance parallèle (CF Load balancing)</p>
-<h3 id="partitionnement-pour-le-remaillage--le-défi-des-interfaces"><a class="header" href="#partitionnement-pour-le-remaillage--le-défi-des-interfaces">Partitionnement pour le Remaillage : Le Défi des Interfaces</a></h3>
-<p>Dans le cadre du remaillage, la gestion des interfaces entre les partitions est un défi majeur, car ces frontières doivent être adaptées sans compromettre la continuité du maillage global ni l’efficacité parallèle. Deux approches principales peuvent être distinguées pour adresser ce problème</p>
-<h4 id="two-step-process-"><a class="header" href="#two-step-process-">Two-Step process :</a></h4>
-<p>Cette méthode débute par un premier partitionnement du maillage. Les interfaces de ces partitions initiales sont alors “gelées”, permettant à chaque processeur de remailler son sous-domaine interne de manière indépendante. Une fois cette première phase d’adaptation locale achevée, un second partitionnement est effectué sur l’ensemble du domaine, mais de manière à ce que les interfaces du premier partitionnement (celles qui étaient gelées) ne partagent aucun élément en commun avec les nouvelles interfaces du deuxième partitionnement. Cette stratégie garantit que la totalité du domaine, y compris les zones d’interface initialement gelées, soit effectivement remaillée, assurant ainsi une adaptation complète.</p>
-<center>
-<img src="../images/Two_Step_Process.png" alt="Logo Tucanos" width="100%">
-</center>
-<br>
-<h4 id="hierarchical-interface-freezing-method-"><a class="header" href="#hierarchical-interface-freezing-method-">Hierarchical Interface Freezing Method :</a></h4>
-<p>Cette seconde approche est également basée sur le gel des interfaces, mais de manière itérative et hiérarchique. Le domaine est initialement partitionné et les interfaces sont gelées, permettant le remaillage indépendant de chaque sous-domaine. Une fois cette étape terminée, l’attention se porte sur les interfaces elles-mêmes : elles sont à leur tour partitionnées (en “gelant” les sous-interfaces nouvellement créées), puis remaillées. Ce processus de subdivision et de remaillage des interfaces peut être répété de manière récursive (gel des interfaces des interfaces, et ainsi de suite) jusqu’à atteindre un niveau de précision et de conformité satisfaisant sur l’ensemble des frontières.</p>
-<center>
-<img src="../images/Freezing_Interface.png" alt="Logo Tucanos" width="80%">
-</center>
-<p>Au-delà des stratégies de gestion des interfaces pour le remaillage parallèle, la problématique fondamentale de la division initiale d’un maillage en sous-domaines demeure. Cette tâche est assurée par les algorithmes de partitionnement dont les objectifs ont été discutés plus tôt. Nous allons introduire ici une séléction des partitionneurs utilisés au sein de Tucanos, ainsi que ceux implémentés dans le cadre des travaux de thèse. On effectuera une analyse comparative de leurs performances sur un cas test :</p>
-<p>Les deux partitionneurs ci-dessous sont basés sur une renumérotation préalable des sommets d’après une courbe de Hilbert. Chaque sommet du maillage se voit attribuer un indice de Hilbert en fonction de sa position spatiale sur la courbe. C’est une opération de compléxité linéaire, facilement parallélisable. Les partitionnements suivants se basent donc sur la liste des indices de Hilbert qui a la forme suivante :</p>
-<pre><code>[ Hilbert_1 = element_i, Hilbert_2 = element_j,  ... ]
-</code></pre>
-<p>Considérant qu’à l’issue de chaque partitionnement, on souhaite obtenir n partitons avec un nombre d’éléments par partition très proche, sans load Balancing.</p>
-<h4 id="1-hilbert-ball-partitionner"><a class="header" href="#1-hilbert-ball-partitionner">1. Hilbert Ball Partitionner</a></h4>
-<p>On commence par lister les éléments partageant le sommet n°1 d’après la liste d’indices de Hilbert, cette liste d’éléments appelée boule du sommet 1, chacun de ces éléments est ajouté à la partition n°1. Puis on fait de même avec le sommet n°2, on liste et on ajoute les éléments de la boule du sommet 2 qui n’ont pas encore été ajouté à une partition, et ainsi de suite … A chaque fois que l’on ajoute un élément à une partition, on vérifie que le nombre d’éléments dans la partition_i que l’on est en train de remplir n’excède pas le montant d’éléments par partition voulu. Si tel est le cas alors l’élément est ajouté à la partition_i+1.</p>
-<p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode de Hilbert pour n=4 partitions:</p>
-<center>
-<img src="../images/Hilbert_bg.png" alt="HilbertBall Partitionnement" width="50%">
-</center>
-<p>quality=2.13e-2</p>
-<h4 id="2-bfs"><a class="header" href="#2-bfs">2. BFS</a></h4>
-<p>Cette méthode s’appuie non pas sur une renumérotation par Hilbert des sommets mais sur une renumérotation par éléments. On considère alors le premier élément de cette liste d’éléments, qu’on appellera élément <strong>racine</strong>, on ajoute chacun des éléments voisins à une file d’attente. Puis chaque élément de la file d’attente est ajouté à la partition courante et on ajoute également ses voisins (si ils n’ont pas déjà été assignés) à la file d’attente. La méthode avance donc par front. De la même manière que pour la méthode de la boule de Hilbert, chaque fois qu’un élément est ajouté à une partition, on s’assure que le montant d’élément dans la partition courante n’excède pas le nombre d’éléments voulu par partition.</p>
-<p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions:</p>
-<center>
-<img src="../images/BFS_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
-</center>
-<p>quality=6.52e-2</p>
-<h4 id="3-bfs-with-restart-bfswr"><a class="header" href="#3-bfs-with-restart-bfswr">3. BFS With Restart (BFSWR)</a></h4>
-<p>Cette méthode utilise la même logique que celle du BFS, mais lorsque qu’une partition excède le nombre d’éléments par partition voulu, la file d’attente est vidée et le prochain élément <strong>racine</strong> devient le dernier élément contenu dans la file avant d’être vidée.</p>
-<p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions:</p>
-<center>
-<img src="../images/BFSWR_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
-</center>
-<p>quality=3.32e-2</p>
-<h4 id="4-metis"><a class="header" href="#4-metis">4. Metis</a></h4>
-<p>METIS est une bibliothèque logicielle largement reconnue, conçue pour le partitionnement de graphes. Dans le contexte de l’adaptation de maillage, elle est utilisée pour décomposer un maillage en sous-domaines en le représentant comme un graphe dual, où chaque élément du maillage correspond à un nœud du graphe. La division du maillage est ensuite obtenue en partitionnant ce graphe. METIS propose deux algorithmes principaux avec des objectifs similaires : le partitionnement Kway et le partitionnement Récursif (Recursive Bisection), qui visent tous deux à minimiser les interdépendances entre les partitions pour optimiser l’efficacité du calcul parallèle.</p>
-<h3 id="metis-kway"><a class="header" href="#metis-kway">Metis Kway</a></h3>
-<center>
-<img src="../images/Metis_Kway_2D_bg.png" alt="MetisKway Partitionnement" width="50%">
-</center>
-<h5 id="ajout-discussion-autour-de-la-qualité-des-partitions"><a class="header" href="#ajout-discussion-autour-de-la-qualité-des-partitions">Ajout discussion autour de la qualité des partitions</a></h5>
-<h3 id="metis-recursive"><a class="header" href="#metis-recursive">Metis Recursive</a></h3>
-<center>
-<img src="../images/Metis_Recursive_2D_bg.png" alt="Metis Recursive Partitionnement" width="50%">
-</center>
-<h5 id="ajout-discussion-autour-de-la-qualité-des-partitions-1"><a class="header" href="#ajout-discussion-autour-de-la-qualité-des-partitions-1">Ajout discussion autour de la qualité des partitions</a></h5>
+                        <h1 id="adaptation-de-maillage"><a class="header" href="#adaptation-de-maillage">Adaptation de Maillage</a></h1>
+<p>En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d’appliquer des modifications localement dans le but d’atteindre un maillage cible, on parle alors d’adaptation. Dans les deux approches, le nouveau maillage est construit d’après une <strong>métrique</strong> issue de l’analyse d’erreur.</p>
+<p>En comparaison au remaillage, l’adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d’éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d’éléments du maillage.</p>
+<p>Par ailleurs, le remaillage rend complexe le transfert des valeurs de champ de l’ancien maillage vers le nouveau. Cette procédure nécessite des algorithmes de recherche spatiale et a tendance à s’appuyer sur des opérateurs de remappage qui sont diffusifs et/ou soumis à des exigences de conservation globale.</p>
+<p>L’adaptation quant à elle permet une exécution locale du transfert de solution. Le raffinement divise les entités parentes et est capable de transférer la solution de manière exacte en utilisant l’interpolation par fonctions de forme. De plus, les autres opérations sont confinées à une cavité locale, ce qui rend toute recherche rapid et les effets diffusifs ainsi que les ajustements de conservation sont localisés.</p>
+<p>Nous nous concentrerons sur le processus d’adaptation de maillage puisqu’il semble que ce dernier possède plus d’avantages que le remaillage total.</p>
+<p>On rapelle donc que l’objectif ultime de l’adaptation de maillage (que ce soit par remaillage ou par des opérations d’adaptation locale) est de garantir que le maillage, après modification, se conforme aussi étroitement que possible au champ de métrique cible dérivé de l’analyse d’erreur.</p>
+<p>Soit \(\mathcal{M}(x)_{x \in \Omega }\) un espace métrique riemannien. L’objectif est de générer un maillage  \(\mathcal{H} \)  pour lequel chaque longueur d’arête est unitaire dans la métrique associée et chaque élément est régulier :</p>
+<p>\[   \forall \textbf{e} \in \mathcal{H} , \ \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
+<p>Comme les éléments réguliers ne peuvent pas remplir entièrement le domaine \( \Omega \), l’adaptation de maillage ne peut créer que des maillages quasi-uniformes, c’est-à-dire des éléments de maillage qui sont presque unitaires dans l’espace riemannien. Pour quantifier l’écart à l’unité, différents outils peuvent être utilisés, dont  par exemple, une fonction de qualité d’élément :</p>
+<p>\[ Q_\mathcal{M} = … \]</p>
+<p>On a vu que la taille de la boule unité associée à la métrique \(\mathcal{M}\) dans la direction de son \(i^{\textbf{ème}}\) vecteur propre est donnée par \( h_i = \lambda_i^{-1\setminus2} \). Ainsi on peut déduire que la taille voulue dans la direction \(\textbf{e}\) est :</p>
+<p>\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\]</p>
+<p>Après adaptation du maillage l’idée est donc d’obtenir des arêtes qui sont de taille unitaire pour leur champ de métrique associé, tout en garantissant la meilleure qualité possible des éléments. Pour cela , plusieurs opérations d’adaptation sont utilisées en vérifiant après chaque modification la validité topologique de l’adaptation. Voici les différentes opérations utilisées :</p>
+<h3 id="definition--cavité"><a class="header" href="#definition--cavité">Definition : Cavité</a></h3>
+<p>Etant donné une entité de maillage \( e \) (un sommet ou une arête dans le cas présent), la cavité \( \mathcal{C}(e) \) est l’ensemble des éléments de maillage qui contiennent l’entité \( e \).</p>
+<p>Une cavité \( \mathcal{C}(e) \) peut être remplie à partir d’un sommet \( \mathbf v \) comme l’ensemble des éléments créés à partir de \( \mathbf v \) et des faces de la frontière de la cavité \( \partial \mathcal{C}(e) \) (orientées vers l’extérieur).</p>
+<p>\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \]</p>
+<h3 id="definition--swap"><a class="header" href="#definition--swap">Definition : Swap</a></h3>
+<figure style="text-align: center;">
+  <img src="../images/swap.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>swap</strong> operation aims at improving the quality of the elements.</p>
+<p>It can however introduce</p>
+<ul>
+<li>“long” or “short” edges</li>
+<li>a poor representation of the geometry that will be difficult to recovered later</li>
+<li>inconsistent tagging</li>
+</ul>
+<p>These 3 criteria have to be assessed to determine if a <strong>swap</strong> operation is accepted or not</p>
+<h3 id="definition--split"><a class="header" href="#definition--split">Definition : Split</a></h3>
+<figure style="text-align: center;">
+  <img src="../images/split.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>split</strong> operations aims at splitting “long” edges. It is applied to edges whose length
+(in metric space) is larger than \(l_0 &gt; \sqrt{2}\).</p>
+<p>It can however introduce</p>
+<ul>
+<li>“short” edges</li>
+<li>element of low quality (including invalid elements)</li>
+</ul>
+<p>These 2 criteria have to be assessed to determine if a <strong>split</strong> operation is accepted or not</p>
+<p>When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.</p>
+<h3 id="definition--collapse"><a class="header" href="#definition--collapse">Definition : Collapse</a></h3>
+<figure style="text-align: center;">
+  <img src="../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+<p>The <strong>collapse</strong> operation aims at removing “small” edges. It is applied to edges whose length (in metric space) is smaller than \( l_0 &lt; 1/\sqrt{2} \).</p>
+<p>It can however introduce</p>
+<ul>
+<li>“long” edges</li>
+<li>element of low quality (including invalid elements)</li>
+<li>a poor representation of the geometry that will be difficult to recovered later</li>
+</ul>
+<p>These 3 criteria have to be assessed to determine if a <strong>collapse</strong> operation is accepted or not</p>
+<h3 id="definition--smooth"><a class="header" href="#definition--smooth">Definition : Smooth</a></h3>
+<p>The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.</p>
+<p>In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity or one of its children are considered for smoothing. A projection step is still required for boundary vertices to ensure the consistency with the CAD model.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../Contributions/First_Explorations_and_Contributions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../Theoritical_Foundations/Metrics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../Contributions/Load_Balancing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../Theoritical_Foundations/Parallel_Computing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -253,11 +254,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../Contributions/First_Explorations_and_Contributions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../Theoritical_Foundations/Metrics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../Contributions/Load_Balancing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../Theoritical_Foundations/Parallel_Computing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
