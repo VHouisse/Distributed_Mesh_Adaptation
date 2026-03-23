@@ -148,13 +148,24 @@ De la même manière on peut définir le coût d'un collapse de la manière suiv
 
 
 Ce qui nous amène à : ... 
+# Vers un Load Balancing Intelligent
 
+### Limites des modèles analytiques
+L'approche initiale consistait à définir le travail de remaillage par une formule déterministe basée sur les densités de métriques :
+$$wrk(K) = |K| ( \alpha (d_{\cap} - d_{\mathcal{H}}) + \beta (d_{\cap} - d_{ T}) + \gamma d_T )$$
 
+Cependant, après implémentation, cette modélisation s'est heurtée à la réalité de l'adaptation anisotrope :
+* **Dépendance des opérateurs** : Le coût d'un *split* n'est pas une valeur isolée car il engendre souvent des cascades de *collapses* et de *swaps* pour maintenir la validité topologique du maillage.
+* **Sensibilité à l'anisotropie** : Une métrique très étirée rend la recherche de cavités et la validation des opérations beaucoup plus complexe, rendant les poids uniformes peu représentatifs de la réalité computationnelle.
+* **Goulots d'étranglement** : Les premiers tests ont montré que les partitions ayant peu de sommets mais une forte activité de remaillage créent des goulots d'étranglement par rapport aux partitions denses mais statiques.
 
+### Piste de l'IA (Exploration)
+Face à l'impossibilité de trouver un modèle analytique universel fonctionnant pour tout type de métrique, l'intégration d'un modèle d'IA a été envisagée. L'idée était d'entraîner un réseau capable de prédire le coût de calcul à partir de patterns de maillage et de métriques. 
+* **Obstacle majeur** : La génération de données d'entraînement représentatives (dépendance au type de maillage, à la qualité de la métrique, etc.) aurait nécessité un investissement temporel trop important, nous éloignant du cœur de la thèse.
 
 <!-- 
 Après l'implémentation initiale des concepts de partitionnement et d'estimation de charge, les premiers cas tests ont permis de dégager des observations cruciales concernant le comportement des algorithmes et la nature des défis liés à l'adaptation de maillage parallèle. Nous présentons ici les conclusions préliminaires tirées de ces expérimentations. 
-
+\(\)\(\)
 Les expérimentations ont été menées sur une série de configuration en deux et trois dimensions. 
 
 
@@ -171,7 +182,6 @@ Les expérimentations ont été menées sur une série de configuration en deux 
 
 
 #### Configuration 3D:
-
 * \\( \Omega = [0,1]^3\\)
 * \\(\mathcal{M}_T =  
     \begin{bmatrix}0.01&0&0\\\\

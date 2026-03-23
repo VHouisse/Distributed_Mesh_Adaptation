@@ -7,7 +7,4 @@ The project is enterily coded in Rust, but it also has a Python interface.
 You can find more information and the source code for Tucanos on its official GitHub repository: <https://github.com/tucanos/tucanos>.
 
 <br>
-
-<center>
 <img src="../images/tucano.svg" alt="Logo Tucanos" width="30%">
-<center>

@@ -13,21 +13,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -39,10 +38,10 @@
             const path_to_root = "";
             const default_light_theme = "rust";
             const default_dark_theme = "rust";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "searchindex-77cae7e6.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-288bfa2c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -56,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div id="body-container">
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -85,12 +84,12 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -105,39 +104,39 @@
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -145,38 +144,38 @@
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
                         <div class="search-wrapper">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
                             </div>
                         </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="1-contexte-général-et-motivations"><a class="header" href="#1-contexte-général-et-motivations">1. Contexte Général et Motivations</a></h1>
 <h2 id="11-le-défi-de-la-simulation-numérique-et-lessence-de-ladaptation-de-maillage"><a class="header" href="#11-le-défi-de-la-simulation-numérique-et-lessence-de-ladaptation-de-maillage">1.1 Le défi de la simulation numérique et l’essence de l’adaptation de maillage</a></h2>
@@ -195,10 +194,12 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
 <p>Ce MdBook a pour vocation de présenter l’intégralité des avancées et des résultats obtenus au cours de ma thèse de doctorat. Au fil des chapitres, il retracera l’évolution continue de ma thèse, de mes explorations intiailes aux résultats les plus récents. Chaque section abordera un aspect fondamental de ma recherche : l’acquisition de connaissances théoriques relatives à l’adaptation de maillage anisotropique, l’environnement de développement et les outils utilisés ainsi que l’ensemble de mes contributions scientifiques. L’objectif est de fournir une vision claire et structurée de l’état d’avancement de ma recherche, des défis rencontrés et des solutions développées tout au long de ces trois années.</p>
 <p><br><br><br></p>
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <img src="Intro/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
-    <img src="Intro/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+    <img src="images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="images/CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="fondations-théoriques"><a class="header" href="#fondations-théoriques">Fondations Théoriques</a></h1>
+
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="fondations-théoriques"><a class="header" href="#fondations-théoriques">Fondations Théoriques</a></h1>
 <p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux de la dynamique des fluides numérique et de l’adaptation de maillage est essentielle</p>
 <h2 id="une-bref-rappel-du-workflow-cfd-"><a class="header" href="#une-bref-rappel-du-workflow-cfd-">Une bref rappel du WorkFlow CFD :</a></h2>
 <p>Comme indiqué lors de l’introduction la Computational Fluid Dynamics (CFD) est une discipline clé pour la simulation de phénomènes aéronautiques complexes.</p>
@@ -221,12 +222,13 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
 </li>
 </ol>
 <center>
-<img src="Theoritical_Foundations/../images/Schema_Remesh_bg.png" alt="Logo Tucanos" width="100%">
+<img src="images/Schema_Remesh_bg.png" alt="Logo Tucanos" width="100%">
 </center>
-<p>L’analyse d’erreur, qui succède à la résolution CFD, est le moteur de l’adaptation de maillage. <br> De cette analyse découle un champ de métrique, une entité qui précise comment le maillage doit être modifié pour minimiser les erreurs sur le maillage intial. Pour bien saisir ce mécanisme, il est fondamental de comprendre ce qu’est une métrique et comment elle définit un granularité spatiale. (Voir section sur les métriques : <a href="Theoritical_Foundations/./Metrics.html">Metrics</a>) <br></p>
-<p>Une fois cette métrique cible établie, il devient nécessaire de savoir comment la traduire en actions concrètes sur le maillage. La section sur <strong>l’Adaptation de Maillage</strong> explicitera les opérations géométriques et topologiques qui transforment le maillage pour qu’il réponde aux spécifications de la métrique (voir section <a href="Theoritical_Foundations/./Mesh_Adaptation.html">Mesh Adaptation</a>)</p>
-<p>Finalement, pour que l’ensemble de ce processus d’adaptation soit viable et performant pour les applications industrielles à grande échelle, une maîtrise du Calcul Parallèle est indispensable. On expliquera certains aspects de la discipline et on montrera de quelle manière on souhaite l’utiliser dans le cadre de la thèse. (voir section <a href="Theoritical_Foundations/./Parallel_Computing.html">Parallel_Computing</a>)</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="métrique"><a class="header" href="#métrique">Métrique</a></h1>
+<p>L’analyse d’erreur, qui succède à la résolution CFD, est le moteur de l’adaptation de maillage. <br> De cette analyse découle un champ de métrique, une entité qui précise comment le maillage doit être modifié pour minimiser les erreurs sur le maillage intial. Pour bien saisir ce mécanisme, il est fondamental de comprendre ce qu’est une métrique et comment elle définit un granularité spatiale. (Voir section sur les métriques : <a href="#métrique">Metrics</a>) <br></p>
+<p>Une fois cette métrique cible établie, il devient nécessaire de savoir comment la traduire en actions concrètes sur le maillage. La section sur <strong>l’Adaptation de Maillage</strong> explicitera les opérations géométriques et topologiques qui transforment le maillage pour qu’il réponde aux spécifications de la métrique (voir section <a href="#adaptation-de-maillage">Mesh Adaptation</a>)</p>
+<p>Finalement, pour que l’ensemble de ce processus d’adaptation soit viable et performant pour les applications industrielles à grande échelle, une maîtrise du Calcul Parallèle est indispensable. On expliquera certains aspects de la discipline et on montrera de quelle manière on souhaite l’utiliser dans le cadre de la thèse. (voir section <a href="#calcul-parallèle">Parallel_Computing</a>)</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="métrique"><a class="header" href="#métrique">Métrique</a></h1>
 <h3 id="211-définition--métrique"><a class="header" href="#211-définition--métrique">2.1.1 Définition : Métrique</a></h3>
 <p>Un <strong>tenseur métrique</strong> \( \mathcal{M} \in \mathbb{R}^{n} \) est une matrice \( n \times n \) symétrique définie positive.
 \( \mathcal{M} \) est toujours diagonalisable et peut être décomposée comme \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \), où \( \mathcal{R} \) et \( \Delta \) sont respectivement les matrices des vecteurs propres et des valeurs propres de \( \mathcal{M} \).</p>
@@ -239,7 +241,7 @@ L’objectif principal de cette thèse est de développer un cadre d’adaptatio
 <p>\( \xi _{M} ={ p | \sqrt{ \textbf{op}^{t} \mathcal{M} \textbf{op} }=1| } \)</p>
 <p><br><br></p>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/Metric_1.png" alt="Tenseur métrique anisotrope" width="90%">
+  <img src="images/Metric_1.png" alt="Tenseur métrique anisotrope" width="90%">
   <figcaption>Figure 1: Boule unité métrique</figcaption>
 </figure>
 <h3 id="212-définition--espace-métrique-euclidien"><a class="header" href="#212-définition--espace-métrique-euclidien">2.1.2 Définition : Espace métrique euclidien</a></h3>
@@ -261,7 +263,7 @@ La <strong>distance</strong> entre deux points \( \textbf{p} \) et \( \textbf{q}
 Plus précisément, dans un espace métrique riemannien \( \mathcal{M}(\textbf{x}) _{x \in \Omega} \), la longueur d’une arête \( \textbf{pq} \) est calculée en utilisant la paramétrisation en ligne droite \( \gamma(t) = \textbf{p} + t \textbf{pq}, t \in [0,1] \) :</p>
 <p>\[ \mathcal{L}_ { \mathcal{M} } ( \textbf{pq} ) = \int_{0}^{1} || \gamma (t) || \ dt = \int_{0}^{1} \sqrt{\textbf{pq}^t \mathcal{M}(\textbf{p}+t\textbf{pq})\textbf{pq}} \ dt \]</p>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/Riemmanian.png" alt="Isovaleurs de la fonction f(x) = Lm(ox) pour différents espaces" width="90%">
+  <img src="images/Riemmanian.png" alt="Isovaleurs de la fonction f(x) = Lm(ox) pour différents espaces" width="90%">
   <figcaption> \\( \textbf{Figure 2:} \\) Isovaleurs de la fonction \\( f(x) = \mathcal{L}_m (ox) \\) pour différents espaces.
   <br>
   À gauche, l'espace euclidien standard \\( ([-1,1]*[-1,1], \mathbb{I} _{2} ) \\)
@@ -276,7 +278,7 @@ Plus précisément, dans un espace métrique riemannien \( \mathcal{M}(\textbf{x
 <p>Soient deux métriques \( \mathcal{M}_ 1 \) et \( \mathcal{M}_ 2 \), l’intersection \( \mathcal{M}_ {1 \cap 2}\) correspond à une métrique qui impose les plus grand tailles dans toutes directions qui restent plus petites que celles imposées par  \(\mathcal M_1\) et \(\mathcal M_2\). Géométriquement, la métrique intersection \( \mathcal{M}_ {1 \cap 2}\) a comme ellipse associée la plus grande ellipse contenue dans l’intersection des ellipse de \( \mathcal{M}_ 1 \) et \( \mathcal{M}_ 2 \).
 \[ \mathcal M_{1 \cap 2} = \arg \min { \det (\mathcal M) |  \mathcal M \in \mathcal S^+ t.q. \mathcal M\ge \mathcal M_1, \mathcal M\ge \mathcal M_2} \]</p>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/Intersection.png" alt="Isovaleurs de la fonction f(x) = Lm(ox) pour différents espaces" width="90%">
+  <img src="images/Intersection.png" alt="Isovaleurs de la fonction f(x) = Lm(ox) pour différents espaces" width="90%">
   <figcaption>  $$ \text{Intersection de deux métriques, en rouge la métrique intersectee  } \mathcal{M}_{1 \cap 2}$$. </figcaption>
 </figure>
 <p>Le calcul d’intersection est réalisé comme suit :</p>
@@ -310,27 +312,159 @@ et
 <p>Atteindre une graduation maximale sur toutes les arêtes du maillage nécessiterait \( ^2 \) opérations ; en pratique, l’opération ci-dessus n’est appliquée qu’un petit nombre de fois sur l’ensemble des arêtes du maillage.</p>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="adaptation-de-maillage"><a class="header" href="#adaptation-de-maillage">Adaptation de Maillage</a></h1>
-<p>En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d’appliquer des modifications localement dans le but d’atteindre un maillage cible, on parle alors d’adaptation. Dans les deux approches, le nouveau maillage est construit d’après une <strong>métrique</strong> issue de l’analyse d’erreur.</p>
-<p>En comparaison au remaillage, l’adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d’éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d’éléments du maillage.</p>
-<p>Par ailleurs, le remaillage rend complexe le transfert des valeurs de champ de l’ancien maillage vers le nouveau. Cette procédure nécessite des algorithmes de recherche spatiale et a tendance à s’appuyer sur des opérateurs de remappage qui sont diffusifs et/ou soumis à des exigences de conservation globale.</p>
-<p>L’adaptation quant à elle permet une exécution locale du transfert de solution. Le raffinement divise les entités parentes et est capable de transférer la solution de manière exacte en utilisant l’interpolation par fonctions de forme. De plus, les autres opérations sont confinées à une cavité locale, ce qui rend toute recherche rapid et les effets diffusifs ainsi que les ajustements de conservation sont localisés.</p>
-<p>Nous nous concentrerons sur le processus d’adaptation de maillage puisqu’il semble que ce dernier possède plus d’avantages que le remaillage total.</p>
-<p>On rapelle donc que l’objectif ultime de l’adaptation de maillage (que ce soit par remaillage ou par des opérations d’adaptation locale) est de garantir que le maillage, après modification, se conforme aussi étroitement que possible au champ de métrique cible dérivé de l’analyse d’erreur.</p>
-<p>Soit \(\mathcal{M}(x)_{x \in \Omega }\) un espace métrique riemannien. L’objectif est de générer un maillage  \(\mathcal{H} \)  pour lequel chaque longueur d’arête est unitaire dans la métrique associée et chaque élément est régulier :</p>
-<p>\[   \forall \textbf{e} \in \mathcal{H} , \ \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \]</p>
-<p>Comme les éléments réguliers ne peuvent pas remplir entièrement le domaine \( \Omega \), l’adaptation de maillage ne peut créer que des maillages quasi-uniformes, c’est-à-dire des éléments de maillage qui sont presque unitaires dans l’espace riemannien. Pour quantifier l’écart à l’unité, différents outils peuvent être utilisés, dont  par exemple, une fonction de qualité d’élément :</p>
-<p>\[ Q_\mathcal{M} = … \]</p>
-<p>On a vu que la taille de la boule unité associée à la métrique \(\mathcal{M}\) dans la direction de son \(i^{\textbf{ème}}\) vecteur propre est donnée par \( h_i = \lambda_i^{-1\setminus2} \). Ainsi on peut déduire que la taille voulue dans la direction \(\textbf{e}\) est :</p>
-<p>\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\]</p>
-<p>Après adaptation du maillage l’idée est donc d’obtenir des arêtes qui sont de taille unitaire pour leur champ de métrique associé, tout en garantissant la meilleure qualité possible des éléments. Pour cela , plusieurs opérations d’adaptation sont utilisées en vérifiant après chaque modification la validité topologique de l’adaptation. Voici les différentes opérations utilisées :</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="adaptation-de-maillage"><a class="header" href="#adaptation-de-maillage">Adaptation de Maillage</a></h1>
+<!-- En réalité deux approches différentes sont utilisées pour modifier la topologie du maillage à travers une simulation. On peut soit choisir de reconstruire un maillage de zéro, on parle alors de remaillage , soit d'appliquer des modifications localement dans le but d'atteindre un maillage cible, on parle alors d'adaptation. Dans les deux approches, le nouveau maillage est construit d'après une __métrique__ issue de l'analyse d'erreur.
+
+En comparaison au remaillage, l'adaptation semble avoir un coût computationnel faible. En effet, la charge de calcul est proportionnelle au nombre d'éléments modifiés, là ou le remaillage a un coût proportionnel au nombre d'éléments du maillage.
+
+Par ailleurs, le remaillage rend complexe le transfert des valeurs de champ de l'ancien maillage vers le nouveau. Cette procédure nécessite des algorithmes de recherche spatiale et a tendance à s'appuyer sur des opérateurs de remappage qui sont diffusifs et/ou soumis à des exigences de conservation globale.
+
+L'adaptation quant à elle permet une exécution locale du transfert de solution. Le raffinement divise les entités parentes et est capable de transférer la solution de manière exacte en utilisant l'interpolation par fonctions de forme. De plus, les autres opérations sont confinées à une cavité locale, ce qui rend toute recherche rapid et les effets diffusifs ainsi que les ajustements de conservation sont localisés. 
+
+Nous nous concentrerons sur le processus d'adaptation de maillage puisqu'il semble que ce dernier possède plus d'avantages que le remaillage total.
+
+On rapelle donc que l'objectif ultime de l'adaptation de maillage (que ce soit par remaillage ou par des opérations d'adaptation locale) est de garantir que le maillage, après modification, se conforme aussi étroitement que possible au champ de métrique cible dérivé de l'analyse d'erreur.  -->
+<!-- 
+Soit \\(\mathcal{M}(x)_{x \in \Omega }\\) un espace métrique riemannien. L'objectif est de générer un maillage  \\(\mathcal{H} \\)  pour lequel chaque longueur d'arête est unitaire dans la métrique associée et chaque élément est régulier :
+
+
+TODO: Formule maillage optimal 
+
+ \\[   \forall \textbf{e} \in \mathcal{H} , \ \mathcal{L}_ \mathcal{M}(\textbf{e})= 1  \text{      and       } \forall K \in \mathcal{H}, |K|_{\mathcal{M}} = \frac{\sqrt{2}}{12} \\]
+
+Comme les éléments réguliers ne peuvent pas remplir entièrement le domaine \\( \Omega \\), l'adaptation de maillage ne peut créer que des maillages quasi-uniformes, c'est-à-dire des éléments de maillage qui sont presque unitaires dans l'espace riemannien. Pour quantifier l'écart à l'unité, différents outils peuvent être utilisés, dont  par exemple, une fonction de qualité d'élément : 
+
+\\[ Q_\mathcal{M} = ... \\] 
+
+On a vu que la taille de la boule unité associée à la métrique \\(\mathcal{M}\\) dans la direction de son \\(i^{\textbf{ème}}\\) vecteur propre est donnée par \\( h_i = \lambda_i^{-1\setminus2} \\). Ainsi on peut déduire que la taille voulue dans la direction \\(\textbf{e}\\) est : 
+
+\\[h_{\mathcal{M}}(\textbf{e}) = \frac{||e||^2}{l_{\mathcal{M}(\textbf{e})}}\\]
+
+
+Après adaptation du maillage l'idée est donc d'obtenir des arêtes qui sont de taille unitaire pour leur champ de métrique associé, tout en garantissant la meilleure qualité possible des éléments. Pour cela , plusieurs opérations d'adaptation sont utilisées en vérifiant après chaque modification la validité topologique de l'adaptation. Voici les différentes opérations utilisées :  -->
+<p>Pour pouvoir générer des maillages anisotropiques qui s’adaptent à la physique de l’écoulement, il est nécessaire de pouvoir prescrire en tout point du domaine des tailles et des orientations pour les éléments. L’utilisation de l’espace Riemmannien défini plus tôt le permet.</p>
+<p>L’idée principale est donc de réussir à générer un maillage unité vis à vis de la métrique issue de l’indicateur erreur.
+Un tétrahèdre K, défini par sa liste d’arêtes \( \mathbf{(e_i)}_{i=1..6}\) est dit unitaire vis à vis d’une métrique \( \mathcal{M} \) si la longueur de chacune de ses arêtes est unité dans cette métrique:</p>
+<p>\[   \forall i= 1,…,6, \mathcal{l_{M}}(\mathbf{e_i})= 1 \text{ avec }  \mathcal{l_{M}}(\mathbf{e_i})=\sqrt{^t\mathbf{e_i}\mathcal{M}\mathbf{e_i}} \]</p>
+<p>Si toutes les arêtes de K sont de longueur unitaire, alors son volume  \(  \mathbf{|K|_\mathcal{M}}\)   dans   \( \mathcal{M}\) est constant, égal à :</p>
+<p>\[  \mathbf{|K|_\mathcal{M} }= \frac{\sqrt{2}}{12}  \text{  and  } \mathbf{|K|} = \frac{\sqrt{2}}{12} (det(\mathcal{M}))^{ -\frac{1}{2}} \]</p>
+<p>avec\( \mathbf{|K|}\) le volume euclidien.</p>
+<p>L’existence d’un maillage entier unitaire vis à vis d’un espace métrique Riemmanien n’est pas garanti. Ainsi la notion de maillage unitaire doit être étendue, on dira donc qu’un maillage discret \(\mathcal{H}\)  d’un domaine \( \Omega \subset R^{n}\)  est un maillage unité vis à vis d’un espace métrique Riemmanien  \( \mathbf{M}= (\mathcal{M})(x)_{x \in \Omega} \) si tous ses éléments sont quasi-unitaires. On dira qu’un tétrahédron K est quasi-unitaire si :</p>
+<p>\[   \forall i= 1,…,6, \mathcal{l_{M}}(\mathbf{e_i}) \in [\frac{1}{\sqrt{2}}, \sqrt{2}]\] et si son volume est unitaire.</p>
+<p>En conséquence, si le maillage adapté est uniforme est isotropique dans l’espace Riemmanien et anisotrope dans l’espace Euclidien.</p>
+<h2 id="dualité-entre-les-entités-discrètes-et-continues"><a class="header" href="#dualité-entre-les-entités-discrètes-et-continues">Dualité entre les entités discrètes et continues</a></h2>
+<p>Soit un tenseur métrique M, il existe un ensemble infini non vide d’éléments unitaire relativement à M. Réciproquement, soit K un élément tel que |K| != 0, il existe un tenseur métrique m pour lequel cet élément K lui est relativement unitaire.</p>
+<p>La conséquence de cette proposition est que la notion d’unité par rapport à \(\mathcal{M}\) permet de définir des classes d’équivalence d’éléments discrets. Ainsi, dans le cadre des maillages continus, un tenseur métrique \(\mathcal{M}\) est lui-même appelé élément continu. Il est utilisé pour modéliser l’ensemble des éléments discrets qui sont unitaires pour \(\mathcal{M}\). Il est alors possible de calculer des grandeurs géométriques directement associées à cet élément continu.</p>
+<p>Un espace Riemmanien  \(\mathcal{M} =  (\mathcal{M})(x)_{x \in \Omega} \) s’écrit localement :</p>
+<p>\[    \forall x \in \Omega       \mathcal{M} = d^{\frac{2}{3}}(x) \mathcal{R}(x)   \begin{bmatrix}r^{-\frac{2}{3}}(x)&amp;&amp;\\
+&amp; r^{-\frac{2}{3}}(x) &amp; \\
+&amp; &amp; r^{-\frac{2}{3}}(x) \end{bmatrix}   ^t\mathcal{R}(x)   \]</p>
+<p>où :</p>
+<ul>
+<li>la densité \( d \) est égale à : \(d = (\lambda_1 \lambda_2 \lambda_3)^{\frac{1}{2}} = (h_1 h_2 h_3)^{-1}\), avec \(\lambda_i\) les valeurs propres de \(\mathcal{M}\).</li>
+<li>les quotients d’anisotropie \(r_i\) sont égaux à : \(r_i = \frac{h_i^3}{h_1 h_2 h_3}\) .</li>
+<li>\(R\) est la matrice des vecteurs propres de \(\mathcal{M}\) représentant l’orientation.</li>
+</ul>
+<p>Le tenseur métrique \(\mathcal{M}\) peut être décomposé en trois composantes distinctes qui pilotent l’adaptation :</p>
+<p>La densité \(d \)  contrôle uniquement le niveau de précision local de \(\mathcal{M}\). Augmenter ou diminuer \(d \) n’affecte ni les propriétés d’anisotropie, ni l’orientation.</p>
+<p>L’anisotropie  est définie par les quotients d’anisotropie  \(r_i \) basés sur les rapports de tailles \( (h_i)\).</p>
+<p>L’orientation est représentée par la matrice des vecteurs propres R de \( \mathcal{M} \) .</p>
+<p>On définit également la complexité \( \mathcal{C}\) de la métrique \(  \mathcal{M} \) (qui correspond au nombre total de sommets cibles  \( N  \) ) par l’intégrale de la densité sur le domaine :
+\[  \mathcal{C}(\mathcal{M}) = \int_{\Omega} d(x) \ dx = \int_{\Omega} \sqrt{\det(\mathcal{M}(x))} \ dx \]</p>
+<h3 id="contrôle-de-lerreur-et-formulation-continue-en-adaptation-de-maillage"><a class="header" href="#contrôle-de-lerreur-et-formulation-continue-en-adaptation-de-maillage">Contrôle de l’erreur et formulation continue en adaptation de maillage</a></h3>
+<p>En adaptation de maillage, on cherche à contrôler l’erreur d’interpolation entre une solution exacte  \( u \)  et sa reconstruction linéraire sur un maillage \( \mathcal{H}\) :</p>
+<p>\[  |u- \Pi_h u |_{L^p(\Omega_h)}\]</p>
+<p>où :</p>
+<ul>
+<li>\(\Pi_h u\) est l’interpolé linéaire sur le maillage discret</li>
+<li>\((\Omega_h)\) le domaine maillé</li>
+</ul>
+<p>Cette formulation est discrète et dépend explicitement du maillage, ce qui rend l’optimisation globale complexe. En utilisatnt une métrique continue \( \mathcal{M}(x) \), on peut alors définir une erreur d’interpolation continue associée à la métrique \( \mathcal{M}(x) \) indépendante d’un maillage discret spécifique.</p>
+<p>\[  |u- \Pi_{\mathcal{M}} u |_{L^p(\Omega_h)}\]</p>
+<p>Pour une fonction u quadratique on a le théorème suivant :</p>
+<h4 id="théorème-31"><a class="header" href="#théorème-31">Théorème 3.1.</a></h4>
+<p>Pour tous les éléments unitaires K par rapport à \(\mathcal{M} \) , l’erreur d’interpolation de \( u \) en norme \(L^1 \) ne dépend pas de la forme de l’élément et est uniquement fonction de la Hessienne \(\mathbf{H} \) de \(u \) et de \(\mathcal{M}\).
+En 3D, pour tous les tétraèdres unitaires \(K \) par rapport à \(\mathcal{M}\) , l’égalité suivante est vérifiée :</p>
+<p>\[|u - \Pi_h u|_{L^1(K)} = \frac{\sqrt{2}}{240} \det \left( \mathcal{M}^{-\frac{1}{2}} \right) \text{trace} \left( \mathcal{M}^{-\frac{1}{2}} \mathbf{H} \mathcal{M}^{-\frac{1}{2}} \right)\]</p>
+<p>L’erreur est bien definie pour une soltuion quadratique sur un élément K, mais une métrique étant définie en chaque point du domaine \( x \in \Omega \) il faut définir une erreur en tout point du domaine :</p>
+<h4 id="théorème-32"><a class="header" href="#théorème-32">Théorème 3.2.</a></h4>
+<p>Soit u une fonction deux fois continûment dérivable sur un domaine \( \Omega \) et \( \mathcal{M}(x)_{x \in \Omega} \)  un maillage continu de  \( \Omega\).</p>
+<p>Alors, il existe une unique fonction \( \pi_M \)  telle que :
+\[ \forall a \in \Omega, |u - \pi_M u|(a) = \frac{|u_Q - \Pi_h u_Q|_{L^1(K)}}{|K|} = \frac{1}{20} \text{trace} \left( \mathcal{M}(a)^{-\frac{1}{2}} |\mathbf{H}(a)| \mathcal{M}(a)^{-\frac{1}{2}} \right) \]
+pour tout élément unitaire K par rapport à \(\mathcal{M}(a)\) , où \( u_Q\)  est le modèle quadratique de u au point \( a \).</p>
+<p>Ce théorème souligne une autre dualité discret-continu en mettant en évidence un équivalent continu de l’erreur d’interpolation.</p>
+<p>Pour cette raison, le formalisme suivant est proposé :</p>
+<p>\( \pi_M\)  est appelé interpolé linéaire continu et \( |u - \pi_M u| \)  représente le dual continu de l’erreur d’interpolation.</p>
+<p>L’erreur d’interpolation locale devient globale lorsque le maillage est unitaire par rapport à un tenseur métrique constant (ce qui n’implique pas nécessairement que le maillage soit uniforme) et lorsque la fonction est quadratique. Dans ce cas spécifique, en négligeant les erreurs dues à la discrétisation des frontières, nous obtenons l’égalité :
+\[ |u - \Pi_h u|_{L^1(\Omega_h)} = |u - \pi_M u| _{ L^1(\Omega) }\]</p>
+<p>Pour tous les maillages \( \mathcal{H} \) qui sont unitaires par rapport à \( \mathcal{M}(x)_{x \in \Omega} \)</p>
+<h3 id="34-contrôle-optimal-de-lerreur-dinteprolation-en-norme-lp"><a class="header" href="#34-contrôle-optimal-de-lerreur-dinteprolation-en-norme-lp">3.4 Contrôle optimal de l’erreur d’inteprolation en norme \(L^P\)</a></h3>
+<p>Dans sa forme la plus générale, le problème de l’adaptation de maillage consiste à trouver le maillage \(\mathcal{H}\) d’un domaine \( \Omega \) qui minimise une erreur donnée pour une fonction u définie. Par souci de simplicité, nous considérons ici l’erreur d’interpolation linéaire \( |u - \Pi_h u | \) contrôlée en norme \(L^p\). À noter que l’utilisation d’autres normes est également possible. Le problème est ainsi posé de manière a priori
+Trouver \( H_{opt} \) possédant \(N\) sommets tel que :
+\[E_{L^p}(H_{opt}) = \min_{H} |u - \Pi_h u|_{L^p(\Omega_h)} \quad (P)\]</p>
+<p>\((P)\) est un problème combinatoire global qui s’avère insoluble en pratique. En effet, cela nécessiterait l’optimisation simultanée de la topologie du maillage et de la position des sommets.</p>
+<p>Par conséquent, des problèmes plus simples sont envisagés pour approximer la solution.Une simplification courante consiste à effectuer une analyse locale de l’erreur au lieu de considérer le problème global. Un premier ensemble de méthodes consiste à déduire la forme optimale des éléments. Un second ensemble consiste à dériver une borne locale de l’erreur d’interpolation. Cette borne est ensuite transformée en une estimation basée sur une métrique. Une minimisation directe de l’erreur peut également être envisagée en utilisant l’erreur d’interpolation directement comme fonction de coût dans le générateur de maillage.</p>
+<p>Toutes ces stratégies ont en commun la résolution d’un problème local, car elles agissent au voisinage d’un élément. Par conséquent, de telles minimisations d’erreur sont équivalentes à un algorithme de descente de gradient qui ne converge que vers un minimum local avec de faibles propriétés de convergence. Cet inconvénient provient du fait qu’une minimisation est directement effectuée sur un maillage discret.</p>
+<p>Nous proposons d’aborder la résolution de \((P)\) dans un cadre continu. Par conséquent, \((P)\) est reformulé comme un problème d’optimisation continue où l’erreur d’interpolation discrète est remplacée par son équivalent continu :</p>
+<p>Trouver \(M_{opt}\) ayant une complexité de \(N\) tel que :
+\[E_{L^p}(M_{opt}) = \min_{M} |u - \pi_M u|_{L^p(\Omega)}\]</p>
+<p>En utilisant la définition de l’interpolé continu linéaire \(\pi_M\), il est alors possible de poser le problème d’optimisation globale bien posé consistant à trouver le maillage continu optimal qui minimise l’erreur d’interpolation continue en norme \(L^p\) :</p>
+<p>Trouver \(M_{L^p} = \min_{M} E_{L^p}(M)\), soit :</p>
+<p>\[E_{L^p}(M) = \left( \int_{\Omega} (u(x) - \pi_M u(x))^p , dx \right)^{1/p} = \left( \int_{\Omega} \text{trace} \left( M(x)^{-1/2} |H_u(x)| M(x)^{-1/2} \right)^p  dx \right)^{1/p} \quad (4)\]</p>
+<p>sous la contrainte :\[\mathcal{C}(M) = \int_{\Omega} d(x) \ dx = N\]</p>
+<p>La contrainte sur la complexité est ajoutée pour éviter la solution triviale où tous les \((h_i)_{i=1,3}\) seraient nuls, ce qui donnerait une erreur nulle. Contrairement à une analyse discrète, ce problème peut être résolu globalement en utilisant le calcul des variations, lequel est bien défini sur l’espace des maillages continus.</p>
+<h3 id="theoreme-33"><a class="header" href="#theoreme-33">Theoreme 3.3</a></h3>
+<p>Soit \(u\) une fonction deux fois continûment dérivable définie sur \(\Omega \subset \mathbb{R}^3\), et \(H_u\) sa Hessienne. Le maillage continu optimal \(M_{L^p}(u) = (M_{L^p}(x))_{x \in \Omega}\) minimisant localement le Problème (4) s’écrit :</p>
+<p>\[M_{L^p}(x) = N^{\frac{2}{3}} \left( \int_{\Omega} \det(|H_u(\bar{x})|)^{\frac{p}{2p+3}} d\bar{x} \right)^{-\frac{2}{3}} \times \det(|H_u(x)|)^{-\frac{1}{2p+3}} |H_u(x)| \quad (5)\]</p>
+<p>Il vérifie les propriétés suivantes :</p>
+<ul>
+<li>L’unicité : \(M_{L^p}(u)\) est unique.</li>
+<li>L’alignement local : \(M_{L^p}(u)\) est localement aligné avec la base des vecteurs propres de \(H_u\) et possède les mêmes rapports d’anisotropie que \(H_u\).</li>
+<li>La borne d’erreur optimale : \(M_{L^p}(u)\) fournit une borne explicite optimale de l’erreur d’interpolation en norme \(L^p\) :</li>
+</ul>
+<p>\[ |u - \pi_{M_{L^p}} u|_ {L^p(\Omega)} = 3 N^{-\frac{2}{3}} \left( \int_{\Omega} \det(|H_u|)^{\frac{p}{2p+3}} \right)^{\frac{2p+3}{3p}}\]</p>
+<p>Il apparaît ainsi que la recherche du maillage optimal ne peut être dissociée de la métrique dont il découle ; cette dernière agit comme le pivot entre la minimisation théorique de l’erreur et la construction géométrique d’un domaine de calcul discret et efficace.</p>
+<h3 id="4-adaptation-de-maillage-pour-les-écoulements-stationnaires"><a class="header" href="#4-adaptation-de-maillage-pour-les-écoulements-stationnaires">4. Adaptation de maillage pour les écoulements stationnaires</a></h3>
+<p>Le passage d’une analyse théorique de l’erreur à une application numérique en mécanique des fluides (CFD) impose de reformuler le problème d’optimisation. Alors que la théorie pure définit la métrique optimale comme un tenseur idéal, l’enjeu opérationnel réside dans la génération effective d’un maillage dont la densité et l’anisotropie minimisent l’erreur d’approximation.</p>
+<p>Dans le cadre de simulations numériques, la solution exacte \(u\) est par définition inconnue. Le problème \((P)\) est alors transposé pour minimiser l’erreur entre \(u \text{ et } u_h \) en norme \(  |L^{p}| \) .</p>
+<p>Cette transition nécessite de coupler la théorie du maillage continu avec des estimateurs d’erreur capables de lier l’erreur d’approximation à l’erreur d’interpolation locale.</p>
+<h3 id="41-stratégies-dadaptation"><a class="header" href="#41-stratégies-dadaptation">4.1. Stratégies d’adaptation</a></h3>
+<p>Deux approches méthodologiques se distinguent pour le pilotage de l’anisotropie :</p>
+<p>L’approche par caractéristiques (Feature-based) : Elle vise à optimiser le maillage pour capturer l’ensemble des structures physiques d’un capteur (pression, nombre de Mach, etc.). L’utilisation de la norme \(L^p\) s’avère ici cruciale pour la capture des phénomènes multi-échelles, permettant de raffiner des structures dont l’amplitude est plusieurs ordres de grandeur inférieure aux échelles principales.</p>
+<p>L’approche orientée objectif (Goal-oriented) : Elle focalise l’effort de réduction d’erreur sur une fonctionnelle scalaire d’intérêt (ex: portance, traînée), bien que l’introduction de l’anisotropie y soit mathématiquement plus complexe à prescrire.</p>
+<h3 id="43-procédure-itérative-et-convergence"><a class="header" href="#43-procédure-itérative-et-convergence">4.3. Procédure itérative et convergence</a></h3>
+<p>L’adaptation de maillage étant intrinsèquement non-linéaire, sa résolution repose sur une boucle itérative visant la convergence du couple maillage-solution. Le processus suit une séquence rigoureuse :
+Résolution de l’écoulement sur un maillage \(H_i\).Estimation de la métrique optimale \(M_{L^p}\) à partir de la solution calculée (généralement via la récupération de la Hessienne).Gradation du champ de métriques pour assurer une régularité géométrique.Génération d’un nouveau maillage \(H_{i+1}\) respectant la métrique prescrite.Cette stratégie permet non seulement de capturer les singularités et les fortes discontinuités (chocs, couches limites), mais assure également le recouvrement de l’ordre de convergence théorique du schéma numérique, souvent dégradé sur des maillages non adaptés.daptation de maillage anisotrope pour les écoulements stationnairesCe passage marque une transition cruciale : on ne cherche plus seulement à définir mathématiquement une métrique optimale, mais à construire physiquement le maillage optimal qui en découle pour résoudre des problèmes complexes de dynamique des fluides.Deux approches principalesL’auteur distingue deux méthodes pour guider l’adaptation :L’adaptation basée sur les caractéristiques (Feature-based) : On cherche le meilleur maillage pour capturer les variations d’un capteur physique donné (vitesse, pression, etc.).L’adaptation orientée par l’objectif (Goal-oriented) : On optimise le maillage pour observer une fonctionnelle scalaire précise (par exemple, la traînée ou la portance d’une aile).Problématiques et MotivationsBien que l’efficacité de l’anisotropie soit prouvée, le passage aux solutions numériques (où la solution exacte \(u\) est inconnue) soulève des défis :Erreur d’approximation : On cherche à minimiser \(|u - u_h|_ {L^p}\) au lieu de l’erreur d’interpolation pure.Capture multi-échelles : L’utilisation de la norme \(L^p\) (au lieu de \(L^\infty\)) est indispensable pour capturer des phénomènes dont l’amplitude est parfois 1000 fois plus faible que les structures principales, sans avoir besoin de fixer arbitrairement une taille de maille minimale.Convergence théorique : L’adaptation permet de retrouver un ordre de convergence de 2 (souvent perdu sur des maillages uniformes en présence de chocs ou de forts gradients), ce qui valide la qualité du calcul.L’algorithme d’adaptationL’adaptation est un processus non-linéaire résolu par une boucle itérative. On ne se contente pas de calculer une métrique ; on génère un nouveau maillage à chaque étape pour converger vers le couple maillage-solution optimal.La boucle type (Algorithme 2) :Calcul : Résolution de l’écoulement sur le maillage actuel.Métrique : Calcul de la métrique \(M_{L^p}\) basée sur l’estimation d’erreur.Gradation : Lissage de la métrique pour éviter des variations de taille trop brutales entre voisins.Génération : Création d’un nouveau maillage adapté à cette métrique.Interpolation : Transfert de la solution précédente sur le nouveau maillage pour redémarrer le calcul.</p>
+<div class="algorithm">
+<b>Algorithm 2:</b> Mesh Adaptation Loop for Steady Flows<br><br>
+<p><b>Input:</b> Initial mesh and solution \((H_0, S_0^0)\), target complexity \(N\)<br>
+<b>Output:</b> Adapted mesh and solution<br><br></p>
+<ol>
+<li> Compute solution \\( S_i \\) using the flow solver from \\( (H_i, S_i^0) \\)</li>
+
+<li> If \\(i = n_{\text{adap}}\\), <b>break</b> </li>
+
+<li> Compute metric \\(M_{L^p,i} \text{from} (H_i, S_i)\\)</li>
+
+<li> Apply metric gradation to obtain \\(\tilde{M}_{L^p,i}\\)</li>
+
+<li> Generate adapted mesh \\(H_{i+1}\\)from \\((H_i, \tilde{M}_{L^p,i})\\)</li>
+
+<li> Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)</li>
+
+</ol>
+
+</div>
+ 
+<p>\(\) \(\) \(\) \(\) \(\)</p>
 <h3 id="definition--cavité"><a class="header" href="#definition--cavité">Definition : Cavité</a></h3>
 <p>Etant donné une entité de maillage \( e \) (un sommet ou une arête dans le cas présent), la cavité \( \mathcal{C}(e) \) est l’ensemble des éléments de maillage qui contiennent l’entité \( e \).</p>
 <p>Une cavité \( \mathcal{C}(e) \) peut être remplie à partir d’un sommet \( \mathbf v \) comme l’ensemble des éléments créés à partir de \( \mathbf v \) et des faces de la frontière de la cavité \( \partial \mathcal{C}(e) \) (orientées vers l’extérieur).</p>
 <p>\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \]</p>
 <h3 id="definition--swap"><a class="header" href="#definition--swap">Definition : Swap</a></h3>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/swap.svg" alt="Tenseur métrique anisotrope" width="70%">
+  <img src="images/swap.svg" alt="Tenseur métrique anisotrope" width="70%">
 </figure>
 <p>The <strong>swap</strong> operation aims at improving the quality of the elements.</p>
 <p>It can however introduce</p>
@@ -344,7 +478,7 @@ et
 <p>Le swap est également rejeté lorsque les contraintes de qualité et géométriques ne sont pas respectées. L’opération n’est pas effectuée si la qualité du maillage est déjà supérieure au seuil requis, ou si elle risque de compromettre la régularité de la surface en créant, par exemple, un angle de normales trop grand. Plus précisément, les nouveaux éléments résultant du swap doivent respecter une qualité minimale et des limites de longueur d’arête prédéfinies. Enfin, le swap est considéré comme un échec si la modification proposée ne change rien à la connectivité de la cavité.</p>
 <h3 id="definition--split"><a class="header" href="#definition--split">Definition : Split</a></h3>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/split.svg" alt="Tenseur métrique anisotrope" width="70%">
+  <img src="images/split.svg" alt="Tenseur métrique anisotrope" width="70%">
 </figure>
 <p>The <strong>split</strong> operations aims at splitting “long” edges. It is applied to edges whose length
 (in metric space) is larger than \(l_0 &gt; \sqrt{2}\).</p>
@@ -358,7 +492,7 @@ When introducing new vertices on boundaries, a projection step is required to en
 <p>Ainsi pour qu’un split soit effectué sur une arête jugée trop longue, celle-ci ne doit pas se trouver sur une frontière fixe, et la modification ne doit pas engendrer un maillage de mauvaise qualité ou des arêtes trop courtes. Si l’une de ces conditions n’est pas remplie, l’opération échoue. L’opération est validée et s’effectue si toutes les conditions sont respectées et qu’elle a pour effet d’améliorer la qualité du maillage.</p>
 <h3 id="definition--collapse"><a class="header" href="#definition--collapse">Definition : Collapse</a></h3>
 <figure style="text-align: center;">
-  <img src="Theoritical_Foundations/../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
+  <img src="images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
 </figure>
 <p>The <strong>collapse</strong> operation aims at removing “small” edges. It is applied to edges whose length (in metric space) is smaller than \( l_0 &lt; 1/\sqrt{2} \).</p>
 <p>It can however introduce</p>
@@ -372,48 +506,58 @@ When introducing new vertices on boundaries, a projection step is required to en
 <h3 id="definition--smooth"><a class="header" href="#definition--smooth">Definition : Smooth</a></h3>
 <p>The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.</p>
 <p>In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity or one of its children are considered for smoothing. A projection step is still required for boundary vertices to ensure the consistency with the CAD model.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="calcul-parallèle"><a class="header" href="#calcul-parallèle">Calcul Parallèle</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="calcul-parallèle"><a class="header" href="#calcul-parallèle">Calcul Parallèle</a></h1>
 <h2 id="mpi"><a class="header" href="#mpi">MPI</a></h2>
 <h2 id="rayon"><a class="header" href="#rayon">RAYON</a></h2>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="environnement-de-travail"><a class="header" href="#environnement-de-travail">Environnement de travail</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="environnement-de-travail"><a class="header" href="#environnement-de-travail">Environnement de travail</a></h1>
 <p>La mise en oeuvre des concepts théoriques de l’adaptation de maillage anisotrope dans un envrionnement de calcul massivement parallèle nécessite un écosystème précis.
 Cette section détaille les composants clés de notre environnement de travail. N
 ous y présenterons Tucanos, l’outil d’adaptation de maillage interne (développé chez Airbus par Xavier Garnaud et Jerome Robert ) qui constitute la base de nos recherches et développements, le cluster de calcul HPC,le logiciel de visualisation Paraview, la plateforme Mdbook utilisée pour cette documentation ainsi que l’équipe d’encadrement et le planning prévisionnel de la thèse.</p>
 <ul>
 <li>
-<p><a href="Work_Environnement/./Tucanos.html">Tucanos</a></p>
+<p><a href="#tucanos">Tucanos</a></p>
 </li>
 <li>
-<p><a href="Work_Environnement/./Tools.html">Outils</a></p>
+<p><a href="#outils-utilisés">Outils</a></p>
 </li>
 <li>
-<p><a href="Work_Environnement/./Planning_previsionnel.html">Planning Previsionnel</a></p>
+<p><a href="#organisation-des-travaux-de-recherche">Planning Previsionnel</a></p>
 </li>
 <li>
-<p><a href="Work_Environnement/./Encadrement.html">Encadrement</a></p>
+<p><a href="#encadrement">Encadrement</a></p>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="tucanos"><a class="header" href="#tucanos">Tucanos</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="tucanos"><a class="header" href="#tucanos">Tucanos</a></h1>
 <p>Tucanos is a 2D and 3D anisotropic mesh adaptation library. It is based on the principles described in “Four-Dimensional Anisotropic Mesh Adaptation for Spacetime Numerical Simulations” by Philip Claude Caplan.</p>
 <p>The project is enterily coded in Rust, but it also has a Python interface.</p>
 <p>You can find more information and the source code for Tucanos on its official GitHub repository: <a href="https://github.com/tucanos/tucanos">https://github.com/tucanos/tucanos</a>.</p>
 <br>
-<center>
-<img src="Work_Environnement/../images/tucano.svg" alt="Logo Tucanos" width="30%">
-<center><div style="break-before: page; page-break-before: always;"></div><h1 id="outils-utilisés"><a class="header" href="#outils-utilisés">Outils Utilisés</a></h1>
+<img src="images/tucano.svg" alt="Logo Tucanos" width="30%">
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="outils-utilisés"><a class="header" href="#outils-utilisés">Outils Utilisés</a></h1>
 <h3 id="lenvironnement-hpc"><a class="header" href="#lenvironnement-hpc">L’environnement HPC</a></h3>
 <p>Mes travaux de thèse sont ancrés au sein d’un cluster de calcul haute performantce (HPC). Cet environnement possède une architecture robuste conçue pour répondre aux exigences des calculs massifs liés aux activités d’ingénierie AIRBUS. L’environnement est composé de noeuds de calcul optimisé en terme de puissance et de mémoire.
 La machine utilisée est composée de deux types de noeuds calcul :</p>
 <br>
-<div class="table-wrapper"><table><thead><tr><th>Caractéristiques \ Types</th><th>Type 1</th><th>Type 2</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Caractéristiques \ Types</th><th>Type 1</th><th>Type 2</th></tr>
+</thead>
+<tbody>
 <tr><td>Processeurs</td><td>2 Xeon-G 6142</td><td>2 Xeon-G 6142</td></tr>
 <tr><td>Coeurs physiques par processeurs</td><td>16 (HT)</td><td>16 (HT)</td></tr>
 <tr><td>Base Clock Speed</td><td>1.6 Ghz</td><td>1.6 Ghz</td></tr>
 <tr><td>Memory Speed</td><td>2666 Mhz</td><td>2666 Mhz</td></tr>
 <tr><td>RAM</td><td>96GB</td><td>384 GB</td></tr>
 <tr><td>Stockage local</td><td>1 TB HDD</td><td>3.8 TB SSD</td></tr>
-</tbody></table>
-</div><br>
+</tbody>
+</table>
+</div>
+<br>
 <p>La machine comprend 110 noeuds de Type 1 et 16 de Type2.</p>
 <p>L’ensemble du cluster est géré par LSF (Load Sharing Facility) qui alloue dynamiquement des ressources critiques en fonction des requêtes soumises.</p>
 <h3 id="paraview"><a class="header" href="#paraview">Paraview</a></h3>
@@ -447,7 +591,8 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
 </li>
 </ul>
 <p><strong>MdBook</strong> : <a href="https://rust-lang.github.io/mdBook/index.html">https://rust-lang.github.io/mdBook/index.html</a>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="organisation-des-travaux-de-recherche"><a class="header" href="#organisation-des-travaux-de-recherche">Organisation des travaux de recherche</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="organisation-des-travaux-de-recherche"><a class="header" href="#organisation-des-travaux-de-recherche">Organisation des travaux de recherche</a></h1>
 <ul>
 <li>
 <p><strong>[M1-M6]</strong> Immersion dans le logiciel CODA et son environnement, incluant l’environnement de développement, les outils de pré/post-traitement et l’environnement HPC  Td’Airbus. L’objectif est d’apprendre et de se former sur le logiciel CODA et de mettre en place le calcul de cas tests pertinents.</p>
@@ -476,10 +621,12 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
 </ul>
 <p><br><br><br></p>
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
-    <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+    <img src="images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="images/CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="encadrement"><a class="header" href="#encadrement">Encadrement</a></h1>
+
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="encadrement"><a class="header" href="#encadrement">Encadrement</a></h1>
 <p>Le succès de ce projet de thèse repose sur un encadrement solide et multidisciplinaire, bénéficiant de l’expertise combinée d’Airbus et du Centre Européen de recherche et de formation en Calcul Scientifque (CERFACS) :</p>
 <ul>
 <li>
@@ -503,11 +650,14 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
 </ul>
 <p><br><br><br></p>
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <img src="Work_Environnement/../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
-    <img src="Work_Environnement/../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
+    <img src="images/Airbus.png" alt="Image à gauche" style="width: 30%;">
+    <img src="images/CERFACS.png" alt="Image à droite" style="width: 30%;">
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="recherche--premiers-résultats"><a class="header" href="#recherche--premiers-résultats">Recherche &amp; Premiers Résultats</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="partitionneurs"><a class="header" href="#partitionneurs">Partitionneurs</a></h1>
+
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="recherche--premiers-résultats"><a class="header" href="#recherche--premiers-résultats">Recherche &amp; Premiers Résultats</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="partitionneurs"><a class="header" href="#partitionneurs">Partitionneurs</a></h1>
 <p>Comme nous l’avons vu, la quantité de données induites par la résolution des équations de la CFD ainsi que la recherche de calcul de haute performance nous pousse à utiliser plusieurs unité de calcul. Pour cela il est impératif de partitionner le maillage sous-jacent au domaine de travail. Partitionner permet de diviser le domaine en autant de sous-domaines qu’il y a de coeurs disponibles, décomposant le problème initial en N sous-problèmes.</p>
 <p>Un bon partitionnement repose sur trois critères essentiels :</p>
 <p>Reduction des interdépendances : Minimiser les arêtes ou faces partagées entre les sous-domaines afin de limiter les communications coûteuses entre les unités de calcul.</p>
@@ -518,13 +668,13 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
 <h4 id="two-step-process-"><a class="header" href="#two-step-process-">Two-Step process :</a></h4>
 <p>Cette méthode débute par un premier partitionnement du maillage. Les interfaces de ces partitions initiales sont alors “gelées”, permettant à chaque processeur de remailler son sous-domaine interne de manière indépendante. Une fois cette première phase d’adaptation locale achevée, un second partitionnement est effectué sur l’ensemble du domaine, mais de manière à ce que les interfaces du premier partitionnement (celles qui étaient gelées) ne partagent aucun élément en commun avec les nouvelles interfaces du deuxième partitionnement. Cette stratégie garantit que la totalité du domaine, y compris les zones d’interface initialement gelées, soit effectivement remaillée, assurant ainsi une adaptation complète.</p>
 <center>
-<img src="Contributions/../images/Two_Step_Process.png" alt="Logo Tucanos" width="100%">
+<img src="images/Two_Step_Process.png" alt="Logo Tucanos" width="100%">
 </center>
 <br>
 <h4 id="hierarchical-interface-freezing-method-"><a class="header" href="#hierarchical-interface-freezing-method-">Hierarchical Interface Freezing Method :</a></h4>
 <p>Cette seconde approche est également basée sur le gel des interfaces, mais de manière itérative et hiérarchique. Le domaine est initialement partitionné et les interfaces sont gelées, permettant le remaillage indépendant de chaque sous-domaine. Une fois cette étape terminée, l’attention se porte sur les interfaces elles-mêmes : elles sont à leur tour partitionnées (en “gelant” les sous-interfaces nouvellement créées), puis remaillées. Ce processus de subdivision et de remaillage des interfaces peut être répété de manière récursive (gel des interfaces des interfaces, et ainsi de suite) jusqu’à atteindre un niveau de précision et de conformité satisfaisant sur l’ensemble des frontières.</p>
 <center>
-<img src="Contributions/../images/Freezing_Interface.png" alt="Logo Tucanos" width="80%">
+<img src="images/Freezing_Interface.png" alt="Logo Tucanos" width="80%">
 </center>
 <p>Au-delà des stratégies de gestion des interfaces pour le remaillage parallèle, la problématique fondamentale de la division initiale d’un maillage en sous-domaines demeure. Cette tâche est assurée par les algorithmes de partitionnement dont les objectifs ont été discutés plus tôt. Nous allons introduire ici une séléction des partitionneurs utilisés au sein de Tucanos, ainsi que ceux implémentés dans le cadre des travaux de thèse. On effectuera une analyse comparative de leurs performances sur un cas test :</p>
 <p>Les deux partitionneurs ci-dessous sont basés sur une renumérotation préalable des sommets d’après une courbe de Hilbert. Chaque sommet du maillage se voit attribuer un indice de Hilbert en fonction de sa position spatiale sur la courbe. C’est une opération de compléxité linéaire, facilement parallélisable. Les partitionnements suivants se basent donc sur la liste des indices de Hilbert qui a la forme suivante :</p>
@@ -535,36 +685,37 @@ MdBook offre plusieurs fonctionnalités clés qui sont particulièrement pertine
 <p>On commence par lister les éléments partageant le sommet n°1 d’après la liste d’indices de Hilbert, cette liste d’éléments appelée boule du sommet 1, chacun de ces éléments est ajouté à la partition n°1. Puis on fait de même avec le sommet n°2, on liste et on ajoute les éléments de la boule du sommet 2 qui n’ont pas encore été ajouté à une partition, et ainsi de suite … A chaque fois que l’on ajoute un élément à une partition, on vérifie que le nombre d’éléments dans la partition_i que l’on est en train de remplir n’excède pas le montant d’éléments par partition voulu. Si tel est le cas alors l’élément est ajouté à la partition_i+1.</p>
 <p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode de Hilbert pour n=4 partitions:</p>
 <center>
-<img src="Contributions/../images/Hilbert_bg.png" alt="HilbertBall Partitionnement" width="50%">
+<img src="images/Hilbert_bg.png" alt="HilbertBall Partitionnement" width="50%">
 </center>
 <p>quality=2.13e-2</p>
 <h4 id="2-bfs"><a class="header" href="#2-bfs">2. BFS</a></h4>
 <p>Cette méthode s’appuie non pas sur une renumérotation par Hilbert des sommets mais sur une renumérotation par éléments. On considère alors le premier élément de cette liste d’éléments, qu’on appellera élément <strong>racine</strong>, on ajoute chacun des éléments voisins à une file d’attente. Puis chaque élément de la file d’attente est ajouté à la partition courante et on ajoute également ses voisins (si ils n’ont pas déjà été assignés) à la file d’attente. La méthode avance donc par front. De la même manière que pour la méthode de la boule de Hilbert, chaque fois qu’un élément est ajouté à une partition, on s’assure que le montant d’élément dans la partition courante n’excède pas le nombre d’éléments voulu par partition.</p>
 <p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions:</p>
 <center>
-<img src="Contributions/../images/BFS_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
+<img src="images/BFS_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
 </center>
 <p>quality=6.52e-2</p>
 <h4 id="3-bfs-with-restart-bfswr"><a class="header" href="#3-bfs-with-restart-bfswr">3. BFS With Restart (BFSWR)</a></h4>
 <p>Cette méthode utilise la même logique que celle du BFS, mais lorsque qu’une partition excède le nombre d’éléments par partition voulu, la file d’attente est vidée et le prochain élément <strong>racine</strong> devient le dernier élément contenu dans la file avant d’être vidée.</p>
 <p>Voici un exemple du partitionnement obtenu sur un maillage carré en 2D via la méthode BFS pour n=4 partitions:</p>
 <center>
-<img src="Contributions/../images/BFSWR_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
+<img src="images/BFSWR_2D_bg.png" alt="HilbertBall Partitionnement" width="50%">
 </center>
 <p>quality=3.32e-2</p>
 <h4 id="4-metis"><a class="header" href="#4-metis">4. Metis</a></h4>
 <p>METIS est une bibliothèque logicielle largement reconnue, conçue pour le partitionnement de graphes. Dans le contexte de l’adaptation de maillage, elle est utilisée pour décomposer un maillage en sous-domaines en le représentant comme un graphe dual, où chaque élément du maillage correspond à un nœud du graphe. La division du maillage est ensuite obtenue en partitionnant ce graphe. METIS propose deux algorithmes principaux avec des objectifs similaires : le partitionnement Kway et le partitionnement Récursif (Recursive Bisection), qui visent tous deux à minimiser les interdépendances entre les partitions pour optimiser l’efficacité du calcul parallèle.</p>
 <h3 id="metis-kway"><a class="header" href="#metis-kway">Metis Kway</a></h3>
 <center>
-<img src="Contributions/../images/Metis_Kway_2D_bg.png" alt="MetisKway Partitionnement" width="50%">
+<img src="images/Metis_Kway_2D_bg.png" alt="MetisKway Partitionnement" width="50%">
 </center>
 <h5 id="ajout-discussion-autour-de-la-qualité-des-partitions"><a class="header" href="#ajout-discussion-autour-de-la-qualité-des-partitions">Ajout discussion autour de la qualité des partitions</a></h5>
 <h3 id="metis-recursive"><a class="header" href="#metis-recursive">Metis Recursive</a></h3>
 <center>
-<img src="Contributions/../images/Metis_Recursive_2D_bg.png" alt="Metis Recursive Partitionnement" width="50%">
+<img src="images/Metis_Recursive_2D_bg.png" alt="Metis Recursive Partitionnement" width="50%">
 </center>
 <h5 id="ajout-discussion-autour-de-la-qualité-des-partitions-1"><a class="header" href="#ajout-discussion-autour-de-la-qualité-des-partitions-1">Ajout discussion autour de la qualité des partitions</a></h5>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="load-balancing"><a class="header" href="#load-balancing">Load Balancing</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="load-balancing"><a class="header" href="#load-balancing">Load Balancing</a></h1>
 <p>Une stratégie efficace de partitonnement devrait également faire en sorte d’équilibrer la charge de calcul entre les différents processeurs. Chaque travail de remaillage étant effectué indépendamment sur les différentes partitions, la performance globale d’une parallélisation de l’algorithme de remaillage sera limitée par la partition ayant la plus grosse charge computationnelle.</p>
 <p>Cette charge de travail dépend des opérations de remaillage utilisées (insertion, collapse, swap, smoothing), de la métrique cible \(\mathcal{M}(x)_{x \in \Omega}\), du maillage initial \(\mathcal{H}\) et de sa métrique induite \( (\mathcal{M} _{\mathcal{H}}(x)) _{x \in \Omega} \) avec \(\Omega\) le domaine à remailler.</p>
 <h4 id="remarque-"><a class="header" href="#remarque-">Remarque :</a></h4>
@@ -582,7 +733,7 @@ On dénotera alors \( d_{T} , d_{\mathcal{H}}, d_{\cap} \)  les densités des m�
 On analysera le travail dans deux configurations spécifiques et on généralisera à toutes configurations.</p>
 <h3 id="cas-dinsertion-"><a class="header" href="#cas-dinsertion-">Cas d’insertion :</a></h3>
 <center>
-<img src="Contributions/../images/Insertion.png" alt="Logo Tucanos" width="25%">
+<img src="images/Insertion.png" alt="Logo Tucanos" width="25%">
 </center>
 <p>Prennons le cas, ou le maillage sera uniquement raffiné, la densité de points à insérer est \( d_{\mathcal{M}_T \setminus  \mathcal{M} _{\mathcal{H}} }\) d’où le travail à effectuer par élément est défini par :</p>
 <p>\[ wrk(K) = \alpha |K|(d_{ T} - d_{\mathcal{H}})  = \alpha |K|(d_{\cap} - d_{\mathcal{H}}) \]</p>
@@ -595,7 +746,7 @@ On analysera le travail dans deux configurations spécifiques et on généralise
 <p>Il est important de garder en tête ici que la densité est inversement proportionnelle à la “taille” de l’ellipse représentant la métrique.</p>
 <h3 id="cas-de-collapse-"><a class="header" href="#cas-de-collapse-">Cas de Collapse :</a></h3>
 <center>
-<img src="Contributions/../images/Collapse.png" alt="Logo Tucanos" width="23%">
+<img src="images/Collapse.png" alt="Logo Tucanos" width="23%">
 </center>
 <p>Dans le cas où le maillage est uniquement dégrossi, la densité des points à insérer devient : \( d_{\mathcal{M} _{\mathcal{H}} \setminus \mathcal{M}_T   }\)</p>
 <p>\[ wrk(K) = \beta |K|(d_{\mathcal{H}} - d_{ T})  = \beta |K|(d_{\cap} - d_{ T}) \]</p>
@@ -615,7 +766,7 @@ On analysera le travail dans deux configurations spécifiques et on généralise
 </ul>
 <h3 id="cas-géneral-"><a class="header" href="#cas-géneral-">Cas Géneral :</a></h3>
 <center>
-<img src="Contributions/../images/Cas_general_bg.png" alt="Logo Tucanos" width="90%">
+<img src="images/Cas_general_bg.png" alt="Logo Tucanos" width="90%">
 </center>
 <p>Dans le cas général, il est possible d’avoir à insérer et à supprimmer localement des éléments de maillage pour l’adapatation d’un seul et même élément.
 Par exemple, si la métrique induite et la métrique cible possèdent la même densité mais des axes orientés dans des directions différentes.</p>
@@ -633,12 +784,18 @@ Par exemple, si la métrique induite et la métrique cible possèdent la même d
 <li>Load Balancing : Oui/Non</li>
 </ul>
 <p>Pour pouvoir au mieux estimer les coûts en terme d’adaptation de maillage que représente chaque élément, il est nécessaire d’avoir une idée précise de ce que sont les coûts propres à chaque opération. Dans un premier temps, un profilage du code sur plusieurs configurations données permet de mettre en lumière plusieurs constats :</p>
-<div class="table-wrapper"><table><thead><tr><th>Opération \ Etat</th><th>Réussi</th><th>Echouée</th><th>Vérification</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Opération \ Etat</th><th>Réussi</th><th>Echouée</th><th>Vérification</th></tr>
+</thead>
+<tbody>
 <tr><td>Split</td><td>10−5</td><td>10−6</td><td>10−8</td></tr>
 <tr><td>Collapse</td><td>10−5</td><td>10−5</td><td>10−8</td></tr>
 <tr><td>Swap</td><td>10−5</td><td>10−6</td><td>10−6</td></tr>
 <tr><td>Smooth</td><td>10−9</td><td>10−9</td><td>10−9</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <p>L’opération de vérification qui prend le plus de temps est celle du swap.
 Tous les couts liées aux opérations de smoothing peuvent être négligés la formule d’estimation de coût peut alors être simplifiée:</p>
@@ -661,9 +818,24 @@ De plus par nature de l’opération de spli, cell-ci entraine la création de n
 <p>Dans de futures observations, mais pour simplifier les calculs on montrera que la proportion de swap générés par un split est négligeable.
 De la même manière on peut définir le coût d’un collapse de la manière suivante :</p>
 <p>Ce qui nous amène à : …</p>
+<h1 id="vers-un-load-balancing-intelligent"><a class="header" href="#vers-un-load-balancing-intelligent">Vers un Load Balancing Intelligent</a></h1>
+<h3 id="limites-des-modèles-analytiques"><a class="header" href="#limites-des-modèles-analytiques">Limites des modèles analytiques</a></h3>
+<p>L’approche initiale consistait à définir le travail de remaillage par une formule déterministe basée sur les densités de métriques :
+$$wrk(K) = |K| ( \alpha (d_{\cap} - d_{\mathcal{H}}) + \beta (d_{\cap} - d_{ T}) + \gamma d_T )$$</p>
+<p>Cependant, après implémentation, cette modélisation s’est heurtée à la réalité de l’adaptation anisotrope :</p>
+<ul>
+<li><strong>Dépendance des opérateurs</strong> : Le coût d’un <em>split</em> n’est pas une valeur isolée car il engendre souvent des cascades de <em>collapses</em> et de <em>swaps</em> pour maintenir la validité topologique du maillage.</li>
+<li><strong>Sensibilité à l’anisotropie</strong> : Une métrique très étirée rend la recherche de cavités et la validation des opérations beaucoup plus complexe, rendant les poids uniformes peu représentatifs de la réalité computationnelle.</li>
+<li><strong>Goulots d’étranglement</strong> : Les premiers tests ont montré que les partitions ayant peu de sommets mais une forte activité de remaillage créent des goulots d’étranglement par rapport aux partitions denses mais statiques.</li>
+</ul>
+<h3 id="piste-de-lia-exploration"><a class="header" href="#piste-de-lia-exploration">Piste de l’IA (Exploration)</a></h3>
+<p>Face à l’impossibilité de trouver un modèle analytique universel fonctionnant pour tout type de métrique, l’intégration d’un modèle d’IA a été envisagée. L’idée était d’entraîner un réseau capable de prédire le coût de calcul à partir de patterns de maillage et de métriques.</p>
+<ul>
+<li><strong>Obstacle majeur</strong> : La génération de données d’entraînement représentatives (dépendance au type de maillage, à la qualité de la métrique, etc.) aurait nécessité un investissement temporel trop important, nous éloignant du cœur de la thèse.</li>
+</ul>
 <!-- 
 Après l'implémentation initiale des concepts de partitionnement et d'estimation de charge, les premiers cas tests ont permis de dégager des observations cruciales concernant le comportement des algorithmes et la nature des défis liés à l'adaptation de maillage parallèle. Nous présentons ici les conclusions préliminaires tirées de ces expérimentations. 
-
+\(\)\(\)
 Les expérimentations ont été menées sur une série de configuration en deux et trois dimensions. 
 
 
@@ -680,7 +852,6 @@ Les expérimentations ont été menées sur une série de configuration en deux 
 
 
 #### Configuration 3D:
-
 * \\( \Omega = [0,1]^3\\)
 * \\(\mathcal{M}_T =  
     \begin{bmatrix}0.01&0&0\\\\
@@ -723,9 +894,61 @@ Après étude, sur plusieurs configurations différentes, on obtient les coût m
 
 On observe plusieurs choses très importantes, on voit qu'une opération réussie (split,collpase,swap) dure deux fois plus longtemps qu'une opération échouée et 1000 fois plus qu'une simple vérification. Le coût du Smooth est négligeable vis à vis des autres opérations. Il est également important d'estimer combien de fois sont réalisées chacune de ces sous-opérations lors de processus d'adaptation de maillage, et comment les opérations s'enchainent. Il faut notamment déterminer si certaines opérations, telles que des splits, peuvent entraîner d'autres opérations en cascade, augmentant ainsi le coût total du processus d'adaptation. 
  -->
-<div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-and-references"><a class="header" href="#appendix-and-references">Appendix and References</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="la-chaîne-de-calcul--écosystème-et-interopérabilité"><a class="header" href="#la-chaîne-de-calcul--écosystème-et-interopérabilité">La Chaîne de Calcul : Écosystème et Interopérabilité</a></h1>
+<!-- 
+### Architecture logicielle et outils
+La mise en œuvre de l'adaptation nécessite une orchestration entre plusieurs outils complexes :
+* **CODA** : Solveur CFD massivement parallèle gérant des calculs de très grande envergure.
+* **FSDM** : Gestionnaire de structures de données (Fluid Structure Data Manager) qui propose l'interface avec le solveur via une API Python/C.
+* **Tucanos** : Bibliothèque de remaillage anisotrope 2D/3D écrite en Rust.
+* **FSCGNS** : Module d'E/S crucial pour lequel des contributions significatives ont été apportées afin d'assurer la compatibilité des formats de fichiers industriels (ANSA/CODA). -->
+<h3 id="le-défi-de-la-convergence-initiale"><a class="header" href="#le-défi-de-la-convergence-initiale">Le défi de la convergence initiale</a></h3>
+<p>L’adaptation est un processus dont la qualité dépend de la solution calculée sur le maillage précédent.</p>
+<ul>
+<li><strong>Sensibilité de l’indicateur</strong> : Si la solution sur le maillage initial (souvent grossier) n’est pas convergée, l’indicateur d’erreur est de mauvaise qualité.</li>
+<li><strong>Conséquence directe</strong> : Un indicateur bruité ne permet pas d’adapter le maillage correctement pour capturer la physique de l’écoulement (chocs, couches limites).</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="adaptation-hybride--le-cycle-polyédrique--tétraédrique"><a class="header" href="#adaptation-hybride--le-cycle-polyédrique--tétraédrique">Adaptation Hybride : Le cycle Polyédrique / Tétraédrique</a></h1>
+<h3 id="pourquoi-le-polyédrique-"><a class="header" href="#pourquoi-le-polyédrique-">Pourquoi le polyédrique ?</a></h3>
+<p>Tucanos travaille nativement sur des maillages full tétraèdres. Cependant, pour la résolution en <strong>Volumes Finis (VF)</strong> <em>cell-centered</em> dans CODA, les maillages polyédriques sont préférés pour :</p>
+<ul>
+<li>Une meilleure convergence de la solution sur des maillages grossiers.</li>
+<li>Un calcul de gradient plus robuste (via Green-Gauss ou Moindres Carrés).</li>
+</ul>
+<h3 id="algorithme-de-la-boucle-dadaptation"><a class="header" href="#algorithme-de-la-boucle-dadaptation">Algorithme de la boucle d’adaptation</a></h3>
+<p>Le cycle mis en place pour pallier les limitations des tétras est le suivant :</p>
+<ol>
+<li><strong>Initialisation</strong> : Départ d’un maillage tétraédrique coarse.</li>
+<li><strong>Conversion</strong> : Transformation en polyédrique via le logiciel ANSA (plus stable que la méthode duale interne actuelle).</li>
+<li><strong>Simulation</strong> : Calcul de la solution via CODA sur le maillage polyédrique.</li>
+<li><strong>Interpolation (Rayon Pair)</strong> : Pour remailler, il faut ramener la solution du Poly vers le Tétra. J’ai implémenté la méthode du “Rayon Pair” (<em>Point-in-Polyhedron</em>) pour déterminer l’appartenance d’un point à une cellule polyédrique.</li>
+<li><strong>Remaillage</strong> : Utilisation de Tucanos pour adapter les tétras selon la métrique issue de la solution.</li>
+</ol>
+<h3 id="robustesse-et-qualité-des-éléments"><a class="header" href="#robustesse-et-qualité-des-éléments">Robustesse et qualité des éléments</a></h3>
+<p>Le processus est fragile : les mailles remaillées par Tucanos ne fournissent pas toujours de bons éléments polyédriques après conversion. Un travail est en cours pour identifier des critères de qualité tétraédriques spécifiques garantissant la stabilité de la solution polyédrique après adaptation.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="étude-de-cas--aile-onera-m6"><a class="header" href="#étude-de-cas--aile-onera-m6">Étude de Cas : Aile ONERA M6</a></h1>
+<h3 id="adaptation-à-haute-complexité"><a class="header" href="#adaptation-à-haute-complexité">Adaptation à haute complexité</a></h3>
+<p>L’adaptation fonctionne de manière satisfaisante lorsqu’un grand nombre de degrés de liberté est autorisé. Sur l’aile M6, un maillage très bien adapté capturant le choc transsonique a été obtenu avec :</p>
+<ul>
+<li><strong>Complexité</strong> : Environ 6 000 000 d’éléments.</li>
+<li><strong>Itérations</strong> : 20 cycles d’adaptation.</li>
+</ul>
+<h3 id="le-défi-de-la-basse-complexité"><a class="header" href="#le-défi-de-la-basse-complexité">Le défi de la basse complexité</a></h3>
+<p>L’enjeu actuel est d’obtenir une capture physique similaire avec une complexité proche du maillage initial (~600 000 éléments).</p>
+<ul>
+<li><strong>Observation</strong> : Le couplage actuel échoue à capter la courbure de la Hessienne du Mach sur maillage grossier.</li>
+<li><strong>Analyse</strong> : L’indicateur d’erreur, initialement pensé pour le DG (Discontinuous Galerkin), semble moins performant pour le Volume Fini sur des maillages très <em>coarse</em> où le gradient est mal résolu.</li>
+</ul>
+<h3 id="perspectives--gradients-dordre-supérieur"><a class="header" href="#perspectives--gradients-dordre-supérieur">Perspectives : Gradients d’ordre supérieur</a></h3>
+<p>Pour améliorer la précision de l’indicateur sans augmenter massivement le nombre d’éléments, l’objectif est de travailler sur des méthodes de calcul de gradients d’ordre plus élevé. Cela permettrait d’obtenir un indicateur d’erreur plus précis capable de guider l’adaptation même sur des résolutions spatiales limitées.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="appendix-and-references"><a class="header" href="#appendix-and-references">Appendix and References</a></h1>
 <p>Afin de faciliter la compréhension de cette recherche, cette section fournit des informations complémentaires essentielles ainsi qu’une liste exhaustive des références qui ont été déterminantes pour notre travail.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="references"><a class="header" href="#references">References</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="references"><a class="header" href="#references">References</a></h1>
 <ul>
 <li>
 <p>George, P. L., Borouchaki, H., Alauzet, F., Laug, P., Loseille, A., &amp; Maréchal, L. (2018). <strong>Maillage, modélisation géométrique et simulation numérique Volume 2</strong>.
@@ -747,7 +970,8 @@ On observe plusieurs choses très importantes, on voit qu'une opération réussi
 <p>Loseille, A., Alauzet, F., &amp; Menier, V. (2017). <strong>Unique cavity-based operator and hierarchical domain partitioning for fast parallel generation of anisotropic meshes</strong>.</p>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 
                     </main>
 
@@ -765,6 +989,12 @@ On observe plusieurs choses très importantes, on voit qu'une opération réussi
             </nav>
 
         </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
         <!-- Livereload script (if served using the cli tool) -->
         <script>
@@ -784,19 +1014,18 @@ On observe plusieurs choses très importantes, on voit qu'une opération réussi
         </script>
 
 
-
         <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 
