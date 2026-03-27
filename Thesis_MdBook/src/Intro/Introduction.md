@@ -1,7 +1,27 @@
-# 1. Contexte Général et Motivations
+# 1. Introduction 
 
-## 1.1 Le défi de la simulation numérique et l'essence de l'adaptation de maillage
-Dans le domaine de l'ingénierie et de la science, la modélisation et la simulation numérique jouent un rôle prépondérant pour comprendre et prédire le comportement de phénomènes physiques complexes. Que ce soit pour simuler les écoulements d'air autour d'une aile d'avion, la propagation de la chaleur dans un réacteur, ou la déformation de structures sous contrainte, atteindre une haute-fidélité dans ces simulations est un défi fondamental.
+In the fields of engineering and science, numerical modeling and simulation play a pivotal role in understanding and predicting the behavior of complex physical phenomena. Whether simulating airflow around an aircraft wing, heat propagation within a reactor, or the deformation of structural components under stress, achieving high-fidelity simulations remains a fundamental challenge.
+
+The numerical resolution of the governing equations for these complex phenomena necessitates a prior discretization of space and time. To this end, meshes are essential, as they allow for the decomposition of the complex geometries inherent in the problem into a finite set of elements. This indispensable discretization enables the approximation of physical quantities, thereby allowing the underlying equations to be solved computationally.
+
+While meshes are vital, their static design reveals significant limitations when faced with the complexity of physical phenomena, particularly in fluid dynamics. For instance, capturing the full range of information in turbulent flows using a static mesh would require exhaustive prior knowledge of the flow's specific features, which is seldom available. In practice, these phenomena are characterized by intense physical gradients and intricate motion structures confined to highly specific regions of the domain, such as boundary layers or wakes.
+
+Consequently, a static meshing approach is suboptimal; it risks being insufficiently refined where high precision is critical, yet overly dense in less significant areas of the flow. Beyond the loss of information, this imbalance leads to an unjustified computational overhead in regions where lower resolution would suffice.
+
+To overcome these challenges and optimize the efficiency of high-fidelity numerical simulations, anisotropic mesh adaptation is paramount. This dynamic approach enables the intelligent adjustment of both the density and orientation of mesh elements based on solution characteristics and approximation errors. Anisotropic adaptation refines the resolution by aligning the shape of the elements with the directions of the predominant physical phenomena. By precisely concentrating computational resources where they are most needed, it maximizes accuracy while minimizing computational costs.
+
+Achieving such high fidelity at the scale of modern industrial applications, particularly in the aerospace industry, requires the use of massively parallel computing. Indeed, the volume of data and the complexity of the calculations are colossal; a typical mesh for a Computational Fluid Dynamics (CFD) simulation can comprise tens, or even hundreds, of millions of elements.
+
+Ensuring computational efficiency for such massive datasets can only be achieved through parallel computing. This involves distributing the mesh and its intrinsic operations—such as adaptation processes—across multiple computing cores. This parallel dimension introduces an additional layer of complexity: it requires ensuring an equitable distribution of workload (load balancing) and maintaining efficient, minimal communication between processors, all while preserving the consistency of the calculations. It is within this high-performance computing (HPC) context that mesh adaptation solutions must be integrated to be truly effective for industrial applications.
+
+The objective of this thesis is to extend the capabilities of parallel anisotropic mesh adaptation for RANS-based Finite Volume solvers, focusing on making the entire process industry-ready. By optimizing parallel performance and developing advanced error indicators and gradient recovery methods, this work seeks to provide a scalable and highly accurate solution for complex, large-scale industrial simulations.
+
+
+
+<!-- # 1. Contexte Général et Motivations
+
+## 1.1 Le défi de la simulation numérique et l'essence de l'adaptation de maillage -->
+<!-- Dans le domaine de l'ingénierie et de la science, la modélisation et la simulation numérique jouent un rôle prépondérant pour comprendre et prédire le comportement de phénomènes physiques complexes. Que ce soit pour simuler les écoulements d'air autour d'une aile d'avion, la propagation de la chaleur dans un réacteur, ou la déformation de structures sous contrainte, atteindre une haute-fidélité dans ces simulations est un défi fondamental.
 
 Résoudre numériquement les équations qui régissent ces phénomènes complexes impose une discrétisation préalable de l'espace et du temps. Pour cela, les maillages sont fondamentaux car ils permettent de décomposer la géométrie complexe induite par le problème en un ensemble fini d'éléments. Cette discrétisation, nécessaire, permet d'approximer des grandeurs physiques et donc de résoudre les équations sous jacente au problème de manière computationnelle.
 
@@ -24,12 +44,12 @@ L'objectif principal de cette thèse est de développer un cadre d'adaptation de
 <!-- Pour y parvenir, une part essentielle de la thèse consistera à identifier et à implémenter des métriques anisotropes adaptées à la capture de phénomènes clés comme les couches limites et les chocs transsoniques, ainsi que des métriques "goal-based" exploitant la sensibilité adjointe. La mise en œuvre de ce workflow d'adaptation distribuée débutera par une version en ligne de commande, puis évoluera vers un couplage direct avec le module FSDM de CODA via l'API kalpaTARU C. L'efficacité du workflow sera validée à travers des applications concrètes sur des configurations d'avions représentatives (LAGOON, DPW). -->
 
 
-## 1.3 Feuille de Route 
+<!-- ## 1.3 Feuille de Route 
 
-Ce MdBook a pour vocation de présenter l'intégralité des avancées et des résultats obtenus au cours de ma thèse de doctorat. Au fil des chapitres, il retracera l'évolution continue de ma thèse, de mes explorations intiailes aux résultats les plus récents. Chaque section abordera un aspect fondamental de ma recherche : l'acquisition de connaissances théoriques relatives à l'adaptation de maillage anisotropique, l'environnement de développement et les outils utilisés ainsi que l'ensemble de mes contributions scientifiques. L'objectif est de fournir une vision claire et structurée de l'état d'avancement de ma recherche, des défis rencontrés et des solutions développées tout au long de ces trois années.
+Ce MdBook a pour vocation de présenter l'intégralité des avancées et des résultats obtenus au cours de ma thèse de doctorat. Au fil des chapitres, il retracera l'évolution continue de ma thèse, de mes explorations intiailes aux résultats les plus récents. Chaque section abordera un aspect fondamental de ma recherche : l'acquisition de connaissances théoriques relatives à l'adaptation de maillage anisotropique, l'environnement de développement et les outils utilisés ainsi que l'ensemble de mes contributions scientifiques. L'objectif est de fournir une vision claire et structurée de l'état d'avancement de ma recherche, des défis rencontrés et des solutions développées tout au long de ces trois années. -->
 
 <br><br><br>
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
     <img src="../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
     <img src="../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
-</div>
+</div> 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Planning - Distributed Mesh Adapatation</title>
+        <title>Navier-Stokes Equations - Distributed Mesh Adapatation</title>
 
 
         <!-- Custom HTML head -->
@@ -176,49 +176,64 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="organisation-des-travaux-de-recherche"><a class="header" href="#organisation-des-travaux-de-recherche">Organisation des travaux de recherche</a></h1>
+                        <h1 id="navier-stokes-equations"><a class="header" href="#navier-stokes-equations">Navier-Stokes Equations</a></h1>
+<h2 id="211-the-compressible-navier-stokes-equations"><a class="header" href="#211-the-compressible-navier-stokes-equations">2.1.1 The compressible Navier-Stokes equations</a></h2>
+<p>The compressible Naviers-Stokes equations provides a mathematical description of flow motion in 3D space \( \Omega \in \mathrm{R}^3 \)</p>
+<p>\[ \partial_{t} u + \nabla .(\mathbf{F}_c(\mathbf{u}) - \mathbf{F}_v(\mathbf{u}, \nabla\mathbf{u} ) ) = 0, \forall x \in \Omega, t &gt; 0 \]
+\[\mathbf{u}(x,0) = \mathbf{u}_0(x), \  \forall x \in \Omega \]</p>
+<p>With :</p>
+<p>\[  \mathbf{u} = \begin{bmatrix} \rho \\ \rho \mathbf{v}^\mathrm{T}  \\ \rho \mathrm{E}  \end{bmatrix} , \ \mathbf{F}_c(\mathbf{u}) = \begin{bmatrix} \rho \mathbf{v}^\mathrm{T} \\ \rho \mathbf{v} \mathbf{v}^\mathrm{T} + p I\\ \rho \mathrm{E} \mathbf{v}^\mathrm{T} +  p \mathbf{v}^\mathrm{T} \end{bmatrix}  \ \text{and} \  \mathbf{F}_v(\mathbf{u}, \nabla\mathbf{u}) = \begin{bmatrix} 0 \\ \mathcal{\tau} \\  \mathbf{v}^\mathrm{T} \mathcal{\tau} - \mathbf{q}^\mathrm{T}  \end{bmatrix} \]</p>
+<p>The vector u represents the conservative variables, \(\rho \) being the density, \(\mathbf{v} \) being the velocity vector and \(\mathbf{E}\) the specific total energy. \(\mathbf{F}_c(\mathbf{u})\) and \( \mathbf{F}_v(\mathbf{u}, \nabla\mathbf{u} ) \) being respectively the convective and diffusive fluxes.</p>
+<p>\[\mathcal{\tau} = 2 \mu \mathbf{S}^D = \mu(\mathrm{T})(\nabla\mathbf{v} + \nabla\mathbf{v}^\mathrm{T}- \frac{2}{3}(\nabla . \mathbf{v} I))\]
+\[ q = -\lambda \nabla T\]
+\[ p = \rho \mathrm{RT} = (\gamma - 1)(\rho \mathrm{E} - \frac{1}{2} \rho \mathbf{v}^\mathrm{T}\mathbf{v}) \]</p>
+<p>where \( p \) is the static pressure, \( \gamma = \frac{Cp}{Cv}\)  is the ratio of specific heats, \( \nu(T) \) is the dynamic viscosity, \( S^D\) is the deviatoric component of the strain-rate tensor \( S =  (\nabla \mathbf{v} + \nabla \mathbf{v}^\mathrm{T}) \), \( T \) is the temperature, \( R \) is the specific gas constant, and \(\lambda = \mu \frac{C_p}{P_r} \) is the thermal conductivity, with \( P_r \) the Prandtl number. In this work, a value of Pr = 0.72 is used. The perfect gas law is used to close the system of equations, and the dependence of the viscosity on the temperature is expressed using Sutherland’s law.</p>
+<p>The behavior of inviscid flows is governed by the Euler equations. They correspond to the Navier–Stokes
+equations with zero viscosity \( \mu = 0\) and zero thermal conductivity \(\lambda = 0\). They then take the form of
+equations (1) with \(F_v = \begin{bmatrix} 0 \end{bmatrix} \).</p>
+<h2 id="211-the-reynolds-averaged-navier-stokes-equations"><a class="header" href="#211-the-reynolds-averaged-navier-stokes-equations">2.1.1 The Reynolds-Averaged Navier-Stokes equations</a></h2>
+<p>In cruise conditions the flow can be considered stationary as no complex physical phenomenons are
+occurring. As such, the compressible Navier-Stokes equations can be simplified by taking the statistical
+average.</p>
+<p>\[ \tilde u(t,x) = \frac{1}{t} \int_{-\frac{\nabla t}{2} }^{+\frac{\nabla t}{2}} \mathbf{u}(x,t + \tau) \ d\tau \]</p>
+<p>Each physical variable will be described as a small perturbation around mean values.</p>
+<p>\[\tilde u(t,x) = \bar{u}(t,x) + \acute{u}(t,x)\]
+Since the physical problem is stationary, the statistical mean is time independent. This is the classical
+approach called RANS (Reynolds averaged Navier-Stokes).</p>
+<p>With Boussinesq assumption, the expression of the averaged Reynolds stress tensor is :</p>
+<p>\[ \bar{\tau}_t = 2 \mu_t \bar{S}^D - \frac{2}{3} \bar{\rho}\bar{k}I , \  \bar{q}_t = \frac{\mu_t}{Pr_t} \mathcal{C}_p \nabla \bar{T} \]</p>
+<p>Where :</p>
 <ul>
-<li>
-<p><strong>[M1-M6]</strong> Immersion dans le logiciel CODA et son environnement, incluant l’environnement de développement, les outils de pré/post-traitement et l’environnement HPC  Td’Airbus. L’objectif est d’apprendre et de se former sur le logiciel CODA et de mettre en place le calcul de cas tests pertinents.</p>
-</li>
-<li>
-<p><strong>[M1-M6]</strong>  Réalisation d’une revue de littérature sur les métriques de maillage existantes pour les applications aéronautiques, la résolution près des parois, les écoulements turbulents, les écoulements transsoniques avec chocs, et les méthodes basées sur l’objectif utilisant la sensibilité adjointe.</p>
-</li>
-<li>
-<p><strong>[M4-M17]</strong>  L’implémentation du support de la métrique anisotrope sera réalisée dans kalpaTARU. Cela inclura l’extension du support existant de la métrique scalaire aux champs de métriques tensoriels, l’adaptation de l’interpolation de métrique distribuée existante aux champs tensoriels, et l’implémentation de critères de seuillage pour les champs tensoriels. Les tests seront effectués en utilisant l’infrastructure d’adaptation de maillage autonome existante.</p>
-</li>
-<li>
-<p><strong>[M7-M11]</strong> Apprentissage et formation sur l’utilisation et le développement de Tucanos afin de réaliser les développements nécessaires pour supporter l’adaptation de maillage distribuée. Cela implique le gel de l’adaptation des faces des processeurs, l’information de tag pour la gestion des indices globaux-locaux, et l’API C/Rust pour la nouvelle fonctionnalité créée.</p>
-</li>
-<li>
-<p><strong>[M11-M17]</strong> En Phase 1, Tucanos-kalpaTARU sera couplé via une interface en ligne de commande (CLI). Le principal travail de développement consistera à implémenter un plugin d’E/S pour les maillages CODA basé sur le plugin de maillage AVBP existant. La validation sera effectuée (adaptation de maillage statique) sur des maillages CODA simples avec des champs de métriques prescrits dans des fichiers HDF5.</p>
-</li>
-<li>
-<p><strong>[M17-M24]</strong> En Phase 2, nous réaliserons le couplage de la structure de données FSDM en utilisant l’interface C-API de Tucanos-kalpaTARU. Les tests et la validation seront effectués sur des cas tests avec diverses métriques prescrites implémentées dans CODA.</p>
-</li>
-<li>
-<p><strong>[M24-M30]</strong>  Les tests et la validation seront réalisés sur un cas test de production, à savoir la configuration de train d’atterrissage LAGOON et les configurations de Drag Prediction Workshop (DPW).</p>
-</li>
-<li>
-<p><strong>[M30-M36]</strong>  Réalisation des tâches de rédaction de thèse et communication des publications pour satisfaire aux exigences du doctorat.</p>
-</li>
+<li>\(P r_t = 0.9 \)  is the turbulent Prandtl number</li>
+<li>\(\mu_t\) is the turbulent dynamic viscosity</li>
+<li>\(k\) is the turbulent kinetic energy.</li>
 </ul>
-<p><br><br><br></p>
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <img src="../images/Airbus.png" alt="Image à gauche" style="width: 30%;">
-    <img src="../images//CERFACS.png" alt="Image à droite" style="width: 30%;">
-</div>
-
+<p>In order to correctly capture velocity gradients near the wall, in RANS simulations the first element at the wall should be small enough to ensure \( y^+ \simeq  1 \) in the wall-normal direction. Usually RANS meshes are highly anisotropic in the boundary layers, since the main variation lies in the normal direction to the boundary.</p>
+<p>The modeling of the turbulent viscosity and of the turbulent heat fluxes can be realised with different RANS models.In this work we will use the approach by Spalart and Allmaras, described more in detail in the next paragraph.</p>
+<h2 id="23-spalart-allmaras-turbulence-model"><a class="header" href="#23-spalart-allmaras-turbulence-model">2.3 Spalart-Allmaras turbulence model</a></h2>
+<p>The mean flow equations are coupled with the one-equation turbulence model of Spalart-Allmaras (SA) [41] to solve a modeled transport equation for the kinematic eddy turbulent viscosity.</p>
+<p>In particular we describe the more recent formulation, known as the “negative” version of the SA model, which keeps into account the modification proposed by the original authors in [4], including the modifications for compressibility effects.</p>
+<p>The Reynolds-Averaged Navier-Stokes equations with the SA turbulence model can be written in conservative form by adding a source term to equation 1 as:</p>
+<p>where we assume that u is the vector of time-averaged conservative variables over a given time interval
+and t is a pseudo time. Here and in the remainder of this section we have dropped the symbol  ̄(.) for
+clarity. The turbulent conservative variable ρv ̃ is added to the vector of conservative variables and the
+convective and diffusive fluxes Fc(ρν ̃), Fv(ρν,  ̃ ∇(ρν ̃)) are defined as:</p>
+<p>In the diffusive fluxes, the turbulent stress tensor τt and the turbulent heat fluxes qt in equation 7
+are added respectively to τ and q defined in equation 3. In particular the term depending from k is
+ignored for this type of one-equation model, because k is not readily available. The turbulent dynamic
+viscosity μt is defined as:</p>
+<p>The source terms act on the conservation equation only for the turbulent variable ρν ̃ and read:</p>
+<p>where the production and destruction terms, P and D, are defined by:</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../Work_Environnement/Tools.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../Theoritical_Foundations/Flow_equations.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../Work_Environnement/Encadrement.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../Theoritical_Foundations/FiniteVolume.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -228,11 +243,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../Work_Environnement/Tools.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../Theoritical_Foundations/Flow_equations.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../Work_Environnement/Encadrement.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../Theoritical_Foundations/FiniteVolume.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

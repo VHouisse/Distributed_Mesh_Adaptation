@@ -1,7 +1,11 @@
 # Summary
-- [Contexte Général et Motivations](./Intro/Introduction.md)
+- [Introduction](./Intro/Introduction.md)
+- [Flow Equations and Discretization](./Theoritical_Foundations/Flow_equations.md)
+  - [Navier-Stokes Equations](./Theoritical_Foundations/Compressible_NS_equations.md)
+  - [Numerical Discretization of the PDE equations](./Theoritical_Foundations/FiniteVolume.md)
+- [Anisotropic Mesh Adaptation](./Theoritical_Foundations/Metrics.md)
 - [Fondations Théoriques](./Theoritical_Foundations/Theoritical_Foundations.md)
-  - [Metrique](./Theoritical_Foundations/Metrics.md)
+  <!-- - [Metrique](./Theoritical_Foundations/Metrics.md) -->
   - [Adaptation de maillage](./Theoritical_Foundations/Mesh_Adaptation.md)
   - [Calcul Parallèle](./Theoritical_Foundations/Parallel_Computing.md)
 - [Environnement de travail](./Work_Environnement/Work_Enviornnement.md)

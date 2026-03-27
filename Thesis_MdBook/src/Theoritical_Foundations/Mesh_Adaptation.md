@@ -30,198 +30,219 @@ On a vu que la taille de la boule unité associée à la métrique \\(\mathcal{M
 
 Après adaptation du maillage l'idée est donc d'obtenir des arêtes qui sont de taille unitaire pour leur champ de métrique associé, tout en garantissant la meilleure qualité possible des éléments. Pour cela , plusieurs opérations d'adaptation sont utilisées en vérifiant après chaque modification la validité topologique de l'adaptation. Voici les différentes opérations utilisées :  -->
 
+A discrete simplex mesh can be fully described by a Riemannian metric space. Such duality relies on
+the notion of unit elements. Once we define the unit element notion, we can generalize the unit notion
+to the mesh and then define a duality between the mesh and the continuous metric space. Then we
+can refer to a mesh as its metric field. Furthermore we can use the existing metric operations and
+invariants in the Riemannian space to control the interpolation error. Such mathematical framework
+was thoroughly established in ([33],[34]). We will hereby recall the most important aspects of the
+continuous mesh theory.
 
+To generate anisotropic meshes that adapt to the flow physics, it is necessary to prescribe element sizes and orientations at every point in the domain. This is made possible by using the Riemannian space defined earlier.
 
-Pour pouvoir générer des maillages anisotropiques qui s'adaptent à la physique de l'écoulement, il est nécessaire de pouvoir prescrire en tout point du domaine des tailles et des orientations pour les éléments. L'utilisation de l'espace Riemmannien défini plus tôt le permet. 
+The core idea is to generate a unit mesh with respect to the metric derived from the error indicator. A tetrahedron\\( K \\), ddefined by its set of edges \\( \mathbf{(e_i)}_{i=1..6}\\)is said to be unit with respect to a metric \\( \mathcal{M} \\) if the length of each of its edges is unity in this metric: 
 
-L'idée principale est donc de réussir à générer un maillage unité vis à vis de la métrique issue de l'indicateur erreur.
-Un tétrahèdre K, défini par sa liste d'arêtes \\( \mathbf{(e_i)}_{i=1..6}\\) est dit unitaire vis à vis d'une métrique \\( \mathcal{M} \\) si la longueur de chacune de ses arêtes est unité dans cette métrique: 
+\\[   \forall i= 1,...,6, \mathcal{l_{M}}(\mathbf{e_i})= 1 \text{ with }  \mathcal{l_{M}}(\mathbf{e_i})=\sqrt{^t\mathbf{e_i}\mathcal{M}\mathbf{e_i}} \\]
 
-\\[   \forall i= 1,...,6, \mathcal{l_{M}}(\mathbf{e_i})= 1 \text{ avec }  \mathcal{l_{M}}(\mathbf{e_i})=\sqrt{^t\mathbf{e_i}\mathcal{M}\mathbf{e_i}} \\]
-
-Si toutes les arêtes de K sont de longueur unitaire, alors son volume  \\(  \mathbf{|K|_\mathcal{M}}\\)   dans   \\( \mathcal{M}\\) est constant, égal à : 
-
+If all edges of \\(K\\) have unit length, then its volume  \\(  \mathbf{|K|_\mathcal{M}}\\)  in the metric   \\( \mathcal{M}\\) is constant and equal to: 
 
 \\[  \mathbf{|K|_\mathcal{M} }= \frac{\sqrt{2}}{12}  \text{  and  } \mathbf{|K|} = \frac{\sqrt{2}}{12} (det(\mathcal{M}))^{ -\frac{1}{2}} \\]
 
-avec\\( \mathbf{|K|}\\) le volume euclidien. 
+where \\( \mathbf{|K|}\\) denotes the Euclidean volume.
 
-L'existence d'un maillage entier unitaire vis à vis d'un espace métrique Riemmanien n'est pas garanti. Ainsi la notion de maillage unitaire doit être étendue, on dira donc qu'un maillage discret \\(\mathcal{H}\\)  d'un domaine \\( \Omega \subset R^{n}\\)  est un maillage unité vis à vis d'un espace métrique Riemmanien  \\( \mathbf{M}= (\mathcal{M})(x)_{x \in \Omega} \\) si tous ses éléments sont quasi-unitaires. On dira qu'un tétrahédron K est quasi-unitaire si : 
-
-
-\\[   \forall i= 1,...,6, \mathcal{l_{M}}(\mathbf{e_i}) \in [\frac{1}{\sqrt{2}}, \sqrt{2}]\\] et si son volume est unitaire.
+The existence of a perfect unit mesh for a given Riemannian metric space is not guaranteed. Therefore, the concept of a unit mesh must be extended: a discrete mesh \\(\mathcal{H}\\)  of a domain \\( \Omega \subset R^{n}\\)  is considered a unit mesh with respect to a Riemannian metric space \\( \mathbf{M}= (\mathcal{M})(x)_{x \in \Omega} \\) if all its elements are quasi-unit. A tetrahedron \\( K \\) is said to be quasi-unit if: 
 
 
-En conséquence, si le maillage adapté est uniforme est isotropique dans l'espace Riemmanien et anisotrope dans l'espace Euclidien.
-
-## Dualité entre les entités discrètes et continues 
-Soit un tenseur métrique M, il existe un ensemble infini non vide d'éléments unitaire relativement à M. Réciproquement, soit K un élément tel que |K| != 0, il existe un tenseur métrique m pour lequel cet élément K lui est relativement unitaire.
-
-La conséquence de cette proposition est que la notion d'unité par rapport à \\(\mathcal{M}\\) permet de définir des classes d'équivalence d'éléments discrets. Ainsi, dans le cadre des maillages continus, un tenseur métrique \\(\mathcal{M}\\) est lui-même appelé élément continu. Il est utilisé pour modéliser l'ensemble des éléments discrets qui sont unitaires pour \\(\mathcal{M}\\). Il est alors possible de calculer des grandeurs géométriques directement associées à cet élément continu.
+\\[   \forall i= 1,...,6, \mathcal{l_{M}}(\mathbf{e_i}) \in [\frac{1}{\sqrt{2}}, \sqrt{2}]\\] and if its volume is unitary.
 
 
-Un espace Riemmanien  \\(\mathcal{M} =  (\mathcal{M})(x)_{x \in \Omega} \\) s'écrit localement : 
+Consequently, the adapted mesh is uniform and isotropic in the Riemannian space, while being anisotropic in the Euclidean space.
+
+## Duality Between Discrete and Continuous Entities
+Lete \\(\mathcal{M}\\) be a metric tensor, there exists an infinite, non-empty set of elements that are unit with respect to \\(\mathcal{M}\\).Conversely, let \\(K\\) be an element such that \\(|K| != 0\\), there exists a metric tensor \\(\mathcal{M}\\) for which this element \\(K\\) is unit.
+
+The consequence of this proposition is that the notion of a "unit" element relative to \\(\mathcal{M}\\) allows for the definition of equivalence classes of discrete elements. Thus, within the framework of continuous meshing, a metric tensor \\(\mathcal{M}\\) is itself referred to as a continuous element. It is used to model the set of all discrete elements that are unit for \\(\mathcal{M}\\). This framework makes it possible to compute geometric quantities directly associated with this continuous element.
+
+
+A Riemannian space \\(\mathcal{M} =  (\mathcal{M})(x)_{x \in \Omega} \\) can be written locally as :
 
 \\[    \forall x \in \Omega       \mathcal{M} = d^{\frac{2}{3}}(x) \mathcal{R}(x)   \begin{bmatrix}r^{-\frac{2}{3}}(x)&&\\\\
      & r^{-\frac{2}{3}}(x) & \\\\
      & & r^{-\frac{2}{3}}(x) \end{bmatrix}   ^t\mathcal{R}(x)   \\] 
 
 où :
-* la densité \\( d \\) est égale à : \\(d = (\lambda_1 \lambda_2 \lambda_3)^{\frac{1}{2}} = (h_1 h_2 h_3)^{-1}\\), avec \\(\lambda_i\\) les valeurs propres de \\(\mathcal{M}\\).
-* les quotients d'anisotropie \\(r_i\\) sont égaux à : \\(r_i = \frac{h_i^3}{h_1 h_2 h_3}\\) .
-* \\(R\\) est la matrice des vecteurs propres de \\(\mathcal{M}\\) représentant l'orientation.
+* The density\\( d \\) is defined as: \\(d = (\lambda_1 \lambda_2 \lambda_3)^{\frac{1}{2}} = (h_1 h_2 h_3)^{-1}\\), where \\(\lambda_i\\) are the eigenvalues  \\(\mathcal{M}\\).
+* The anisotropy quotients \\(r_i\\) are defined as : \\(r_i = \frac{h_i^3}{h_1 h_2 h_3}\\) .
+* \\(R\\) is the eigenvector matrix of \\(\mathcal{M}\\) representing the orientation.
 
-Le tenseur métrique \\(\mathcal{M}\\) peut être décomposé en trois composantes distinctes qui pilotent l'adaptation :
+The metric tensor \\(\mathcal{M}\\) can thus be decomposed into three distinct components that drive the adaptation process:
 
-La densité \\(d \\)  contrôle uniquement le niveau de précision local de \\(\mathcal{M}\\). Augmenter ou diminuer \\(d \\) n'affecte ni les propriétés d'anisotropie, ni l'orientation. 
+Density  \\(d \\)  Controls only the local precision level of \\(\mathcal{M}\\). Increasing or decreasing \\(d \\) affects neither the anisotropic properties nor the orientation.
 
-L'anisotropie  est définie par les quotients d'anisotropie  \\(r_i \\) basés sur les rapports de tailles \\( (h_i)\\).
+Anisotropy is defined by the anisotropy quotients \\(r_i \\) based on the size ratios \\( (h_i)\\).
 
-L'orientation est représentée par la matrice des vecteurs propres R de \\( \mathcal{M} \\) .
+L'orientation is represented by the eigenvector matrix \\( \mathcal{R} \\) of \\( \mathcal{M} \\) .
 
-On définit également la complexité \\( \mathcal{C}\\) de la métrique \\(  \mathcal{M} \\) (qui correspond au nombre total de sommets cibles  \\( N  \\) ) par l'intégrale de la densité sur le domaine : 
+Finally, the complexity\\( \mathcal{C}\\) of the metric \\(  \mathcal{M} \\) (which corresponds to the target number of vertices  \\( N  \\) ) is defined by the integral of the density over the domain:: 
  \\[  \mathcal{C}(\mathcal{M}) = \int_{\Omega} d(x) \ dx = \int_{\Omega} \sqrt{\det(\mathcal{M}(x))} \ dx \\]
 
 
-### Contrôle de l’erreur et formulation continue en adaptation de maillage
+### Error Control and Continuous Formulation in Mesh Adaptation
 
-En adaptation de maillage, on cherche à contrôler l'erreur d'interpolation entre une solution exacte  \\( u \\)  et sa reconstruction linéraire sur un maillage \\( \mathcal{H}\\) : 
+In mesh adaptation, the goal is to control the interpolation error between an exact solution \\( u \\)  and its linear reconstruction on a mesh \\( \mathcal{H}\\) : 
 
 \\[  |u- \Pi_h u |_{L^p(\Omega_h)}\\] 
 
-où : 
-* \\(\Pi_h u\\) est l'interpolé linéaire sur le maillage discret
-* \\((\Omega_h)\\) le domaine maillé 
+where : 
+* \\(\Pi_h u\\) is the linear interpolant on the discrete mesh.
+* \\((\Omega_h)\\) is the meshed domain.
 
-Cette formulation est discrète et dépend explicitement du maillage, ce qui rend l'optimisation globale complexe. En utilisatnt une métrique continue \\( \mathcal{M}(x) \\), on peut alors définir une erreur d'interpolation continue associée à la métrique \\( \mathcal{M}(x) \\) indépendante d'un maillage discret spécifique. 
+This formulation is discrete and explicitly depends on the mesh, which makes global optimization complex. By using a continuous metric field \\( \mathcal{M}(x) \\),one can define a continuous interpolation error associated with the metric \\( \mathcal{M}(x) \\)independent of any specific discrete mesh:
 
 \\[  |u- \Pi_{\mathcal{M}} u |_{L^p(\Omega_h)}\\] 
 
-Pour une fonction u quadratique on a le théorème suivant : 
+For a quadratic function \\(u \\), the following theorem holds:
 
 #### Théorème 3.1. 
-Pour tous les éléments unitaires K par rapport à \\(\mathcal{M} \\) , l'erreur d'interpolation de \\( u \\) en norme \\(L^1 \\) ne dépend pas de la forme de l'élément et est uniquement fonction de la Hessienne \\(\mathbf{H} \\) de \\(u \\) et de \\(\mathcal{M}\\).
-En 3D, pour tous les tétraèdres unitaires \\(K \\) par rapport à \\(\mathcal{M}\\) , l'égalité suivante est vérifiée :
+For any element \\(K\\) that is unit with respect to  \\(\mathcal{M} \\) , the \\(L^1 \\)   interpolation error of \\( u \\)is independent of the element's shape and depends solely on the Hessian \\(\mathbf{H} \\) of \\(u \\) and the metric \\(\mathcal{M}\\).
+In 3D, for all tetrahedra \\(K \\) that are unit with respect to \\(\mathcal{M}\\) , the following equality holds: :
 
 \\[\|u - \Pi_h u\|_{L^1(K)} = \frac{\sqrt{2}}{240} \det \left( \mathcal{M}^{-\frac{1}{2}} \right) \text{trace} \left( \mathcal{M}^{-\frac{1}{2}} \mathbf{H} \mathcal{M}^{-\frac{1}{2}} \right)\\]
 
 
-L'erreur est bien definie pour une soltuion quadratique sur un élément K, mais une métrique étant définie en chaque point du domaine \\( x \in \Omega \\) il faut définir une erreur en tout point du domaine : 
+The error is well-defined for a quadratic solution on an element K, however, since a metric is defined at every point in the domain\\( x \in \Omega \\)it is necessary to define the error throughout the entire domain :
 
 
 #### Théorème 3.2. 
 
-Soit u une fonction deux fois continûment dérivable sur un domaine \\( \Omega \\) et \\( \mathcal{M}(x)_{x \in \Omega} \\)  un maillage continu de  \\( \Omega\\).
+Let\\(u\\)be a twice continuously differentiable function on a domain \\( \Omega \\) and let \\( \mathcal{M}(x)_{x \in \Omega} \\)  be a continuous mesh of  \\( \Omega\\).
 
-Alors, il existe une unique fonction \\( \pi_M \\)  telle que :
+There exists a unique function\\( \pi_M \\)  such that:
 \\[ \forall a \in \Omega, |u - \pi_M u|(a) = \frac{\|u_Q - \Pi_h u_Q\|_{L^1(K)}}{|K|} = \frac{1}{20} \text{trace} \left( \mathcal{M}(a)^{-\frac{1}{2}} |\mathbf{H}(a)| \mathcal{M}(a)^{-\frac{1}{2}} \right) \\] 
-pour tout élément unitaire K par rapport à \\(\mathcal{M}(a)\\) , où \\( u_Q\\)  est le modèle quadratique de u au point \\( a \\).
+for any element K that is unit with respect to \\(\mathcal{M}(a)\\) , where \\( u_Q\\)  is the quadratic model of \\(u\\) at point\\( a \\).
 
 
-Ce théorème souligne une autre dualité discret-continu en mettant en évidence un équivalent continu de l'erreur d'interpolation. 
+This theorem emphasizes another discrete-continuous duality by highlighting a continuous equivalent of the interpolation error.
 
-Pour cette raison, le formalisme suivant est proposé :
+For this reason, the following formalism is proposed
 
-\\( \pi_M\\)  est appelé interpolé linéaire continu et \\( |u - \pi_M u| \\)  représente le dual continu de l'erreur d'interpolation.
+\\( \pi_M\\)  is called the continuous linear interpolant, and \\( |u - \pi_M u| \\)  represents the continuous dual of the interpolation error.
 
 
-L'erreur d'interpolation locale devient globale lorsque le maillage est unitaire par rapport à un tenseur métrique constant (ce qui n'implique pas nécessairement que le maillage soit uniforme) et lorsque la fonction est quadratique. Dans ce cas spécifique, en négligeant les erreurs dues à la discrétisation des frontières, nous obtenons l'égalité :
+The local interpolation error becomes global when the mesh is unit with respect to a constant metric tensor (which does not necessarily imply that the mesh is uniform) and when the function is quadratic. In this specific case, neglecting boundary discretization errors, we obtain the following equality: 
+
 \\[ \|u - \Pi_h u\|_{L^1(\Omega_h)} = \|u - \pi_M u\| _{ L^1(\Omega) }\\]
 
 
-Pour tous les maillages \\( \mathcal{H} \\) qui sont unitaires par rapport à \\( \mathcal{M}(x)_{x \in \Omega} \\) 
+for all meshes \\( \mathcal{H} \\) that are unit with respect to\\( \mathcal{M}(x)_{x \in \Omega} \\) 
 
 
-### 3.4 Contrôle optimal de l'erreur d'inteprolation en norme \\(L^P\\)
+### 3.4  Optimal Control of the \\(L^p\\)-norm Interpolation Error
 
-Dans sa forme la plus générale, le problème de l'adaptation de maillage consiste à trouver le maillage \\(\mathcal{H}\\) d'un domaine \\( \Omega \\) qui minimise une erreur donnée pour une fonction u définie. Par souci de simplicité, nous considérons ici l'erreur d'interpolation linéaire \\( |u - \Pi_h u | \\) contrôlée en norme \\(L^p\\). À noter que l'utilisation d'autres normes est également possible. Le problème est ainsi posé de manière a priori 
-Trouver \\( H_{opt} \\) possédant \\(N\\) sommets tel que :
+In its most general form, the mesh adaptation problem consists of finding the mesh \\(\mathcal{H}\\) of a domain \\( \Omega \\) that minimizes a given error for a defined function \\( u \\). 
+
+For the sake of simplicity, we consider here the linear interpolation error \\( |u - \Pi_h u | \\) controlled in the \\(L^p\\)norm, although other norms may also be used. The problem is thus posed a priori:
+Find \\( H_{opt} \\) with \\(N\\) vertices such that:
 \\[E_{L^p}(H_{opt}) = \min_{H} \|u - \Pi_h u\|_{L^p(\Omega_h)} \quad (P)\\]
 
 
-\\((P)\\) est un problème combinatoire global qui s'avère insoluble en pratique. En effet, cela nécessiterait l'optimisation simultanée de la topologie du maillage et de la position des sommets. 
+Problem \\((P)\\) is a global combinatorial problem that proves to be insoluble in practice. Indeed, it would require the simultaneous optimization of both the mesh topology and the vertex positions.
 
-Par conséquent, des problèmes plus simples sont envisagés pour approximer la solution.Une simplification courante consiste à effectuer une analyse locale de l'erreur au lieu de considérer le problème global. Un premier ensemble de méthodes consiste à déduire la forme optimale des éléments. Un second ensemble consiste à dériver une borne locale de l'erreur d'interpolation. Cette borne est ensuite transformée en une estimation basée sur une métrique. Une minimisation directe de l'erreur peut également être envisagée en utilisant l'erreur d'interpolation directement comme fonction de coût dans le générateur de maillage.
+Consequently, simpler sub-problems are considered to approximate the solution. A common simplification consists of performing a local error analysis instead of addressing the global problem. A first set of methods focuses on deducing the optimal shape of the elements. A second set involves deriving a local bound for the interpolation error.
 
-Toutes ces stratégies ont en commun la résolution d'un problème local, car elles agissent au voisinage d'un élément. Par conséquent, de telles minimisations d'erreur sont équivalentes à un algorithme de descente de gradient qui ne converge que vers un minimum local avec de faibles propriétés de convergence. Cet inconvénient provient du fait qu'une minimisation est directement effectuée sur un maillage discret.
+This bound is then transformed into a metric-based estimate. Direct error minimization can also be considered by using the interpolation error itself as a cost function within the mesh generator.
+
+All these strategies share a common trait: they solve a local problem, as they operate in the neighborhood of a single element. Consequently, such error minimizations are equivalent to a gradient descent algorithm that only converges toward a local minimum with poor convergence properties. This drawback arises from the fact that the minimization is performed directly on a discrete mesh.
+
+<br>
+<br>
 
 
+## 3.5 Optimal Control of the \\(L^p\\)-norm Interpolation Error in a Continuous Framework 
 
-Nous proposons d'aborder la résolution de \\((P)\\) dans un cadre continu. Par conséquent, \\((P)\\) est reformulé comme un problème d'optimisation continue où l'erreur d'interpolation discrète est remplacée par son équivalent continu :
+We propose to address the resolution of \\((P)\\) within a continuous framework. Consequently, \\((P)\\) is reformulated as a continuous optimization problem where the discrete interpolation error is replaced by its continuous equivalent:
 
-Trouver \\(M_{opt}\\) ayant une complexité de \\(N\\) tel que :
+Find \\(M_{opt}\\) with a complexity of \\(N\\) such that:
 \\[E_{L^p}(M_{opt}) = \min_{M} \|u - \pi_M u\|_{L^p(\Omega)}\\]
 
-En utilisant la définition de l'interpolé continu linéaire \\(\pi_M\\), il est alors possible de poser le problème d'optimisation globale bien posé consistant à trouver le maillage continu optimal qui minimise l'erreur d'interpolation continue en norme \\(L^p\\) :
+By using the definition of the continuous linear interpolant\\(\pi_M\\), it is possible to pose a well-posed global optimization problem to find the optimal continuous mesh that minimizes the \\(L^p\\) norm continuous interpolation error:
 
-Trouver \\(M_{L^p} = \min_{M} E_{L^p}(M)\\), soit :
+Find \\(M_{L^p} = \min_{M} E_{L^p}(M)\\), where:
 
 \\[E_{L^p}(M) = \left( \int_{\Omega} (u(x) - \pi_M u(x))^p , dx \right)^{1/p} = \left( \int_{\Omega} \text{trace} \left( M(x)^{-1/2} |H_u(x)| M(x)^{-1/2} \right)^p  dx \right)^{1/p} \quad (4)\\]
 
-sous la contrainte :\\[\mathcal{C}(M) = \int_{\Omega} d(x) \ dx = N\\]
+subject to the constraint: \\[\mathcal{C}(M) = \int_{\Omega} d(x) \ dx = N\\]
 
-La contrainte sur la complexité est ajoutée pour éviter la solution triviale où tous les \\((h_i)_{i=1,3}\\) seraient nuls, ce qui donnerait une erreur nulle. Contrairement à une analyse discrète, ce problème peut être résolu globalement en utilisant le calcul des variations, lequel est bien défini sur l'espace des maillages continus.
+The complexity constraint is added to avoid the trivial solution where all sizes \\((h_i)_{i=1,3}\\) would be zero, which would result in zero error. Unlike a discrete analysis, this problem can be solved globally using the calculus of variations, which is well-defined over the space of continuous meshes.
 
 
-
-### Theoreme 3.3 
-Soit \\(u\\) une fonction deux fois continûment dérivable définie sur \\(\Omega \subset \mathbb{R}^3\\), et \\(H_u\\) sa Hessienne. Le maillage continu optimal \\(M_{L^p}(u) = (M_{L^p}(x))_{x \in \Omega}\\) minimisant localement le Problème (4) s'écrit :
+### Theorem 3.3
+Let \\(u\\) be a twice continuously differentiable function defined on \\(\Omega \subset \mathbb{R}^3\\), and \\(H_u\\) its Hessian. The optimal continuous mesh \\(M_{L^p}(u) = (M_{L^p}(x))_{x \in \Omega}\\) that locally minimizes Problem (4) is given by:
 
 \\[M_{L^p}(x) = N^{\frac{2}{3}} \left( \int_{\Omega} \det(|H_u(\bar{x})|)^{\frac{p}{2p+3}} d\bar{x} \right)^{-\frac{2}{3}} \times \det(|H_u(x)|)^{-\frac{1}{2p+3}} |H_u(x)| \quad (5)\\]
 
-Il vérifie les propriétés suivantes :
-* L'unicité : \\(M_{L^p}(u)\\) est unique.
-* L'alignement local : \\(M_{L^p}(u)\\) est localement aligné avec la base des vecteurs propres de \\(H_u\\) et possède les mêmes rapports d'anisotropie que \\(H_u\\).
-* La borne d'erreur optimale : \\(M_{L^p}(u)\\) fournit une borne explicite optimale de l'erreur d'interpolation en norme \\(L^p\\) :
+It satisfies the following properties:
+* L'Uniqueness : \\(M_{L^p}(u)\\) is unique.
+* Local Alignment: \\(M_{L^p}(u)\\) is locally aligned with the eigenvector basis of \\(H_u\\) and possesses the same anisotropy ratios as \\(H_u\\).
+* Optimal Error Bound: \\(M_{L^p}(u)\\) provides an explicit optimal bound for the \\(L^p\\)norm interpolation error: :
 
 \\[ \|u - \pi_{M_{L^p}} u\|_ {L^p(\Omega)} = 3 N^{-\frac{2}{3}} \left( \int_{\Omega} \det(|H_u|)^{\frac{p}{2p+3}} \right)^{\frac{2p+3}{3p}}\\]
 
 
-Il apparaît ainsi que la recherche du maillage optimal ne peut être dissociée de la métrique dont il découle ; cette dernière agit comme le pivot entre la minimisation théorique de l'erreur et la construction géométrique d'un domaine de calcul discret et efficace.
+It thus appears that the search for the optimal mesh cannot be dissociated from the metric from which it originates; the latter acts as the pivot between the theoretical minimization of error and the geometric construction of a discrete and efficient computational domain.
+
+### 4. Mesh Adaptation for Steady Flows
+
+The transition from a theoretical error analysis to a numerical application in Fluid Dynamics requires a reformulation of the optimization problem. While pure theory defines the optimal metric as an ideal tensor, the operational challenge lies in the effective generation of a mesh whose density and anisotropy minimize the approximation error.
+
+In numerical simulations, the exact solution \\(u\\) is, by definition, unknown. 
+
+Problem \\((P)\\) therefore transposed to minimize the error between \\(u \text{ and } u_h \\) in the \\(  |L^{p}| \\) norm .
+
+This transition requires coupling continuous mesh theory with error estimators capable of linking the approximation error to the local interpolation error.
+
+### 4.1. Adaptation Strategies
+
+Two distinct methodological approaches are used to drive anisotropy:
+
+Feature-based approach :This aims to optimize the mesh to capture all physical structures of a specific sensor (e.g., pressure, Mach number). The use of the \\(L^p\\)norm is crucial here for capturing multi-scale phenomena, allowing for the refinement of structures whose amplitude is several orders of magnitude smaller than the primary scales.
+
+Goal-oriented approach: This focuses the error reduction effort on a specific scalar functional of interest (e.g., lift, drag), although prescribing anisotropy in this context is mathematically more complex.
+
+### 4.3. Iterative Procedure and Convergence
+
+Since mesh adaptation is intrinsically non-linear, its resolution relies on an iterative loop aimed at the convergence of the mesh-solution pair. The process follows a rigorous sequence:
+
+Flow resolution on a given mesh \\(H_i\\).
+Estimation of the optimal metric \\(M_{L^p}\\)from the computed solution (generally via Hessian recovery).
+Metric field gradation to ensure geometric regularity (smoothing).
+Generation of a new mesh \\(H_{i+1}\\)  that adheres to the prescribed metric.
+
+This strategy not only allows for the capture of singularities and strong discontinuities (shocks, boundary layers) but also ensures the recovery of the numerical scheme's theoretical convergence order, which is often degraded on non-adapted meshes.
+
+We no longer seek merely to mathematically define an optimal metric, but to physically construct the resulting optimal mesh to solve complex fluid dynamics problems.
 
 
-### 4. Adaptation de maillage pour les écoulements stationnaires
+<!-- L'adaptation basée sur les caractéristiques (Feature-based) : On cherche le meilleur maillage pour capturer les variations d'un capteur physique donné (vitesse, pression, etc.).
+L'adaptation orientée par l'objectif (Goal-oriented) : On optimise le maillage pour observer une fonctionnelle scalaire précise (par exemple, la traînée ou la portance d'une aile).
+Problématiques et Motivations
+Bien que l'efficacité de l'anisotropie soit prouvée, le passage aux solutions numériques (où la solution exacte \\(u\\) est inconnue) soulève des défis :Erreur d'approximation : On cherche à minimiser \\(\|u - u_h\|_ {L^p}\\) au lieu de l'erreur d'interpolation pure.Capture multi-échelles : L'utilisation de la norme \\(L^p\\) (au lieu de \\(L^\infty\\)) est indispensable pour capturer des phénomènes dont l'amplitude est parfois 1000 fois plus faible que les structures principales, sans avoir besoin de fixer arbitrairement une taille de maille minimale.Convergence théorique : L'adaptation permet de retrouver un ordre de convergence de 2 (souvent perdu sur des maillages uniformes en présence de chocs ou de forts gradients), ce qui valide la qualité du calcul.L'algorithme d'adaptationL'adaptation est un processus non-linéaire résolu par une boucle itérative. On ne se contente pas de calculer une métrique ; on génère un nouveau maillage à chaque étape pour converger vers le couple maillage-solution optimal.La boucle type (Algorithme 2) :Calcul : Résolution de l'écoulement sur le maillage actuel.Métrique : Calcul de la métrique \\(M_{L^p}\\) basée sur l'estimation d'erreur.Gradation : Lissage de la métrique pour éviter des variations de taille trop brutales entre voisins.Génération : Création d'un nouveau maillage adapté à cette métrique.Interpolation : Transfert de la solution précédente sur le nouveau maillage pour redémarrer le calcul. -->
 
-Le passage d'une analyse théorique de l'erreur à une application numérique en mécanique des fluides (CFD) impose de reformuler le problème d'optimisation. Alors que la théorie pure définit la métrique optimale comme un tenseur idéal, l'enjeu opérationnel réside dans la génération effective d'un maillage dont la densité et l'anisotropie minimisent l'erreur d'approximation.
 
-Dans le cadre de simulations numériques, la solution exacte \\(u\\) est par définition inconnue. Le problème \\((P)\\) est alors transposé pour minimiser l'erreur entre \\(u \text{ et } u_h \\) en norme \\(  |L^{p}| \\) .
-
-Cette transition nécessite de coupler la théorie du maillage continu avec des estimateurs d'erreur capables de lier l'erreur d'approximation à l'erreur d'interpolation locale.
-
-### 4.1. Stratégies d'adaptation
-
-Deux approches méthodologiques se distinguent pour le pilotage de l'anisotropie :
-
-L'approche par caractéristiques (Feature-based) : Elle vise à optimiser le maillage pour capturer l'ensemble des structures physiques d'un capteur (pression, nombre de Mach, etc.). L'utilisation de la norme \\(L^p\\) s'avère ici cruciale pour la capture des phénomènes multi-échelles, permettant de raffiner des structures dont l'amplitude est plusieurs ordres de grandeur inférieure aux échelles principales.
-
-L'approche orientée objectif (Goal-oriented) : Elle focalise l'effort de réduction d'erreur sur une fonctionnelle scalaire d'intérêt (ex: portance, traînée), bien que l'introduction de l'anisotropie y soit mathématiquement plus complexe à prescrire.
-
-### 4.3. Procédure itérative et convergence
-
-L'adaptation de maillage étant intrinsèquement non-linéaire, sa résolution repose sur une boucle itérative visant la convergence du couple maillage-solution. Le processus suit une séquence rigoureuse :
-
-Résolution de l'écoulement sur un maillage \\(H_i\\).
-Estimation de la métrique optimale \\(M_{L^p}\\) à partir de la solution calculée (généralement via la récupération de la Hessienne).Gradation du champ de métriques pour assurer une régularité géométrique.
-Génération d'un nouveau maillage \\(H_{i+1}\\) respectant la métrique prescrite.
-
-Cette stratégie permet non seulement de capturer les singularités et les fortes discontinuités (chocs, couches limites), mais assure également le recouvrement de l'ordre de convergence théorique du schéma numérique, souvent dégradé sur des maillages non adaptés.
-Désormais, on ne cherche plus seulement à définir mathématiquement une métrique optimale, mais à construire physiquement le maillage optimal qui en découle pour résoudre des problèmes complexes de dynamique des fluides.
-
-Deux approches principalesL'auteur distingue deux méthodes pour guider l'adaptation :L'adaptation basée sur les caractéristiques (Feature-based) : On cherche le meilleur maillage pour capturer les variations d'un capteur physique donné (vitesse, pression, etc.).L'adaptation orientée par l'objectif (Goal-oriented) : On optimise le maillage pour observer une fonctionnelle scalaire précise (par exemple, la traînée ou la portance d'une aile).Problématiques et MotivationsBien que l'efficacité de l'anisotropie soit prouvée, le passage aux solutions numériques (où la solution exacte \\(u\\) est inconnue) soulève des défis :Erreur d'approximation : On cherche à minimiser \\(\|u - u_h\|_ {L^p}\\) au lieu de l'erreur d'interpolation pure.Capture multi-échelles : L'utilisation de la norme \\(L^p\\) (au lieu de \\(L^\infty\\)) est indispensable pour capturer des phénomènes dont l'amplitude est parfois 1000 fois plus faible que les structures principales, sans avoir besoin de fixer arbitrairement une taille de maille minimale.Convergence théorique : L'adaptation permet de retrouver un ordre de convergence de 2 (souvent perdu sur des maillages uniformes en présence de chocs ou de forts gradients), ce qui valide la qualité du calcul.L'algorithme d'adaptationL'adaptation est un processus non-linéaire résolu par une boucle itérative. On ne se contente pas de calculer une métrique ; on génère un nouveau maillage à chaque étape pour converger vers le couple maillage-solution optimal.La boucle type (Algorithme 2) :Calcul : Résolution de l'écoulement sur le maillage actuel.Métrique : Calcul de la métrique \\(M_{L^p}\\) basée sur l'estimation d'erreur.Gradation : Lissage de la métrique pour éviter des variations de taille trop brutales entre voisins.Génération : Création d'un nouveau maillage adapté à cette métrique.Interpolation : Transfert de la solution précédente sur le nouveau maillage pour redémarrer le calcul.
 
 <div class="algorithm">
-<b>Algorithm 2:</b> Mesh Adaptation Loop for Steady Flows<br><br>
+<b>Algorithm:</b> Mesh Adaptation Loop for Steady Flows<br><br>
 
 <b>Input:</b> Initial mesh and solution \\((H_0, S_0^0)\\), target complexity \\(N\\)<br>
 <b>Output:</b> Adapted mesh and solution<br><br>
 
 <ol>
-<li> Compute solution \\( S_i \\) using the flow solver from \\( (H_i, S_i^0) \\)</li>
-<li> If \\(i = n_{\text{adap}}\\), <b>break</b> </li>
-<li> Compute metric \\(M_{L^p,i} \text{from} (H_i, S_i)\\)</li>
-<li> Apply metric gradation to obtain \\(\tilde{M}_{L^p,i}\\)</li>
-<li> Generate adapted mesh \\(H_{i+1}\\)from \\((H_i, \tilde{M}_{L^p,i})\\)</li>
-<li> Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)</li>
+Compute solution \\(S_i\\) using the flow solver from \\( (H_i, S_i^0) \\)
+If \\(i = n_{\text{adap}}\\) , <b>break</b> 
+Compute metric \\(M_{L^p,i} \text{from} (H_i, S_i)\\)
+Apply metric gradation to obtain \\(\tilde{M}_{L^p,i}\\)
+Generate adapted mesh \\(H_{i+1}\\)from \\((H_i, \tilde{M}_{L^p,i})\\)
+Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
 </ol>
 
 </div> 
@@ -231,43 +252,52 @@ Deux approches principalesL'auteur distingue deux méthodes pour guider l'adapta
 \\(\\) \\(\\) \\(\\) \\(\\) \\(\\) 
 
 
-### Definition : Cavité 
+### Definition: Cavity
 
-Etant donné une entité de maillage \\( e \\) (un sommet ou une arête dans le cas présent), la cavité \\( \mathcal{C}(e) \\) est l'ensemble des éléments de maillage qui contiennent l'entité \\( e \\).
+Given a mesh entity \\( e \\) (a vertex or an edge in this case), the cavity \\( \mathcal{C}(e) \\)is the set of mesh elements that contain the entity \\( e \\).
 
-Une cavité \\( \mathcal{C}(e) \\) peut être remplie à partir d'un sommet \\( \mathbf v \\) comme l'ensemble des éléments créés à partir de \\( \mathbf v \\) et des faces de la frontière de la cavité \\( \partial \mathcal{C}(e) \\) (orientées vers l'extérieur).
+A cavity \\( \mathcal{C}(e) \\) can be "re-filled" from a vertex \\( \mathbf v \\) as the set of elements created from \\( \mathbf v \\) and the faces of the cavity boundary \\( \partial \mathcal{C}(e) \\) (outward-oriented).
 
 \\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \\]
 
-### Definition : Swap
+### Definition: Swap
 
 <figure style="text-align: center;">
-  <img src="../images/swap.svg" alt="Tenseur métrique anisotrope" width="70%">
+  <img src="../images/swap.svg" alt="Anisotropic metric tensor " width="70%">
 </figure>
 
-The __swap__ operation aims at improving the quality of the elements. 
+The __swap__ operation aims at improving the quality of the elements. It locally modifies the connectivity of a mesh without adding or removing vertices.
 
-It can however introduce
-- "long" or "short" edges
-- a poor representation of the geometry that will be difficult to recovered later
-- inconsistent tagging
+This operation may fail for several reasons. It is topologically impossible if the edge to be modified has only one adjacent element or if it lies on a fixed boundary. Similarly, the operation fails if the vertex topology is incompatible.
 
 These 3 criteria have to be assessed to determine if a __swap__ operation is accepted or not.
 
-Un swap modifilocalement la connectivité d'un maillage sans ajouter ni retirer de sommets. Cette opération peut échouer pour diverses raisons. Elle est impossible pour des raisons topologiques si l'arête à modifier n'a qu'un seul élément adjacent ou si elle se situe sur une frontière fixe. De la même manière, l'opération échoue si la topologie des sommets est incompatible.
+This operation may fail for several reasons. It is topologically impossible if the edge to be modified has only one adjacent element or if it lies on a fixed boundary. Similarly, the operation fails if the vertex topology is incompatible.
 
-Le swap est également rejeté lorsque les contraintes de qualité et géométriques ne sont pas respectées. L'opération n'est pas effectuée si la qualité du maillage est déjà supérieure au seuil requis, ou si elle risque de compromettre la régularité de la surface en créant, par exemple, un angle de normales trop grand. Plus précisément, les nouveaux éléments résultant du swap doivent respecter une qualité minimale et des limites de longueur d'arête prédéfinies. Enfin, le swap est considéré comme un échec si la modification proposée ne change rien à la connectivité de la cavité.
+A swap is also rejected when quality and geometric constraints are not met. The operation is not performed if the current mesh quality is already above the required threshold, or if it risks compromising surface regularity by creating, for instance, an excessively large normal angle. Specifically, the new elements resulting from the swap must respect a minimum quality and predefined edge length limits. Finally, the swap is considered a failure if the proposed modification does not change the cavity connectivit
 
-### Definition : Split
+
+It can however introduce:
+
+* "long" or "short" edges
+
+* a poor representation of the geometry that will be difficult to recover later
+
+* inconsistent tagging
+
+These three criteria must be assessed to determine if a swap operation is accepted or not.
+
+### Definition: Split
 
 
 
 <figure style="text-align: center;">
-  <img src="../images/split.svg" alt="Tenseur métrique anisotrope" width="70%">
+  <img src="../images/split.svg" alt="Anisotropic metric tensor" width="70%">
 </figure>
 
-The __split__ operations aims at splitting "long" edges. It is applied to edges whose length
-(in metric space) is larger than \\(l_0 > \sqrt{2}\\). 
+The __split__ operation aims at splitting "long" edges. It is applied to edges whose length (in metric space) is larger than \\(l_0 > \sqrt{2}\\). 
+
+For a split to be performed on an edge deemed too long, it must not be located on a fixed boundary, and the modification must not result in poor mesh quality or excessively short edges. If any of these conditions are not met, the operation fails. The operation is validated and executed only if all conditions are respected and if it effectively improves the mesh quality. 
 
 It can however introduce
 - "short" edges
@@ -277,9 +307,8 @@ These 2 criteria have to be assessed to determine if a __split__ operation is ac
 When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.
 
 
-Ainsi pour qu'un split soit effectué sur une arête jugée trop longue, celle-ci ne doit pas se trouver sur une frontière fixe, et la modification ne doit pas engendrer un maillage de mauvaise qualité ou des arêtes trop courtes. Si l'une de ces conditions n'est pas remplie, l'opération échoue. L'opération est validée et s'effectue si toutes les conditions sont respectées et qu'elle a pour effet d'améliorer la qualité du maillage.
 
-### Definition : Collapse
+### Definition: Collapse
 
 <figure style="text-align: center;">
   <img src="../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
@@ -295,12 +324,12 @@ It can however introduce
 
 These 3 criteria have to be assessed to determine if a __collapse__ operation is accepted or not.
 
-De la même manière que pour un split, un collapse sur une arête jugée trop courte ne peut être effectué que sous certaines conditions. L'opération est d'abord soumise à des vérifications de faisabilité. Elle échoue si l'arête se trouve sur une frontière fixe, si la modification risque de dégrader la qualité du maillage résultant ou si elle engendre une géométrie des sommets non régulière.
+Just as with a split, a collapse on an edge deemed too short can only be performed under certain conditions. The operation is first subject to feasibility checks. It fails if the edge is on a fixed boundary, if the modification risks degrading the resulting mesh quality, or if it leads to an irregular vertex geometry.
 
-### Definition : Smooth
+### Definition: Smooth
 
 The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.
 
-In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity or one of its children are considered for smoothing. A projection step is still required for boundary vertices to ensure the consistency with the CAD model.
+In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity (or one of its children) are considered for smoothing. A projection step is still required for boundary vertices to ensure consistency with the CAD model.
 
 
