@@ -23,7 +23,7 @@ A metric \\( \mathcal{M} \\) can be geometrically represented by its associated 
 
 <figure style="text-align: center;">
   <img src="../images/Metric_1.png" alt="Tenseur métrique anisotrope" width="90%">
-  <figcaption>Figure 1: Geometric representation of the unit ball $ \xi _{M} , v_i $  are the eigenvectors of \mathcal{M} and \lambda_i = h_i^{-2} are the eigenvalues of \mathcal{M} [33] </figcaption>
+  <figcaption>Figure 1: Geometric representation of the unit ball $$\xi _{M} , v_i $$  are the eigenvectors of $$\mathcal{M} $$and $$\lambda_i = h_i^{-2}$$ are the eigenvalues of $$\mathcal{M}$$ [33] </figcaption>
 </figure>
 
 ### 3.2 Definition : Euclidean metric space
@@ -105,7 +105,7 @@ Finally, the complexity \\( \mathcal{C}\\) of the metric \\(  \mathcal{M} \\) is
 
 
 ### Definition 3.4 Unit Element with respect to \\(\mathcal{M}\\)
-Let \\( K \\) be a simplex element in \\( \Omega\\) where d denotes the dimension. K is defined by its set of edges \\( \mathbf{(e_i)}_{i=1,..,d(d+1)/2}\\) is said to be unit with respect to a metric \\( \mathcal{M} \\) if the length of each of its edges is unit in this metric: 
+Let \\( K \\) be a simplex element in \\( \Omega\\) where d denotes the dimension. \\(K\\) is defined by its set of edges \\( \mathbf{(e_i)}_{i=1,..,d(d+1)/2}\\) is said to be unit with respect to a metric \\( \mathcal{M} \\) if the length of each of its edges is unit in this metric: 
 
 \\[   \forall i= 1,...,\frac{d(d+1)}{2} \  \ \mathcal{ l_{M}}(\mathbf{e_i})= 1  \\]
 <!-- \text{ with }  \mathcal{l_{M}}(\mathbf{e_i})=\sqrt{^t\mathbf{e_i}\mathcal{M}\mathbf{e_i}} -->
@@ -116,7 +116,7 @@ If all edges of \\(K\\) have unit length, then its volume  \\(  \mathbf{|K|_\mat
 where \\( \mathbf{|K|} _{I_d}\\) denotes the Euclidean volume.
 
 ### 3.5 Duality Between Discrete and Continuous Entities
-Let \\(\mathcal{M}\\) be a metric tensor, there exists an infinite, non-empty set of elements that are unit with respect to \\(\mathcal{M}\\).Conversely, let \\(K\\) be an element such that \\(|K| != 0\\), there exists a metric tensor \\(\mathcal{M}\\) for which this element \\(K\\) is unit.
+Let \\(\mathcal{M}\\) be a metric tensor, there exists an infinite, non-empty set of elements that are unit with respect to \\(\mathcal{M}\\).Conversely, let \\(K\\) be an element such that \\(|K| != 0\\), there exists a unique metric tensor \\(\mathcal{M}\\) for which this element \\(K\\) is unit. Proof can be find in [32]
 
 The consequence of this proposition is that the notion of a "unit" element relative to \\(\mathcal{M}\\) allows for the definition of equivalence classes of discrete elements. Thus, within the framework of continuous meshing, a metric tensor \\(\mathcal{M}\\) is itself referred to as a continuous element. It is used to model the set of all discrete elements that are unit for \\(\mathcal{M}\\). This framework makes it possible for a discrete simplex mesh to be fully described by a Riemmanian metric space.
 
@@ -137,19 +137,106 @@ A tetrahedron \\( K \\) is said to be quasi-unit if:
 Consequently, the adapted mesh is uniform and isotropic in the Riemannian space, while being anisotropic in the Euclidean space.
 
 #### 3.5.1 Quality function
-The relaxed definition of a unit mesh, which allows for quasi-unit elements, may lead to non-conforming or degenerate elements, such as those with zero volume (see [33] for examples). Consequently, controlling edge lengths alone is insufficient; the element volume must also be monitored.The strategy employed here is to control the ratio between the sum of the squared edge lengths and the volume of the element. All geometric quantities are computed within the prescribed metric \\(\mathcal{M}\\). This ratio defines a quality measure \\(Q_\mathcal{M}\\) that evaluates the regularity of a tetrahedron \\(K\\) in the metric space:
+The relaxed definition of a unit mesh, which allows for quasi-unit elements, may lead to non-conforming or degenerate elements, such as those with zero volume (see [33] for examples). Consequently, controlling edge lengths alone is insufficient, the element volume must also be monitored. \
+The strategy employed here is to control the ratio between the sum of the squared edge lengths and the volume of the element. All geometric quantities are computed within the prescribed metric \\(\mathcal{M}\\). This ratio defines a quality measure \\(Q_\mathcal{M}\\) that evaluates the regularity of a tetrahedron \\(K\\) in the metric space:
 
 \\[Q_{\mathcal{M}}(K) = \frac{36\sqrt[3]{3} \cdot |K|_ {\mathcal{M}}^{\frac{2}{3}}}{\sum_{i=1}^{6} \ell_{\mathcal{M}}^2(\mathbf{e}_i)} \in [0, 1] \\]
  <!-- compute geometric quantities directly associated with this continuous element. -->
+The normalization constant \\(  36\sqrt[3]{3} \\) is specifically chosen to ensure that \\( Q_{\mathcal{M}} = 1 \\) for an equilateral tetrahedron, regardless of its edge lengths, while \\( Q_{\mathcal{M}} = 0 \\) for any degenerate element with null volume.\
+Through the concept of the unit mesh, we have established a duality between the discrete mesh \\( \mathcal{T}_ K \\) and the Riemannian metric space \\( \mathcal{M}(\mathbf{x})_ {\mathbf{x} \in \Omega} \\).This duality implies that any perfectly adapted discrete element is perceived as a unit equilateral simplex within the metric space. \
+Consequently, in the remainder of this work, the metric field \\( \mathcal{M}(\mathbf{x})_{\mathbf{x} \in \Omega} \\) will be referred to as a continuous mesh.
+
+#### 3.5.2 Quantification of mesh anisotropy 
+In three dimensions, mesh anisotropy is quantified using two distinct notions: anisotropic ratios and anisotropic quotients.The derivation of these quantities for a specific element \\(K\\) relies on the property that there exists a unique metric tensor 
+\\( \mathcal{M}_K \\) (the element-implied metric) for which the element \\( K \\) is unit. 
+Once \\( \mathcal{M}_{K} \\) is computed, the anisotropic ratio and the anisotropic quotient associated with element \\(K\\) are defined as follows:
+\\[\text{ratio} = \sqrt{\frac{\max_i \lambda_i}{\min_i \lambda_i}} = \frac{\max_i h_i}{\min_i h_i}\\]
+\\(\text{quo} = \frac{\max_i h_i^3}{h_1 h_2 h_3}\\) where \\((\lambda_i)_{i=1,3}\\) are the eigenvalues of \\( \mathcal{M}_K \\) and \\((h_i)_{i=1,3}\\) are the corresponding characteristic sizes (\\(h_i = \lambda_i^{-1/2}\\)). 
+
+
+### 3.6 Metric Interpolation 
+In practical CFD applications, such as with the CODA solver, the physical information used for adaptation is computed and stored at discrete location, in our case, it is stored at cell center. To be able to compute a metric at any point of the domain, a robust interpolation framework on metrics is required.\ 
+For instance we want the interpolation to be commutative (i.e. the resulting metric does not depend on the order of the interpolation operations between metrics). To that end, we use the log-Euclidean framework introduced in [5].
+
+
+#### 3.6.1 Log-Euclidean Framework 
+
+The metric logarithm is defined for a tensor \\(\mathcal{M} = \mathcal{R} \Lambda \mathcal{R}^T\\) as:
+$$\ln(\mathcal{M}) := \mathcal{R} \ln(\Lambda) \mathcal{R}^T$$
+where \\(\ln(\Lambda) = \text{diag}(\ln(\lambda_i))\\). Additionnaly , for any symmetric matrix \\(\mathbf{S} = \mathbf{Q} \Sigma \mathbf{Q}^T\\), the matrix exponential is given by:$$\exp(\mathbf{S}) := \mathbf{Q} \exp(\Sigma) \mathbf{Q}^T$$ where \\(\exp(\Sigma) = \text{diag}(\exp(\xi_i))\\). Based on these operators, we define the logarithmic addition (\\(\oplus\\)) and scalar multiplication (\\(\odot)\\):$$\mathcal{M}_1 \oplus \mathcal{M}_2 := \exp(\ln(\mathcal{M}_1) + \ln(\mathcal{M}_2))$$ $$\alpha \odot \mathcal{M} := \exp(\alpha \cdot \ln(\mathcal{M})) = \mathcal{M}^\alpha$$
+This framework ensures commutativity and preserves the structural properties of the tensors during interpolation.
 
 
 
-## Metric Operations
+#### 3.6.2 Metric Interpolation in the Log-Euclidean Framework 
+Let \\( (x_i)_ {i=1,...,k} \in \Omega \\) be a set of cell centers and \\(\mathcal{M}(c_i)_ {i=1,..,k}\\) their associated metrics. Then, for a point x of \\(\Omega \\) such that : 
+\\[ x = \sum_{i=1}^k \alpha_i x_i \text{ with } \sum_{i=1}^k \alpha_i = 1 \\]
+
+The interpolated metric is defined by : 
+
+\\[ \mathcal{M}(\mathbf{x}) = \bigoplus_{i=1}^{k} \alpha_i \odot \mathcal{M}(\mathbf{x}_ i) = \exp \left( \sum_{i=1}^{k} \alpha_i \ln(\mathcal{M}(\mathbf{x}_i)) \right) \\]
+
+While this interpolation method is commutative, its main drawback lies in its computational cost, as it requires $k$ diagonalizations along with the evaluation of matrix logarithms and exponentials. Despite being CPU-intensive, this procedure is essential for defining a continuous metric field across the entire domain. \
+
+An additional advantage of this framework, as demonstrated in [5], is that it preserves the maximum principle. Specifically, for an edge \\(ab\\) with endpoint metrics \\(\mathcal{M}(a)\\) and \\(\mathcal{M}(b)\\) such that \\(\det(\mathcal{M}(a)) < \det(\mathcal{M}(b)) \\), the determinant of the interpolated metric remains strictly bounded:
+$$\det(\mathcal{M}(a)) < \det(\mathcal{M}(a + t\vec{ab})) < \det(\mathcal{M}(b)), \quad \forall t \in [0, 1]$$
+
+#### 3.6.3 Numerical Computation of Edge Lengths
+The Riemannian length of a segment \\(\mathbf{ab}\\) is defined by the integral of the metric along the path. While this can be approximated using a \\(k\\)-point Gaussian quadrature:
+$$\ell_{\mathcal{M}}(\mathbf{ab}) = \int_{0}^{1} \sqrt{\mathbf{ab}^T \mathcal{M}(\mathbf{a} + t\mathbf{ab}) \mathbf{ab}} \, dt \approx \sum_{i=1}^{k} \omega_i \sqrt{\mathbf{ab}^T \mathcal{M}(\mathbf{a} + \alpha_i \mathbf{ab}) \mathbf{ab}}$$
+such computations are too expensive for frequent use in the remeshing process.
+
+By assuming a logarithmic variation law along the edge, an analytical solution can be derived. Let \\(\ell_1\\) and \\(\ell_2\\) be the lengths of edge \\(\mathbf{e}\\) evaluated using the endpoint metrics \\(\mathcal{M}(\mathbf{p}_ 1)\\) and \\( \mathcal{M}(\mathbf{p}_ 2) \\), with \\(\ell_1  > \ell_2 \\). Setting \\(a = \ell_1 / \ell_2\\), the integrated Riemannian length is:
+$$\ell_{\mathcal{M}}(\mathbf{e}) = \ell_1 \frac{a - 1}{a \ln(a)}$$
+The proof can be found in [32].
+
+#### 3.6.4 Numerical Computation of Volumes
+The volume of a tetrahedron \\(K\\) in a Riemannian space is calculated by integrating the metric density \\(\sqrt{\det \mathcal{M}(\mathbf{x})}\\). Using a first-order log-Euclidean approximation at the barycenter, the volume is estimated as:
+\\[ |K|_ {\mathcal{M}} \approx \sqrt{\det \left( \exp \left( \frac{1}{4} \sum_{i=1}^{4} \ln(\mathcal{M}_ i) \right) \right)} |K|_{\mathcal{I}_d} \\]
+
+For higher accuracy, a \\(k\\) -point Gaussian quadrature with weights \\(\omega_j\\) and barycentric coordinates \\(\beta_{j}^{i}\\) can be employed:
+\\[|K|_ {\mathcal{M}} \approx |K|_ {\mathcal{I}_ d} \sum_{j=1}^{k} \omega_j \sqrt{\det \left( \exp \left( \sum_{i=1}^{4} \beta_{j}^{i} \ln(\mathcal{M}_i) \right) \right)}\\]
+
+
+<figure style="text-align: center;">
+  <img src="../images/Metric_interpolation-.png" alt="Metric Evolution along a segment" width="90%">
+  <figcaption>  $$ \text{Metric Evolution along a segment where the endpoints metrics are the blue and purple ones } $$. </figcaption>
+</figure>
+
+
+
+
+## 3.7  Metric Operations
 Constructing a metric suitable for remeshing often requires combining information from various sources or imposing specific constraints, such as minimum/maximum edge lengths or controlled metric gradation across the mesh. Therefore, it is essential to define the mathematical operations that can be performed on metrics.
 
-### Metric Intersection : 
-Given two metric \\( \mathcal{M}_ 1 \\) and \\( \mathcal{M}_ 2 \\), their intersection \\( \mathcal{M}_ {1 \cap 2}\\) corresponds to a metric that imposes the largest sizes in all directions that remain smaller than those prescribed by both  \\(\mathcal M_1\\) and \\(\mathcal M_2\\). Geometrically, the ellipse associated with the intersection metric \\( \mathcal{M}_ {1 \cap 2}\\) is the largest ellipse contained within the intersection of the ellipses of\\( \mathcal{M}_ 1 \\) and \\( \mathcal{M}_ 2 \\).
-\\[ \mathcal M_{1 \cap 2} = \arg \min \{ \det (\mathcal M) |  \mathcal M \in \mathcal S^+ t.q. \mathcal M\ge \mathcal M_1, \mathcal M\ge \mathcal M_2\} \\] 
+### 3.7.1 Metric Intersection : 
+Given two metric \\( \mathcal{M}_ 1 \\) and \\( \mathcal{M}_ 2 \\), their intersection \\( \mathcal{M}_ {1 \cap 2}\\) corresponds to a metric that imposes the largest sizes in all directions that remain smaller than those prescribed by both  \\(\mathcal M_1\\) and \\(\mathcal M_2\\). Geometrically, the ellipse associated with the intersection metric \\( \mathcal{M}_ {1 \cap 2}\\) is the largest ellipse contained within the intersection of the ellipses of\\( \mathcal{M}_ 1 \\) and \\( \mathcal{M}_ 2 \\). This ellipsoid (metric) verifying this property is obtained by using the simultaneous reudction of the two metrics.
+
+### Simultaneous reduction 
+The simultaneous reudction enables to find a common basis \\( (e_1, e_2, e_3) \\) such that \\( \mathcal{M}_1\\) and \\( \mathcal{M}_2\\)
+are congruent to a diagonal matrix in this basis, and then to deduce the intersected metric. To do so, the matrix \\( \mathcal{N} = \mathcal{M}_1^{-1}\mathcal{M}_2\\) is introduced. \\(N\\) is diagonalizable with real-eigenvalues. The normalized eigenvectors of \\(\mathcal{N}\\) denoted by \\( (e_1, e_2, e_3) \\) constitute a common diagonalization basis for \\( \mathcal{M}_1\\) and \\( \mathcal{M}_2\\). The entries of the diagonal matrices, that are associated with the metrics \\( \mathcal{M}_1\\) and \\( \mathcal{M}_2\\) in this basis, are obtained with the Rayleigh formula : 
+
+\\[\lambda_i = e_i^T \mathcal{M}_1 e_i \text{ and }  \mu_i = e_i^T \mathcal{M}_2 e_i\\]
+
+Let \\(P(e_1, e_2, e_3) \\) be the matrix with the columns that are the eignevectors \\({e_i}_{i=1,...,3}\\) of \\(\mathcal{N}\\). \\(P\\) is invertible as \\((e_1, e_2, e_3)\\) is a basis of \\(\mathbb{R}^3\\). We have : 
+
+\\[ \mathcal{M}_1 = P^{-T} \begin{bmatrix} \lambda_1&&\\\\
+    &\lambda_2& \\\\
+    &&\lambda_3  \end{bmatrix} P^{-1} \text{and}  \mathcal{M}_2 = P^{-T} \begin{bmatrix} \mu_1&&\\\\
+    &\mu_2& \\\\
+    &&\mu_3  \end{bmatrix} P^{-1} \\]
+
+Since the eigen values are the opposite of the prescribed sizes, it comes : 
+\\[ \mathcal M_{1 \cap 2} =  \mathcal{M}_1 \cap \mathcal{M}_2 =  P^{-T} \begin{bmatrix} max(\mu_1,\lambda_1)&&\\\\
+    & max(\mu_2,\lambda_2)& \\\\
+    &&max(\mu_3,\lambda_3) \end{bmatrix} P^{-1} \\]
+
+Numerically, to compute \\(\mathcal M_{1 \cap 2}\\), the real-eigenvalues of \\(\mathcal{N}\\) are first evaluated with a Newton algorithm.
+Then, the eigenvectors of \\(\mathcal{N}\\) , which define \\(P\\), are computed using the algebra notions of image and
+kernel spaces.
+
+
+<!-- \\[ \mathcal M_{1 \cap 2} = \arg \min \{ \det (\mathcal M) |  \mathcal M \in \mathcal S^+ t.q. \mathcal M\ge \mathcal M_1, \mathcal M\ge \mathcal M_2\} \\]  -->
 
 
 <figure style="text-align: center;">
@@ -157,7 +244,7 @@ Given two metric \\( \mathcal{M}_ 1 \\) and \\( \mathcal{M}_ 2 \\), their inters
   <figcaption>  $$ \text{Intersection of two metrics; the intersected metric } \mathcal{M}_{1 \cap 2}$$. </figcaption>
 </figure>
 
-The intersection operation is performed as follows:
+<!-- The intersection operation is performed as follows:
 
 Let \\( P = (e_0 | ... | e_d) \\) be the generalized eigenvectors of the pair\\( (M_0, M_1) \\) :
 
@@ -173,10 +260,55 @@ The intersection is then defined as:
 
 \\[ \mathcal M_0 \cap \mathcal M_1 = \mathcal P^{-1, T} \Lambda^{(i,j)} \mathcal P^{-1} \\]
 
-with \\( \Lambda^{(i,j)}{jk} = \max(\Lambda^{(i)}{jk}, \Lambda^{(j)}_{jk}) \\)
+with \\( \Lambda^{(i,j)}{jk} = \max(\Lambda^{(i)}{jk}, \Lambda^{(j)}_{jk}) \\) -->
 
 
-## Metric Gradation
+### 3.7.2 Metric Gradation
+
+Metric fields may have huge variations or may be quite irregular when evaluated from numerical solutions that present discontinuities or steep gradients. This makes the generation of a unit mesh difficult or impossible, thus leading to poor quality anisotropic meshes. Generating high-quality anisotropic meshes requires to smooth the metric field by bounding its variations in all directions. It also helps flow solver convergence. In the anisotropic context, the mesh gradation consists in reducing in all directions the size prescribed at any points if the variation of the metric field is larger than a fixed threshold [1].
+
+#### Spanning a metric field 
+Let \\(p\\) be a point of a domain \\(\Omega\\) supplied with a metric \\(\mathcal{M}_p\\) and \\(\beta\\) the specified gradation. Two laws governing the metric growth in the domain are proposed. In the first one, the metric growth is homogeneous in the Euclidean metric field defined by \\(\mathcal{M}_p\\). The second metric growth is homogeneous in the physical space, i.e., the classical Euclidean space.
+
+
+The first law associates for any point \\(x\\) of the domain a unique scale factor with the metric given by:
+$$\eta^2(px) = (1 + \ell_p(px) \cdot \ln(\beta))^{-2} = \left(1 + \sqrt{px^{\top} \mathcal{M}_p px} \cdot \ln(\beta)\right)^{-2}$$
+
+With this formulation, each pointwise metric \\(\mathcal{M}_ p\\) spans a global continuous smooth metric field all over domain \\(\Omega\\) parametrized by the given gradation value \\(\beta\\):
+
+\\[(\mathcal{M}_ p(x))_ {x \in \Omega} \text{ with } \mathcal{M}_p(x) = \eta^2(px) \mathcal{M}_p\\]
+
+In this case, the resulting metric field grows homogeneously in the Euclidean metric space defined by \\(\mathcal{M}_p\\) as the scale factor depends on the length of segment \\(px\\) with respect to \\(\mathcal{M}_p\\). \
+As a result, the shape of the metric is kept unchanged while growing. This law conserves the same anisotropic ratio. For the second law, we associate independently a growth factor with each eigenvalue of : 
+
+\\[\mathcal{M}_p = \mathcal{R} \Lambda \mathcal{R}^{\top} \quad \text{with} \quad \Lambda = \text{diag}(\lambda_i)_{i=1,3}\\]
+
+so:
+
+\\[\eta_i^2(px) = (1 + \sqrt{\lambda_i} \|px\|_2 \cdot \ln(\beta))^{-2} \\]
+
+The grown metric at \\(x\\) is given by \\(\mathcal{M}_p(x) = \mathcal{R} N(px) \Lambda \mathcal{R}^{\top}\\) where:
+\\[N(px) = \begin{bmatrix} \eta_1^2(px) & 0 & 0 \\\\ 0 & \eta_2^2(px) & 0 \\\\ 0 & 0 & \eta_3^2(px) \end{bmatrix} \\]
+
+The resulting metric field grows homogeneously in the physical space. Indeed, each eigenvalue grows similarly in all directions, as the factor \\(\eta_i\\) depends only on the distance (in the physical space) from the original point. 
+
+Consequently, the shape, i.e., the anisotropic ratio of the metric, is no more preserved as the eigenvalues are growing separately and differently.
+This law gradually makes the metric more and more isotropic as it gradually propagates in the domain.In [2] the authors suggest to mix these two laws to achieve an efficient metric gradation algorithm. 
+For this new law, a growth factor is associated independently with each eigenvalue of \\(\mathcal{M}_p\\):
+$$\eta_i^2(px) = \left( (1 + \sqrt{\lambda_i} \|px\|_2 \cdot \ln(\beta))^t \cdot (1 + \ell_p(px) \cdot \ln(\beta))^{1-t} \right)^{-2}$$
+
+The authors consider \\(t = 1/8\\) within their numerical examples.
+
+#### Metric reduction
+The reduced metric at a point \\(x\\) of the domain \\(\Omega\\) is given by the strongest size constraint imposed by the metric at
+\\(x\\) and by the spanned metrics (parametrized by the given size gradation) of all the other points of the domain at \\(x\\):
+$$\hat{\mathcal{M}}(x) = \left( \bigcap_{p \in \Omega} \mathcal{M}_p(x) \right) \cap \mathcal{M}(x)$$
+Practical implementation are given in [1].
+
+
+
+
+<!-- 
 
 It is often desirable to control the evolution of edge lengths from one element to another. This concept can be translated into constraints on the variation of the metric field (see *Size gradation control of anisotropic meshes*, F. Alauzet, 2010). The approach can be summarized as follows:
 
@@ -193,40 +325,31 @@ et
 \\[ \widetilde{\mathcal M_i} = \mathcal M_i \cap \mathcal M_s(\mathbf x_j, \mathbf x_i) \\]
 
 * Achieving a global maximum gradation across all mesh edges would theoretically require \\( O(N^2) \\) operations. In practice, the above operation is applied iteratively over a limited number of passes across the set of mesh edges.
+ -->
+### 3.7.3 Controlling the step between two metrics  
+
+Controlling the step between two metricsIn the remeshing process, it may be interesting to control the step between the element-implied and target metrics. Such control is available within the remesher Tucanos and specified by the parameter \\(f\\).
+Given two metric fields \\(\mathcal{M}_1\\) and \\(\mathcal{M}_2\\), the objective is to find \\(\mathcal{M} = \mathcal{L}(\mathcal{M}_1, \mathcal{M}_2, f)\\) as close as possible to \\(\mathcal{M}_2\\) such that, for all edges \\(\mathbf{e}\\):
+
+\\[\frac{1}{f} \leq \frac{\mathbf{e}^{\top} \mathcal{M} \mathbf{e}}{\mathbf{e}^{\top} \mathcal{M}_1 \mathbf{e}} \leq f\\]
+i.e., to have:
+\\[ \frac{1}{f} \leq \lambda_{\min}(\mathcal{M}_ 1^{-\frac{1}{2}} \mathcal{M} \mathcal{M}_ 1^{-\frac{1}{2}}) \leq \lambda_{\max}(\mathcal{M}_1^{-\frac{1}{2}} \mathcal{M} \mathcal{M}_1^{-\frac{1}{2}}) \leq f \\]
+Practically, "as close as possible" is defined as minimizing the Frobenius norm $\|\mathcal{M}_1^{-\frac{1}{2}} (\mathcal{M} - \mathcal{M}_2) \mathcal{M}_1^{-\frac{1}{2}}\|_F$.The optimal $\mathcal{M}^*$ is then computed as follows:Compute $\mathbf{N} := \mathcal{M}_1^{-\frac{1}{2}} \mathcal{M}_2 \mathcal{M}_1^{-\frac{1}{2}}$Compute the eigenvalue decomposition $\mathbf{Q} \mathbf{D} \mathbf{Q}^{\top} = \mathbf{N}$, with $\mathbf{D} = \text{diag}(\lambda_i)$Compute $\mathbf{N}^* := \mathbf{Q} \text{diag}(\hat{\lambda}_i) \mathbf{Q}^{\top}$ where $\hat{\lambda}_i := \min(\max(\lambda_i, \frac{1}{f}), f)$Compute $\mathcal{M}^* := \mathcal{M}_1^{\frac{1}{2}} \mathbf{N}^* \mathcal{M}_1^{\frac{1}{2}}$
 
 
+### 4. Ansitropic Mesh Adaptation Strategy 
+Now that the mathematical foundations specifically the Riemannian metric framework and the discrete-continuous duality have been established, we possess the necessary tools to address the mesh adaptation problem formally. The challenge shifts from a purely geometric construction to a constrained optimization problem.
+
+In the context of anisotropic mesh adaptation, which is specifically tailored for simplex meshes, the primary objective is to rigorously couple the physical error model to the geometrical properties of the mesh.
 
 
-
-A discrete simplex mesh can be fully described by a Riemannian metric space. Such duality relies on
-the notion of unit elements. Once we define the unit element notion, we can generalize the unit notion
-to the mesh and then define a duality between the mesh and the continuous metric space. Then we
-can refer to a mesh as its metric field. Furthermore we can use the existing metric operations and
-invariants in the Riemannian space to control the interpolation error. Such mathematical framework
-was thoroughly established in ([33],[34]). We will hereby recall the most important aspects of the
-continuous mesh theory.
-
-To generate anisotropic meshes that adapt to the flow physics, it is necessary to prescribe element sizes and orientations at every point in the domain. This is made possible by using the Riemannian space defined earlier.
-
-The core idea is to generate a unit mesh with respect to the metric derived from the error indicator. A tetrahedron\\( K \\), ddefined by its set of edges \\( \mathbf{(e_i)}_{i=1..6}\\)is said to be unit with respect to a metric \\( \mathcal{M} \\) if the length of each of its edges is unity in this metric: 
-
-\\[   \forall i= 1,...,6, \mathcal{l_{M}}(\mathbf{e_i})= 1 \text{ with }  \mathcal{l_{M}}(\mathbf{e_i})=\sqrt{^t\mathbf{e_i}\mathcal{M}\mathbf{e_i}} \\]
-
-If all edges of \\(K\\) have unit length, then its volume  \\(  \mathbf{|K|_\mathcal{M}}\\)  in the metric   \\( \mathcal{M}\\) is constant and equal to: 
-
-\\[  \mathbf{|K|_\mathcal{M} }= \frac{\sqrt{2}}{12}  \text{  and  } \mathbf{|K|} = \frac{\sqrt{2}}{12} (det(\mathcal{M}))^{ -\frac{1}{2}} \\]
-
-where \\( \mathbf{|K|}\\) denotes the Euclidean volume.
-
-The existence of a perfect unit mesh for a given Riemannian metric space is not guaranteed. Therefore, the concept of a unit mesh must be extended: a discrete mesh \\(\mathcal{H}\\)  of a domain \\( \Omega \subset R^{n}\\)  is considered a unit mesh with respect to a Riemannian metric space \\( \mathbf{M}= (\mathcal{M})(x)_{x \in \Omega} \\) if all its elements are quasi-unit. A tetrahedron \\( K \\) is said to be quasi-unit if: 
+Let \\(\mathcal{T}_ K\\) be a simplex mesh composed of elements \\(K\\). For a given error model \\(E(\mathcal{T}_ K)\\), the discrete adaptation problem consists in finding the optimal mesh \\(\mathcal{T}_ K^{opt}\\) that minimizes the error for a fixed number of vertices \\(N\\) (the complexity):
+\\[\mathcal{T}_ K^{opt} = \arg \min_{\mathcal{C}(\mathcal{T}_ K)=N} E(\mathcal{T}_ K)\\]
+While solving this directly in the discrete space is combinatorially explosive, the continuous mesh theory provides a powerful alternative. By representing the mesh as a continuous metric field \\(\mathcal{M}(\mathbf{x})\\), we can recast the problem into a variational form. The goal becomes finding the optimal continuous metric \\(\mathcal{M}_ {opt}\\) that minimizes a continuous error functional \\(\mathcal{E}(\mathcal{M})\\) under a fixed complexity constraint \\(\mathcal{C}(\mathcal{M}) = N\\):
+\\[\mathcal{M}_ {opt} = \arg \min_{\mathcal{C}(\mathcal{M})=N} \mathcal{E}(\mathcal{M})\\]
 
 
-\\[   \forall i= 1,...,6, \mathcal{l_{M}}(\mathbf{e_i}) \in [\frac{1}{\sqrt{2}}, \sqrt{2}]\\] and if its volume is unitary.
-
-
-Consequently, the adapted mesh is uniform and isotropic in the Riemannian space, while being anisotropic in the Euclidean space.
-
-
+### 4.1 Feature-based mesh adaptation
 
 ### Error Control and Continuous Formulation in Mesh Adaptation
 
