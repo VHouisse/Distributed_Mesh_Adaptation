@@ -38,7 +38,7 @@
             const path_to_root = "";
             const default_light_theme = "rust";
             const default_dark_theme = "rust";
-            window.path_to_searchindex_js = "searchindex-c3ad34d6.js";
+            window.path_to_searchindex_js = "searchindex-f5c9ca58.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0cff5d47.js"></script>
@@ -273,8 +273,8 @@ viscosity μt is defined as:</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="numerical-discretization-of-the-pde-equations"><a class="header" href="#numerical-discretization-of-the-pde-equations">Numerical Discretization of the PDE equations</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="metric"><a class="header" href="#metric">Metric</a></h1>
-<h3 id="31-definition--métrique"><a class="header" href="#31-definition--métrique">3.1 Definition : Métrique</a></h3>
+<h1 id="anisotropic-mesh-adaptation"><a class="header" href="#anisotropic-mesh-adaptation">Anisotropic Mesh Adaptation</a></h1>
+<h3 id="31-definition--metric"><a class="header" href="#31-definition--metric">3.1 Definition : Metric</a></h3>
 <p>A <strong>metric tensor</strong> \( \mathcal{M} \in \mathbb{R}^{n \times n} \) is a symmetric positive definite matrix.</p>
 <p>\( \mathcal{M} \) is always diagonalizable and can be decomposed as \( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \), where \( \mathcal{R} \) and \( \Delta \) respectively the matrices of the eigenvectors and eigenvalues of \( \mathcal{M} \).</p>
 <p>From this definition, it follows that the <strong>scalar product</strong> of two vectors in \( \mathbb{R}^n \) can be defined with respect to a metric \( \mathcal{M} \) as follows :</p>
@@ -489,6 +489,7 @@ Given two metric fields \(\mathcal{M}_1\) and \(\mathcal{M}_2\), the objective i
 i.e., to have:
 \[ \frac{1}{f} \leq \lambda</em>{\min}(\mathcal{M}_ 1^{-\frac{1}{2}} \mathcal{M} \mathcal{M}_ 1^{-\frac{1}{2}}) \leq \lambda_{\max}(\mathcal{M}_1^{-\frac{1}{2}} \mathcal{M} \mathcal{M}_1^{-\frac{1}{2}}) \leq f \]
 Practically, “as close as possible” is defined as minimizing the Frobenius norm $|\mathcal{M}_1^{-\frac{1}{2}} (\mathcal{M} - \mathcal{M}_2) \mathcal{M}_1^{-\frac{1}{2}}|_F$.The optimal $\mathcal{M}^<em>$ is then computed as follows:Compute $\mathbf{N} := \mathcal{M}_1^{-\frac{1}{2}} \mathcal{M}_2 \mathcal{M}_1^{-\frac{1}{2}}$Compute the eigenvalue decomposition $\mathbf{Q} \mathbf{D} \mathbf{Q}^{\top} = \mathbf{N}$, with $\mathbf{D} = \text{diag}(\lambda_i)$Compute $\mathbf{N}^</em> := \mathbf{Q} \text{diag}(\hat{\lambda}_i) \mathbf{Q}^{\top}$ where $\hat{\lambda}_i := \min(\max(\lambda_i, \frac{1}{f}), f)$Compute $\mathcal{M}^* := \mathcal{M}_1^{\frac{1}{2}} \mathbf{N}^* \mathcal{M}_1^{\frac{1}{2}}$</p>
+<h6 id="a-reformuler"><a class="header" href="#a-reformuler">A REFORMULER</a></h6>
 <h3 id="4-ansitropic-mesh-adaptation-strategy"><a class="header" href="#4-ansitropic-mesh-adaptation-strategy">4. Ansitropic Mesh Adaptation Strategy</a></h3>
 <p>Now that the mathematical foundations specifically the Riemannian metric framework and the discrete-continuous duality have been established, we possess the necessary tools to address the mesh adaptation problem formally. The challenge shifts from a purely geometric construction to a constrained optimization problem.</p>
 <p>In the context of anisotropic mesh adaptation, which is specifically tailored for simplex meshes, the primary objective is to rigorously couple the physical error model to the geometrical properties of the mesh.</p>
@@ -496,86 +497,68 @@ Practically, “as close as possible” is defined as minimizing the Frobenius n
 \[\mathcal{T}_ K^{opt} = \arg \min_{\mathcal{C}(\mathcal{T}_ K)=N} E(\mathcal{T}_ K)\]
 While solving this directly in the discrete space is combinatorially explosive, the continuous mesh theory provides a powerful alternative. By representing the mesh as a continuous metric field \(\mathcal{M}(\mathbf{x})\), we can recast the problem into a variational form. The goal becomes finding the optimal continuous metric \(\mathcal{M}_ {opt}\) that minimizes a continuous error functional \(\mathcal{E}(\mathcal{M})\) under a fixed complexity constraint \(\mathcal{C}(\mathcal{M}) = N\):
 \[\mathcal{M}_ {opt} = \arg \min_{\mathcal{C}(\mathcal{M})=N} \mathcal{E}(\mathcal{M})\]</p>
+<p>However, we only defined the duality between discrete and continuous entities for elements and meshes
+but not for error models. In the following we will see how this duality is defined in literature for the
+linear interpolation error of a sensor w (Feature-based mesh adaptation).</p>
 <h3 id="41-feature-based-mesh-adaptation"><a class="header" href="#41-feature-based-mesh-adaptation">4.1 Feature-based mesh adaptation</a></h3>
-<h3 id="error-control-and-continuous-formulation-in-mesh-adaptation"><a class="header" href="#error-control-and-continuous-formulation-in-mesh-adaptation">Error Control and Continuous Formulation in Mesh Adaptation</a></h3>
-<p>In mesh adaptation, the goal is to control the interpolation error between an exact solution \( u \)  and its linear reconstruction on a mesh \( \mathcal{H}\) :</p>
-<p>\[  |u- \Pi_h u |_{L^p(\Omega_h)}\]</p>
-<p>where :</p>
-<ul>
-<li>\(\Pi_h u\) is the linear interpolant on the discrete mesh.</li>
-<li>\((\Omega_h)\) is the meshed domain.</li>
-</ul>
-<p>This formulation is discrete and explicitly depends on the mesh, which makes global optimization complex. By using a continuous metric field \( \mathcal{M}(x) \),one can define a continuous interpolation error associated with the metric \( \mathcal{M}(x) \)independent of any specific discrete mesh:</p>
-<p>\[  |u- \Pi_{\mathcal{M}} u |_{L^p(\Omega_h)}\]</p>
-<p>For a quadratic function \(u \), the following theorem holds:</p>
-<h4 id="théorème-31"><a class="header" href="#théorème-31">Théorème 3.1.</a></h4>
-<p>For any element \(K\) that is unit with respect to  \(\mathcal{M} \) , the \(L^1 \)   interpolation error of \( u \)is independent of the element’s shape and depends solely on the Hessian \(\mathbf{H} \) of \(u \) and the metric \(\mathcal{M}\).
-In 3D, for all tetrahedra \(K \) that are unit with respect to \(\mathcal{M}\) , the following equality holds: :</p>
-<p>\[|u - \Pi_h u|_{L^1(K)} = \frac{\sqrt{2}}{240} \det \left( \mathcal{M}^{-\frac{1}{2}} \right) \text{trace} \left( \mathcal{M}^{-\frac{1}{2}} \mathbf{H} \mathcal{M}^{-\frac{1}{2}} \right)\]</p>
-<p>The error is well-defined for a quadratic solution on an element K, however, since a metric is defined at every point in the domain\( x \in \Omega \)it is necessary to define the error throughout the entire domain :</p>
-<h4 id="théorème-32"><a class="header" href="#théorème-32">Théorème 3.2.</a></h4>
-<p>Let\(u\)be a twice continuously differentiable function on a domain \( \Omega \) and let \( \mathcal{M}(x)_{x \in \Omega} \)  be a continuous mesh of  \( \Omega\).</p>
-<p>There exists a unique function\( \pi_M \)  such that:
-\[ \forall a \in \Omega, |u - \pi_M u|(a) = \frac{|u_Q - \Pi_h u_Q|_{L^1(K)}}{|K|} = \frac{1}{20} \text{trace} \left( \mathcal{M}(a)^{-\frac{1}{2}} |\mathbf{H}(a)| \mathcal{M}(a)^{-\frac{1}{2}} \right) \]
-for any element K that is unit with respect to \(\mathcal{M}(a)\) , where \( u_Q\)  is the quadratic model of \(u\) at point\( a \).</p>
-<p>This theorem emphasizes another discrete-continuous duality by highlighting a continuous equivalent of the interpolation error.</p>
-<p>For this reason, the following formalism is proposed</p>
-<p>\( \pi_M\)  is called the continuous linear interpolant, and \( |u - \pi_M u| \)  represents the continuous dual of the interpolation error.</p>
-<p>The local interpolation error becomes global when the mesh is unit with respect to a constant metric tensor (which does not necessarily imply that the mesh is uniform) and when the function is quadratic. In this specific case, neglecting boundary discretization errors, we obtain the following equality:</p>
-<p>\[ |u - \Pi_h u|_{L^1(\Omega_h)} = |u - \pi_M u| _{ L^1(\Omega) }\]</p>
-<p>for all meshes \( \mathcal{H} \) that are unit with respect to\( \mathcal{M}(x)_{x \in \Omega} \)</p>
-<h3 id="34--optimal-control-of-the-lp-norm-interpolation-error"><a class="header" href="#34--optimal-control-of-the-lp-norm-interpolation-error">3.4  Optimal Control of the \(L^p\)-norm Interpolation Error</a></h3>
-<p>In its most general form, the mesh adaptation problem consists of finding the mesh \(\mathcal{H}\) of a domain \( \Omega \) that minimizes a given error for a defined function \( u \).</p>
-<p>For the sake of simplicity, we consider here the linear interpolation error \( |u - \Pi_h u | \) controlled in the \(L^p\)norm, although other norms may also be used. The problem is thus posed a priori:
-Find \( H_{opt} \) with \(N\) vertices such that:
-\[E_{L^p}(H_{opt}) = \min_{H} |u - \Pi_h u|_{L^p(\Omega_h)} \quad (P)\]</p>
-<p>Problem \((P)\) is a global combinatorial problem that proves to be insoluble in practice. Indeed, it would require the simultaneous optimization of both the mesh topology and the vertex positions.</p>
-<p>Consequently, simpler sub-problems are considered to approximate the solution. A common simplification consists of performing a local error analysis instead of addressing the global problem. A first set of methods focuses on deducing the optimal shape of the elements. A second set involves deriving a local bound for the interpolation error.</p>
-<p>This bound is then transformed into a metric-based estimate. Direct error minimization can also be considered by using the interpolation error itself as a cost function within the mesh generator.</p>
-<p>All these strategies share a common trait: they solve a local problem, as they operate in the neighborhood of a single element. Consequently, such error minimizations are equivalent to a gradient descent algorithm that only converges toward a local minimum with poor convergence properties. This drawback arises from the fact that the minimization is performed directly on a discrete mesh.</p>
-<br>
-<br>
-<h2 id="35-optimal-control-of-the-lp-norm-interpolation-error-in-a-continuous-framework"><a class="header" href="#35-optimal-control-of-the-lp-norm-interpolation-error-in-a-continuous-framework">3.5 Optimal Control of the \(L^p\)-norm Interpolation Error in a Continuous Framework</a></h2>
-<p>We propose to address the resolution of \((P)\) within a continuous framework. Consequently, \((P)\) is reformulated as a continuous optimization problem where the discrete interpolation error is replaced by its continuous equivalent:</p>
-<p>Find \(M_{opt}\) with a complexity of \(N\) such that:
-\[E_{L^p}(M_{opt}) = \min_{M} |u - \pi_M u|_{L^p(\Omega)}\]</p>
-<p>By using the definition of the continuous linear interpolant\(\pi_M\), it is possible to pose a well-posed global optimization problem to find the optimal continuous mesh that minimizes the \(L^p\) norm continuous interpolation error:</p>
-<p>Find \(M_{L^p} = \min_{M} E_{L^p}(M)\), where:</p>
-<p>\[E_{L^p}(M) = \left( \int_{\Omega} (u(x) - \pi_M u(x))^p , dx \right)^{1/p} = \left( \int_{\Omega} \text{trace} \left( M(x)^{-1/2} |H_u(x)| M(x)^{-1/2} \right)^p  dx \right)^{1/p} \quad (4)\]</p>
-<p>subject to the constraint: \[\mathcal{C}(M) = \int_{\Omega} d(x) \ dx = N\]</p>
-<p>The complexity constraint is added to avoid the trivial solution where all sizes \((h_i)_{i=1,3}\) would be zero, which would result in zero error. Unlike a discrete analysis, this problem can be solved globally using the calculus of variations, which is well-defined over the space of continuous meshes.</p>
-<h3 id="theorem-33"><a class="header" href="#theorem-33">Theorem 3.3</a></h3>
-<p>Let \(u\) be a twice continuously differentiable function defined on \(\Omega \subset \mathbb{R}^3\), and \(H_u\) its Hessian. The optimal continuous mesh \(M_{L^p}(u) = (M_{L^p}(x))_{x \in \Omega}\) that locally minimizes Problem (4) is given by:</p>
-<p>\[M_{L^p}(x) = N^{\frac{2}{3}} \left( \int_{\Omega} \det(|H_u(\bar{x})|)^{\frac{p}{2p+3}} d\bar{x} \right)^{-\frac{2}{3}} \times \det(|H_u(x)|)^{-\frac{1}{2p+3}} |H_u(x)| \quad (5)\]</p>
-<p>It satisfies the following properties:</p>
-<ul>
-<li>L’Uniqueness : \(M_{L^p}(u)\) is unique.</li>
-<li>Local Alignment: \(M_{L^p}(u)\) is locally aligned with the eigenvector basis of \(H_u\) and possesses the same anisotropy ratios as \(H_u\).</li>
-<li>Optimal Error Bound: \(M_{L^p}(u)\) provides an explicit optimal bound for the \(L^p\)norm interpolation error: :</li>
-</ul>
-<p>\[ |u - \pi_{M_{L^p}} u|_ {L^p(\Omega)} = 3 N^{-\frac{2}{3}} \left( \int_{\Omega} \det(|H_u|)^{\frac{p}{2p+3}} \right)^{\frac{2p+3}{3p}}\]</p>
-<p>It thus appears that the search for the optimal mesh cannot be dissociated from the metric from which it originates; the latter acts as the pivot between the theoretical minimization of error and the geometric construction of a discrete and efficient computational domain.</p>
-<h3 id="4-mesh-adaptation-for-steady-flows"><a class="header" href="#4-mesh-adaptation-for-steady-flows">4. Mesh Adaptation for Steady Flows</a></h3>
-<p>The transition from a theoretical error analysis to a numerical application in Fluid Dynamics requires a reformulation of the optimization problem. While pure theory defines the optimal metric as an ideal tensor, the operational challenge lies in the effective generation of a mesh whose density and anisotropy minimize the approximation error.</p>
-<p>In numerical simulations, the exact solution \(u\) is, by definition, unknown.</p>
-<p>Problem \((P)\) therefore transposed to minimize the error between \(u \text{ and } u_h \) in the \(  |L^{p}| \) norm .</p>
-<p>This transition requires coupling continuous mesh theory with error estimators capable of linking the approximation error to the local interpolation error.</p>
-<h3 id="41-adaptation-strategies"><a class="header" href="#41-adaptation-strategies">4.1. Adaptation Strategies</a></h3>
-<p>Two distinct methodological approaches are used to drive anisotropy:</p>
-<p>Feature-based approach :This aims to optimize the mesh to capture all physical structures of a specific sensor (e.g., pressure, Mach number). The use of the \(L^p\)norm is crucial here for capturing multi-scale phenomena, allowing for the refinement of structures whose amplitude is several orders of magnitude smaller than the primary scales.</p>
-<p>Goal-oriented approach: This focuses the error reduction effort on a specific scalar functional of interest (e.g., lift, drag), although prescribing anisotropy in this context is mathematically more complex.</p>
-<h3 id="43-iterative-procedure-and-convergence"><a class="header" href="#43-iterative-procedure-and-convergence">4.3. Iterative Procedure and Convergence</a></h3>
+<p>The feature-based mesh adaptation strategy is based on the multiscale error estimate [32]. It comes
+from the idea to control the interpolation error of sensor field \(w = f(u)\) defined from the state \(u\).
+Let \(\mathcal{T}_K\) be a simplex mesh on which the sensor w is piecewise linear approximated on elements \( K \). We denote the piecewise approximation by \(\Pi_hw\) on the mesh \(\mathcal{T}_K\). The idea is to solve \((65)\)Given the following \(L^p\)-norm interpolation error model of the the sensor field :</p>
+<p>\[  E_{L^p}(\mathcal{T}_K) = (\int _{\Omega} |\omega - \Pi_h \omega |^P d\Omega)^{\frac{1}{p}} \]</p>
+<p>To establish a rigorous link between the discrete mesh \(\mathcal{T}_h\) and the continuous metric field \(\mathcal{M}(\mathbf{x})\), we must define a continuous counterpart to the interpolation error. This is achieved by analyzing the local interpolation error of a quadratic sensor function \(w\), which represents the local Taylor expansion of a physical solution $u$ around a point \(\mathbf{a} \in \Omega\).</p>
+<h4 id="411-local-error-estimate-for-quadratic-forms"><a class="header" href="#411-local-error-estimate-for-quadratic-forms">4.1.1 Local Error Estimate for Quadratic Forms</a></h4>
+<p>Let \(w(\mathbf{x}) = \frac{1}{2} \mathbf{x}^{\top} \mathbf{H} \mathbf{x}\) be a quadratic form. For a simplex element \(K\) with edges \((\mathbf{e}_i)\) and volume \(|K|\), the \(L^1\) interpolation error is bounded by the alignment of the edges with the Hessian matrix \(|\mathbf{H}|\). According to [33], this error is expressed as:</p>
+<p>\[ | \omega - \Pi_h \omega |_ {L^1(K)} \leq \frac{|K|}{c_d} \sum_{i=1}^{n_e} \mathbf{e}_i^{\top} |\mathbf{H}| \mathbf{e}_i\]</p>
+<p>where \(c_d\) is a constant depending on the dimension (\(c_2 = 24, c_3 = 40\)).\</p>
+<p>To handle hyperbolic functions, the absolute value of the Hessian \(|\mathbf{H}|\) is used, effectively treating the error as an over-estimation by transforming the local model into an elliptic or parabolic one.</p>
+<p>We now consider a metric \( \mathcal{M} \) for which \(K\) is unit, and an interpolation error on a quadratic elliptic
+or parabolic function \(w\) (if \(w\) is hyperbolic, we take \(|H|\) to define the discrete interpolation error). using the geometric invariants in 3.2.1 and the proposition above we have the following link (theorem) between the linear interpolation error and the metric \( \mathcal{M} \) for quadratic functions:</p>
+<p>In 2D:
+\[ |w - \Pi_h w|_ {L^1(K)} = \frac{\sqrt{3}}{64} \det(\mathcal{M}^{-\frac{1}{2}}) \text{Tr}(\mathcal{M}^{-\frac{1}{2}} |\mathbf{H}| \mathcal{M}^ {-\frac{1}{2}})\]
+In 3D:
+$$|w - \Pi_h w|_{L^1(K)} = \frac{\sqrt{2}}{240} \det(\mathcal{M}^{-\frac{1}{2}}) \text{Tr}(\mathcal{M}^{-\frac{1}{2}} |\mathbf{H}| \mathcal{M}^{-\frac{1}{2}})$$</p>
+<p>This theorem confirms that the use of metric-based mesh adaptation is particularly well suited to
+control anisotropically the interpolation error, because the metric alone contains enough information
+to describe completely the linear interpolation error. The complete proof of theorem this can be found
+in [33].</p>
+<h4 id="412-continuous-linear-interpolate"><a class="header" href="#412-continuous-linear-interpolate">4.1.2 Continuous linear interpolate</a></h4>
+<p>The main difficulty in defining the continuous linear interpolate is to connect a discrete error computed on an element to a local continuous error that is defined pointwise. Suppose now that the continuous mesh \(\mathcal{M}(x)_ {x \in \Omega}\) is varying and \(w\) is not quadratic but only twice differentiable (to define its Hessian \(H_w\)).
+The equality 70 do not apply anymore but the right hand-side terms are defined continuously. The definition of a continuous linear interpolate \(\pi_{\mathcal{M}}\) follows this consideration.We denote by \(w_Q\) the quadratic approximation of a smooth function \(w\). At point \(a, w_Q\) is defined in the vicinity of \(a\) as the truncated second order Taylor expansion of \(w\):
+\[ \forall x \in \mathcal{V}(a), w_Q(a, x) = w(a) + \nabla w(a)(x - a) + \frac{1}{2}(x - a)^{\top}H_w(a)(x - a) \]</p>
+<p>\(w_Q\) is a complete quadratic form composed of a constant term, a linear term, and finally a quadratic term. In the vicinity of \(a,w_Q\) approximates \(w\) and \(\mathcal{M}(x)_ {x \in \Omega}\) reduces to \(\mathcal{M}(a)\) in the tangent space.<br>Given the following hypothesis, (theorem) there exists a unique continuous linear interpolate function \(\pi_{\mathcal{M}}\) such that
+$$\forall a \in \Omega, |w - \pi_{\mathcal{M}}w|(a) = 2\frac{|w_Q - \Pi_h w_Q|_ {L^1(K)}}{|K|} \quad (71)$$
+for every \(K\) unit element with respect to \(\mathcal{M}(a)\). The proof of this theorem can be found in [33]. The consequence of this theorem allows to write the continuous linear interpolation error w.r.t only the geometry and the Hessian:
+$$\forall a \in \Omega, |w - \pi_{\mathcal{M}}w|(a) = \frac{1}{8} \text{tr}(\mathcal{M}(a)^{-\frac{1}{2}} |H(a)| \mathcal{M}(a)^{-\frac{1}{2}}) \text{ in 2D} \quad (72)$$
+$$\forall a \in \Omega, |w - \pi_{\mathcal{M}}w|(a) = \frac{1}{10} \text{tr}(\mathcal{M}(a)^{-\frac{1}{2}} |H(a)| \mathcal{M}(a)^{-\frac{1}{2}}) \text{ in 3D} \quad (73)$$
+The proof of this is obtained by combining the above theorem 71, the equality 70 and the geometric invariants from 3.2.1.</p>
+<h4 id="413-continuous-linear-interpolation-error-model"><a class="header" href="#413-continuous-linear-interpolation-error-model">4.1.3 Continuous linear interpolation error model</a></h4>
+<p>The continuous linear interpolation model in \(L^p\)-norm is given by the following:
+$$\mathcal{E}_ {L^p}(\mathcal{M}) = \left( \int_{\Omega} |w - \pi_{\mathcal{M}} w|^p d\Omega \right)^{\frac{1}{p}} \quad (74)$$
+We can express the error only with \(\mathcal{M}(x)_ {x \in \Omega}\) and \(H_w\) the Hessian of \(w\).
+Putting this error model expression into problem (66) allows for a direct computation of \(\mathcal{M}_ {L^p}^{opt}\) that takes the following form:
+$$\mathcal{M}_ {L^p}^{opt} = N^{\frac{2}{d}} \left( \int_{\Omega} \det |H_w|^{\frac{p}{2p+d}} d\Omega \right)^{-\frac{2}{d}} \det |H_w|^{-\frac{1}{2p+d}} |H_w| \quad (75)$$
+where \(d\) denotes the dimension. The proof of this is in [34].</p>
+<h3 id="42-goal-oriented-mesh-adaptation"><a class="header" href="#42-goal-oriented-mesh-adaptation">4.2 Goal-oriented mesh adaptation</a></h3>
+<p>Feature-based mesh adaptation is efficient in controlling the interpolation error of a sensor field and has the good property of being generic. The multiscale error estimate in \(L^p\)-norm allows to automatically capture all scales within the flow. However, if generecity is a good advantage, it also has some flaws.<br>Indeed, the precision of a PDE solution is not always well described by the interpolation error. This can result in precision error in the computation of a function \(J(u)\) depending on the state \(u\) ([32],[2]). In aerodynamics, the accuracy of the aerodynamic coefficients is of interest for industrials. For example, it has been seen on wing profiles ([2]) that a mesh adaptation strategy based on the precise computation of the Drag enriched the boundary layer earlier and put less elements in the wake compared to Feature-
+based mesh adaptation on the mach number. This lead to a faster convergence of the drag coefficient, however it does not guarantee that all functions are well computed on the adapted mesh.</p>
+<h3 id="43-iterative-procedure-and-convergence"><a class="header" href="#43-iterative-procedure-and-convergence">4.3 Iterative Procedure and Convergence</a></h3>
+<p>Given an input discrete metric field ***, the goal of the remeshing algorithm is to perform operations on the current mesh to inforce as best as possible the desired metric. This comes in an iterative process called a mesh adaptation loop (see figure 10) in which a series of steady state solution computations, error analysis and remeshing are performed at constant complexity until mesh convergence is achieved. In practice, we apply this loop until aerodynamic coefficients reach a plateau. Then the complexity increase is specified by the user in the form of table 1 where complexity and iteration number at constant complexity are specified. Exit loop conditions could be added in the latter similar to [2] where a Cauchy convergence criterion with an error threshold \(\epsilon\) on the aerodynamic coefficients is used
+to get to higher complexities.
+Practically, the remesher works as follows: the metric is interpolated [5] on the vertexes of the mesh. Then the definition of metric lengths is possible between two vertexes with 60. Following that, local operations are performed on mesh entities within cavities (list of geometrical entities containing the entity). Different local operators exists such as edge splits, edge collapses, edge swaps, face swaps, vertex smoothing etc [30]. The idea of cavity operators is to replace an existing set of elements by a new one that conserves mesh topology (for example there is no face F counted twice). Depending on the operation, each local operator is performed if it prescribes the new metric (i.e. if the lenghts in the cavity are quasi-unit) with quality sufficient elements. The quality threshold is usually hard-coded, however it is possible to change the quality thresholds in Tucanos. The scheduling of such operators is performed as in P.C. Caplan’PhD [14] p58. To our knowledge this scheduling is different from the one present in classic anisotropic remeshers such as MMG [20], fefloa [30] or refine [37].</p>
 <p>Since mesh adaptation is intrinsically non-linear, its resolution relies on an iterative loop aimed at the convergence of the mesh-solution pair. The process follows a rigorous sequence:</p>
 <p>Flow resolution on a given mesh \(H_i\).
 Estimation of the optimal metric \(M_{L^p}\)from the computed solution (generally via Hessian recovery).
 Metric field gradation to ensure geometric regularity (smoothing).
-Generation of a new mesh \(H_{i+1}\)  that adheres to the prescribed metric.</p>
+Modification of \(H_i\) in order to get a new mesh \(H_{i+1}\)  that adheres to the prescribed metric.</p>
 <p>This strategy not only allows for the capture of singularities and strong discontinuities (shocks, boundary layers) but also ensures the recovery of the numerical scheme’s theoretical convergence order, which is often degraded on non-adapted meshes.</p>
-<p>We no longer seek merely to mathematically define an optimal metric, but to physically construct the resulting optimal mesh to solve complex fluid dynamics problems.</p>
-<!-- L'adaptation basée sur les caractéristiques (Feature-based) : On cherche le meilleur maillage pour capturer les variations d'un capteur physique donné (vitesse, pression, etc.).
-L'adaptation orientée par l'objectif (Goal-oriented) : On optimise le maillage pour observer une fonctionnelle scalaire précise (par exemple, la traînée ou la portance d'une aile).
-Problématiques et Motivations
-Bien que l'efficacité de l'anisotropie soit prouvée, le passage aux solutions numériques (où la solution exacte \\(u\\) est inconnue) soulève des défis :Erreur d'approximation : On cherche à minimiser \\(\|u - u_h\|_ {L^p}\\) au lieu de l'erreur d'interpolation pure.Capture multi-échelles : L'utilisation de la norme \\(L^p\\) (au lieu de \\(L^\infty\\)) est indispensable pour capturer des phénomènes dont l'amplitude est parfois 1000 fois plus faible que les structures principales, sans avoir besoin de fixer arbitrairement une taille de maille minimale.Convergence théorique : L'adaptation permet de retrouver un ordre de convergence de 2 (souvent perdu sur des maillages uniformes en présence de chocs ou de forts gradients), ce qui valide la qualité du calcul.L'algorithme d'adaptationL'adaptation est un processus non-linéaire résolu par une boucle itérative. On ne se contente pas de calculer une métrique ; on génère un nouveau maillage à chaque étape pour converger vers le couple maillage-solution optimal.La boucle type (Algorithme 2) :Calcul : Résolution de l'écoulement sur le maillage actuel.Métrique : Calcul de la métrique \\(M_{L^p}\\) basée sur l'estimation d'erreur.Gradation : Lissage de la métrique pour éviter des variations de taille trop brutales entre voisins.Génération : Création d'un nouveau maillage adapté à cette métrique.Interpolation : Transfert de la solution précédente sur le nouveau maillage pour redémarrer le calcul. -->
+<p>the transformation of the actual mesh  \(H_i\)  in a adapted mesh \(H_{i+1}\) that respect the prescribed metric itself extracted from the interpoaltion error analysis is performed threw a combination of different mesh operations.</p>
+<figure style="text-align: center;">
+  <img src="images/Schema_Remesh_bg.png" alt="Anisotropic metric tensor" width="70%">
+</figure>
+<h4 id="431-cavity"><a class="header" href="#431-cavity">4.3.1 Cavity</a></h4>
+<p>Given a mesh entity \( e \) (a vertex or an edge in this case), the cavity \( \mathcal{C}(e) \)is the set of mesh elements that contain the entity \( e \).</p>
+<p>A cavity \( \mathcal{C}(e) \) can be “re-filled” from a vertex \( \mathbf v \) as the set of elements created from \( \mathbf v \) and the faces of the cavity boundary \( \partial \mathcal{C}(e) \) (outward-oriented).</p>
+<p>\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \]</p>
 <div class="algorithm">
 <b>Algorithm:</b> Mesh Adaptation Loop for Steady Flows<br><br>
 <p><b>Input:</b> Initial mesh and solution \((H_0, S_0^0)\), target complexity \(N\)<br>
@@ -591,20 +574,30 @@ Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
 
 </div>
  
-<p>\(\) \(\) \(\) \(\) \(\)</p>
-<h3 id="definition-cavity"><a class="header" href="#definition-cavity">Definition: Cavity</a></h3>
-<p>Given a mesh entity \( e \) (a vertex or an edge in this case), the cavity \( \mathcal{C}(e) \)is the set of mesh elements that contain the entity \( e \).</p>
-<p>A cavity \( \mathcal{C}(e) \) can be “re-filled” from a vertex \( \mathbf v \) as the set of elements created from \( \mathbf v \) and the faces of the cavity boundary \( \partial \mathcal{C}(e) \) (outward-oriented).</p>
-<p>\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \]</p>
-<h3 id="definition-swap"><a class="header" href="#definition-swap">Definition: Swap</a></h3>
+<h3 id="432-swap"><a class="header" href="#432-swap">4.3.2 Swap</a></h3>
 <figure style="text-align: center;">
   <img src="images/swap.svg" alt="Anisotropic metric tensor " width="70%">
 </figure>
 <p>The <strong>swap</strong> operation aims at improving the quality of the elements. It locally modifies the connectivity of a mesh without adding or removing vertices.</p>
 <p>This operation may fail for several reasons. It is topologically impossible if the edge to be modified has only one adjacent element or if it lies on a fixed boundary. Similarly, the operation fails if the vertex topology is incompatible.</p>
 <p>These 3 criteria have to be assessed to determine if a <strong>swap</strong> operation is accepted or not.</p>
-<p>This operation may fail for several reasons. It is topologically impossible if the edge to be modified has only one adjacent element or if it lies on a fixed boundary. Similarly, the operation fails if the vertex topology is incompatible.</p>
-<p>A swap is also rejected when quality and geometric constraints are not met. The operation is not performed if the current mesh quality is already above the required threshold, or if it risks compromising surface regularity by creating, for instance, an excessively large normal angle. Specifically, the new elements resulting from the swap must respect a minimum quality and predefined edge length limits. Finally, the swap is considered a failure if the proposed modification does not change the cavity connectivit</p>
+<p>The swap of edge \(e_ {i,j}\) can be performed as follow</p>
+<ul>
+<li>build the edge cavity \(C(e_{i,j})\)</li>
+<li>compute \(q_{min} = \min_{K \in C(e_{i,j})} q(K)\)</li>
+<li>if \(q_{min}\) is too low, loop over all the vertices \(\mathbf{x}\) on the boundary of C (that are neither \(\mathbf{x}_i\) nor \(\mathbf{x}_j\))
+<ul>
+<li>fill the vertex cavity from \(\mathbf{x} : F = \mathcal{F} (\mathbf{x},C(\mathbf e_{i,j}))\)</li>
+<li>if \(F\) passes all the criteria, it is a valid candidate</li>
+</ul>
+</li>
+<li>if valid candidates are available, let \(F_0\) be the best one (the one with for which the minimum element quality is maximum)
+<ul>
+<li>remove all the elements from \(C(\mathbf{e}_{i,j})\) from the mesh</li>
+<li>insert all the elements from \(F_0\) to the mesh</li>
+</ul>
+</li>
+</ul>
 <p>It can however introduce:</p>
 <ul>
 <li>
@@ -617,13 +610,24 @@ Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
 <p>inconsistent tagging</p>
 </li>
 </ul>
-<p>These three criteria must be assessed to determine if a swap operation is accepted or not.</p>
-<h3 id="definition-split"><a class="header" href="#definition-split">Definition: Split</a></h3>
+<h3 id="433-split"><a class="header" href="#433-split">4.3.3 Split</a></h3>
 <figure style="text-align: center;">
   <img src="images/split.svg" alt="Anisotropic metric tensor" width="70%">
 </figure>
 <p>The <strong>split</strong> operation aims at splitting “long” edges. It is applied to edges whose length (in metric space) is larger than \(l_0 &gt; \sqrt{2}\).</p>
-<p>For a split to be performed on an edge deemed too long, it must not be located on a fixed boundary, and the modification must not result in poor mesh quality or excessively short edges. If any of these conditions are not met, the operation fails. The operation is validated and executed only if all conditions are respected and if it effectively improves the mesh quality.</p>
+<p>The split of edge \(e_ {i,j}\) can be performed as follow :</p>
+<ul>
+<li>build the edge cavity \(C(e_{i,j})\)</li>
+<li>create the midpoint \(\mathbf x = (\mathbf x_i + \mathbf x_j) / 2\), project it onto the geometry if needed, and compute the metric \(\mathcal M = \exp((\log(\mathcal{M}_i) + \log(\mathcal M_j)) / 2)\)</li>
+<li>fill the vertex cavity from \(\mathbf{x} : F = \mathcal{F} (\mathbf{x} ,C(\mathbf{e}_{i,j}))\)</li>
+<li>if \(F\) passes all the criteria for swaps
+<ul>
+<li>remove all the elements from \(C(\mathbf e_{i,j})\) from the mesh</li>
+<li>insert verted \(\mathbf{x}\) (with metric \(\mathcal{M}\)) to the mesh</li>
+<li>insert all the elements from \(F\) to the mesh</li>
+</ul>
+</li>
+</ul>
 <p>It can however introduce</p>
 <ul>
 <li>“short” edges</li>
@@ -631,7 +635,7 @@ Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
 </ul>
 <p>These 2 criteria have to be assessed to determine if a <strong>split</strong> operation is accepted or not
 When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.</p>
-<h3 id="definition-collapse"><a class="header" href="#definition-collapse">Definition: Collapse</a></h3>
+<h3 id="434-collapse"><a class="header" href="#434-collapse">4.3.4 Collapse</a></h3>
 <figure style="text-align: center;">
   <img src="images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
 </figure>
@@ -643,10 +647,210 @@ When introducing new vertices on boundaries, a projection step is required to en
 <li>a poor representation of the geometry that will be difficult to recovered later</li>
 </ul>
 <p>These 3 criteria have to be assessed to determine if a <strong>collapse</strong> operation is accepted or not.</p>
-<p>Just as with a split, a collapse on an edge deemed too short can only be performed under certain conditions. The operation is first subject to feasibility checks. It fails if the edge is on a fixed boundary, if the modification risks degrading the resulting mesh quality, or if it leads to an irregular vertex geometry.</p>
+<p>The collapse of edge $e_{i,j} = (\mathbf x_i, \mathbf x_j)$ can be performed as follow</p>
+<ul>
+<li>check the tags
+<ul>
+<li>if $dim(e_{i,j}) &gt;  dim(\mathbf x_i)$ and $dim(e_{i,j}) &gt; dim(\mathbf x_j)$, do not collapse</li>
+<li>if $dim(e_{i,j}) &gt;  dim(\mathbf x_i)$ and $dim(e_{i,j}) = dim(\mathbf x_j)$, swap indices $i$ and $j$</li>
+</ul>
+</li>
+<li>build the vertex cavity $C(\mathbf x_i)$</li>
+<li>fill the vertex cavity from $\mathbf x_j$: $F = \mathcal F(\mathbf x_j,C(\mathbf x_i))$</li>
+<li>if $F$ passes all the criteria for swaps
+<ul>
+<li>remove all the elements from $C(\mathbf x_i)$ from the mesh</li>
+<li>insert all the elements from $F$ to the mesh</li>
+</ul>
+</li>
+</ul>
+<!-- Just as with a split, a collapse on an edge deemed too short can only be performed under certain conditions. The operation is first subject to feasibility checks. It fails if the edge is on a fixed boundary, if the modification risks degrading the resulting mesh quality, or if it leads to an irregular vertex geometry. -->
 <h3 id="definition-smooth"><a class="header" href="#definition-smooth">Definition: Smooth</a></h3>
 <p>The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.</p>
 <p>In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity (or one of its children) are considered for smoothing. A projection step is still required for boundary vertices to ensure consistency with the CAD model.</p>
+<p>The smoothnig of vertex $\mathbf x_{i}$ can be performed as follow</p>
+<ul>
+<li>build the vertex cavity $C(\mathbf x_{i})$</li>
+<li>compute $q_{min} = \min_{K \in C(\mathbf x_{i})} q(K)$</li>
+<li>compute the subset of the vertices in $C(\mathbf x_{i})$ that are tagged in the same entity as $\mathbf x_{i}$ or one of its children, and average the positions of these vertices to obtain the new position $\mathbf x$</li>
+<li>if $\mathbf x_{i}$ is on a boundary, project $\mathbf x$ on the geometry</li>
+<li>fill the vertex cavity from $\mathbf x$: $F = \mathcal F(\mathbf x,C(\mathbf x_{i}))$</li>
+<li>if $\min_{K \in F} q(K) &lt; q_{min}$:
+<ul>
+<li>locate the element of $C(\mathbf x_{i})$ that contains $\mathbf x$ (or is the closest), and interpolate the metric in $\mathbf x$ using the barycentric coordinates</li>
+<li>update the location and metric of vertex $i$</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-tucanos-remeshing-library"><a class="header" href="#5-tucanos-remeshing-library">5. Tucanos Remeshing Library</a></h3>
+<p>Tucanos is a remeshing library developped by Xavier Garnaud and Jérome Robert in the CRT (Research
+and technology center) of Airbus. It contains isotropic and anisotropic 2D and 3D remeshers, optima28 metric computation in the sense of the Lp multiscale error estimate and onboard hessian computations.
+The main core is written in RUST with a python API available called pytucanos. It is open-source and available on git https://github.com/tucanos along with some benchmarks and documentation. It enables parallel multithreading remeshing using Rayon and metis for partitionning the mesh. The theoretical aspects follow P.C. Caplan’s PhD [14], which is based on the continuous mesh theory ([33],[34]).</p>
+<h4 id="51-tucanos-parameters"><a class="header" href="#51-tucanos-parameters">5.1 Tucanos Parameters</a></h4>
+<p>….</p>
+<p>While the formulation of the optimal metric \(\mathcal{M}_ {L^p}^{opt}\) provides a theoretical definition of the ideal mesh for minimizing interpolation error, its implementation on complex aerodynamic configurations quickly encounters hardware limitations.</p>
+<p>Indeed, high-fidelity CFD simulations, coupled with an anisotropic adaptation process generating millions of elements, induce memory loads and computational times that are prohibitive for classical sequential architectures.Consequently, to maintain turnaround times compatible with industrial requirements, it becomes imperative to leverage the power of High-Performance Computing (HPC).</p>
+<p>This transition from sequential to distributed computing introduces a major challenge: the partitioning of the computational domain into multiple sub-domains. This necessitates the definition of robust partitioning strategies capable of equitably distributing mesh complexity while minimizing the communication costs between processors.</p>
+<h3 id="6-parallel-strategies"><a class="header" href="#6-parallel-strategies">6. Parallel Strategies</a></h3>
+<p>The massive data scales inherent to high-fidelity CFD and the demand for High-Performance Computing (HPC) necessitate the distribution of the computational workload across multiple processing units. Consequently, it is imperative to partition the underlying mesh of the spatial domain \( \Omega \). Partitioning decomposes the global domain into \( n \) sub-domains, effectively transforming the initial problem into \( n \) smaller, coupled sub-problems that can be solved in parallel.An efficient partitioning strategy must satisfy three primary criteria:</p>
+<ul>
+<li>
+<p><strong>Interdependency Reduction</strong>: Minimizing the number of shared edges or faces between sub-domains to reduce costly inter-processor communication overhead.</p>
+</li>
+<li>
+<p><strong>Quality Preservation</strong>: Ensuring that the partitioning process does not degrade the geometric or topological quality of the individual sub-meshes.</p>
+</li>
+<li>
+<p><strong>Load Balancing</strong>: Uniformly distributing the computational effort among all processors to prevent bottlenecks and maximize parallel speedup.</p>
+</li>
+</ul>
+<h4 id="61-partitioning-for-remeshing-the-interface-challenge"><a class="header" href="#61-partitioning-for-remeshing-the-interface-challenge">6.1 Partitioning for Remeshing: The Interface Challenge</a></h4>
+<p>In the context of mesh adaptation, managing the interfaces between partitions presents a significant challenge. These boundaries must be adapted without compromising the global continuity of the mesh or parallel efficiency. Two distinct methodologies are commonly employed:</p>
+<h4 id="611--the-two-step-process"><a class="header" href="#611--the-two-step-process">6.1.1  The Two-Step Process</a></h4>
+<p>This method begins with an initial domain partitioning where the resulting interfaces are “frozen,” allowing each processor to remesh its local sub-domain independently. Following this local adaptation phase, a second partitioning is performed. The key to this strategy is ensuring that the new interfaces do not coincide with the previously frozen ones. This staggered approach guarantees that the entire domain, including the initial interface regions, is eventually adapted.</p>
+<center>
+<img src="images/Two_Step_Process.png" alt="Two_Step_Process" width="100%">
+</center>
+<h4 id="612-hierarchical-interface-freezing-method"><a class="header" href="#612-hierarchical-interface-freezing-method">6.1.2 Hierarchical Interface Freezing Method</a></h4>
+<p>This approach utilizes iterative, hierarchical freezing. After the initial sub-domains are remeshed with frozen interfaces, the interfaces themselves are extracted and partitioned. By “freezing” the newly created sub-interfaces, the original boundary regions can be remeshed. This recursive process—freezing interfaces of interfaces—can be repeated until global conformity and satisfactory mesh resolution are achieved across all boundaries.</p>
+<center>
+<img src="images/Freezing_Interface.png" alt="Freezing_Interface" width="80%">
+</center>
+<p>Regarding Tucanos, the second approach is considered.Beyond interface management strategies for parallel remeshing, the fundamental challenge of the initial decomposition of a mesh into sub-domains remains. This task is performed by partitioning algorithms, whose objectives were discussed previously. Various partitioning algorithms are available within the Tucanos library, and a comparative performance analysis will be conducted regarding the quality of the resulting partitions. A viable metric for assessing partitioning quality is the measurement of the number of shared edges or ‘edge-cut’ between partitions following the decomposition.</p>
+<p>… Exemples de décomposition de domaine. Test cube 3D ?</p>
+<h3 id="62-load-balancing-in-parallel-mesh-adaptation"><a class="header" href="#62-load-balancing-in-parallel-mesh-adaptation">6.2 Load Balancing in Parallel Mesh Adaptation</a></h3>
+<p>The performance of parallel remeshing is intrinsically limited by the sub-domain with the highest computational load. This workload is a complex function of the local remeshing operators (insertion, collapse, swap, smoothing), the target metric \(\mathcal{M}_ T\), and the initial induced metric \(\mathcal{M}_{\mathcal{H}}\).</p>
+<p>An effective domain partitioning strategy should indeed balance the work which is going to be done by the local remesher on each partition, knowing that each partition is meshed independently.</p>
+<p>It is convenient to define the work at the elements because it is the elements that are uniquely distributed to each partition. We recall that the natural metric of an element \(K\) is the unique metric tensor \(\mathcal{M}_K\) such that all edges of \(K\) are of length 1 for \(\mathcal{M}_K\) . It is obtained by solving a simple linear system [35]. And, metric field (MH (x))x∈Ω is the union of the element metrics MK. To define the remesher work per element and the total work, we use a continuous approach – similarly to the error estimate theory [35,36] – because the initial mesh and the targeted final adapted mesh are represented by their respective metric fields (MH (x))x∈Ω and (M(x))x∈Ω.</p>
+<h4 id="remark"><a class="header" href="#remark">Remark</a></h4>
+<p>If we consider that the metric induced by the initial mesh is equal to the target metric at every point of the domain \(\Omega\), i.e., \( (\mathcal{M}_ {\mathcal{H}}(x))_{x \in \Omega} = (\mathcal{M}_T(x)) _{x \in \Omega}\), then no remeshing work is required.</p>
+<!-- 
+
+### Error Control and Continuous Formulation in Mesh Adaptation
+
+In mesh adaptation, the goal is to control the interpolation error between an exact solution \\( u \\)  and its linear reconstruction on a mesh \\( \mathcal{H}\\) : 
+
+\\[  |u- \Pi_h u |_{L^p(\Omega_h)}\\] 
+
+where : 
+* \\(\Pi_h u\\) is the linear interpolant on the discrete mesh.
+* \\((\Omega_h)\\) is the meshed domain.
+
+This formulation is discrete and explicitly depends on the mesh, which makes global optimization complex. By using a continuous metric field \\( \mathcal{M}(x) \\),one can define a continuous interpolation error associated with the metric \\( \mathcal{M}(x) \\)independent of any specific discrete mesh:
+
+\\[  |u- \Pi_{\mathcal{M}} u |_{L^p(\Omega_h)}\\] 
+
+For a quadratic function \\(u \\), the following theorem holds:
+
+#### Théorème 3.1. 
+For any element \\(K\\) that is unit with respect to  \\(\mathcal{M} \\) , the \\(L^1 \\)   interpolation error of \\( u \\)is independent of the element's shape and depends solely on the Hessian \\(\mathbf{H} \\) of \\(u \\) and the metric \\(\mathcal{M}\\).
+In 3D, for all tetrahedra \\(K \\) that are unit with respect to \\(\mathcal{M}\\) , the following equality holds: :
+
+\\[\|u - \Pi_h u\|_{L^1(K)} = \frac{\sqrt{2}}{240} \det \left( \mathcal{M}^{-\frac{1}{2}} \right) \text{trace} \left( \mathcal{M}^{-\frac{1}{2}} \mathbf{H} \mathcal{M}^{-\frac{1}{2}} \right)\\]
+
+
+The error is well-defined for a quadratic solution on an element K, however, since a metric is defined at every point in the domain\\( x \in \Omega \\)it is necessary to define the error throughout the entire domain :
+
+
+#### Théorème 3.2. 
+
+Let\\(u\\)be a twice continuously differentiable function on a domain \\( \Omega \\) and let \\( \mathcal{M}(x)_{x \in \Omega} \\)  be a continuous mesh of  \\( \Omega\\).
+
+There exists a unique function\\( \pi_M \\)  such that:
+\\[ \forall a \in \Omega, |u - \pi_M u|(a) = \frac{\|u_Q - \Pi_h u_Q\|_{L^1(K)}}{|K|} = \frac{1}{20} \text{trace} \left( \mathcal{M}(a)^{-\frac{1}{2}} |\mathbf{H}(a)| \mathcal{M}(a)^{-\frac{1}{2}} \right) \\] 
+for any element K that is unit with respect to \\(\mathcal{M}(a)\\) , where \\( u_Q\\)  is the quadratic model of \\(u\\) at point\\( a \\).
+
+
+This theorem emphasizes another discrete-continuous duality by highlighting a continuous equivalent of the interpolation error.
+
+For this reason, the following formalism is proposed
+
+\\( \pi_M\\)  is called the continuous linear interpolant, and \\( |u - \pi_M u| \\)  represents the continuous dual of the interpolation error.
+
+
+The local interpolation error becomes global when the mesh is unit with respect to a constant metric tensor (which does not necessarily imply that the mesh is uniform) and when the function is quadratic. In this specific case, neglecting boundary discretization errors, we obtain the following equality: 
+
+\\[ \|u - \Pi_h u\|_{L^1(\Omega_h)} = \|u - \pi_M u\| _{ L^1(\Omega) }\\]
+
+
+for all meshes \\( \mathcal{H} \\) that are unit with respect to\\( \mathcal{M}(x)_{x \in \Omega} \\) 
+
+
+### 3.4  Optimal Control of the \\(L^p\\)-norm Interpolation Error
+
+In its most general form, the mesh adaptation problem consists of finding the mesh \\(\mathcal{H}\\) of a domain \\( \Omega \\) that minimizes a given error for a defined function \\( u \\). 
+
+For the sake of simplicity, we consider here the linear interpolation error \\( |u - \Pi_h u | \\) controlled in the \\(L^p\\)norm, although other norms may also be used. The problem is thus posed a priori:
+Find \\( H_{opt} \\) with \\(N\\) vertices such that:
+\\[E_{L^p}(H_{opt}) = \min_{H} \|u - \Pi_h u\|_{L^p(\Omega_h)} \quad (P)\\]
+
+
+Problem \\((P)\\) is a global combinatorial problem that proves to be insoluble in practice. Indeed, it would require the simultaneous optimization of both the mesh topology and the vertex positions.
+
+Consequently, simpler sub-problems are considered to approximate the solution. A common simplification consists of performing a local error analysis instead of addressing the global problem. A first set of methods focuses on deducing the optimal shape of the elements. A second set involves deriving a local bound for the interpolation error.
+
+This bound is then transformed into a metric-based estimate. Direct error minimization can also be considered by using the interpolation error itself as a cost function within the mesh generator.
+
+All these strategies share a common trait: they solve a local problem, as they operate in the neighborhood of a single element. Consequently, such error minimizations are equivalent to a gradient descent algorithm that only converges toward a local minimum with poor convergence properties. This drawback arises from the fact that the minimization is performed directly on a discrete mesh.
+
+<br>
+<br>
+
+
+## 3.5 Optimal Control of the \\(L^p\\)-norm Interpolation Error in a Continuous Framework 
+
+We propose to address the resolution of \\((P)\\) within a continuous framework. Consequently, \\((P)\\) is reformulated as a continuous optimization problem where the discrete interpolation error is replaced by its continuous equivalent:
+
+Find \\(M_{opt}\\) with a complexity of \\(N\\) such that:
+\\[E_{L^p}(M_{opt}) = \min_{M} \|u - \pi_M u\|_{L^p(\Omega)}\\]
+
+By using the definition of the continuous linear interpolant\\(\pi_M\\), it is possible to pose a well-posed global optimization problem to find the optimal continuous mesh that minimizes the \\(L^p\\) norm continuous interpolation error:
+
+Find \\(M_{L^p} = \min_{M} E_{L^p}(M)\\), where:
+
+\\[E_{L^p}(M) = \left( \int_{\Omega} (u(x) - \pi_M u(x))^p , dx \right)^{1/p} = \left( \int_{\Omega} \text{trace} \left( M(x)^{-1/2} |H_u(x)| M(x)^{-1/2} \right)^p  dx \right)^{1/p} \quad (4)\\]
+
+subject to the constraint: \\[\mathcal{C}(M) = \int_{\Omega} d(x) \ dx = N\\]
+
+The complexity constraint is added to avoid the trivial solution where all sizes \\((h_i)_{i=1,3}\\) would be zero, which would result in zero error. Unlike a discrete analysis, this problem can be solved globally using the calculus of variations, which is well-defined over the space of continuous meshes.
+
+
+### Theorem 3.3
+Let \\(u\\) be a twice continuously differentiable function defined on \\(\Omega \subset \mathbb{R}^3\\), and \\(H_u\\) its Hessian. The optimal continuous mesh \\(M_{L^p}(u) = (M_{L^p}(x))_{x \in \Omega}\\) that locally minimizes Problem (4) is given by:
+
+\\[M_{L^p}(x) = N^{\frac{2}{3}} \left( \int_{\Omega} \det(|H_u(\bar{x})|)^{\frac{p}{2p+3}} d\bar{x} \right)^{-\frac{2}{3}} \times \det(|H_u(x)|)^{-\frac{1}{2p+3}} |H_u(x)| \quad (5)\\]
+
+It satisfies the following properties:
+* L'Uniqueness : \\(M_{L^p}(u)\\) is unique.
+* Local Alignment: \\(M_{L^p}(u)\\) is locally aligned with the eigenvector basis of \\(H_u\\) and possesses the same anisotropy ratios as \\(H_u\\).
+* Optimal Error Bound: \\(M_{L^p}(u)\\) provides an explicit optimal bound for the \\(L^p\\)norm interpolation error: :
+
+\\[ \|u - \pi_{M_{L^p}} u\|_ {L^p(\Omega)} = 3 N^{-\frac{2}{3}} \left( \int_{\Omega} \det(|H_u|)^{\frac{p}{2p+3}} \right)^{\frac{2p+3}{3p}}\\]
+
+
+It thus appears that the search for the optimal mesh cannot be dissociated from the metric from which it originates; the latter acts as the pivot between the theoretical minimization of error and the geometric construction of a discrete and efficient computational domain.
+
+### 4. Mesh Adaptation for Steady Flows
+
+The transition from a theoretical error analysis to a numerical application in Fluid Dynamics requires a reformulation of the optimization problem. While pure theory defines the optimal metric as an ideal tensor, the operational challenge lies in the effective generation of a mesh whose density and anisotropy minimize the approximation error.
+
+In numerical simulations, the exact solution \\(u\\) is, by definition, unknown. 
+
+Problem \\((P)\\) therefore transposed to minimize the error between \\(u \text{ and } u_h \\) in the \\(  |L^{p}| \\) norm .
+
+This transition requires coupling continuous mesh theory with error estimators capable of linking the approximation error to the local interpolation error.
+
+### 4.1. Adaptation Strategies
+
+Two distinct methodological approaches are used to drive anisotropy:
+
+Feature-based approach :This aims to optimize the mesh to capture all physical structures of a specific sensor (e.g., pressure, Mach number). The use of the \\(L^p\\)norm is crucial here for capturing multi-scale phenomena, allowing for the refinement of structures whose amplitude is several orders of magnitude smaller than the primary scales.
+
+Goal-oriented approach: This focuses the error reduction effort on a specific scalar functional of interest (e.g., lift, drag), although prescribing anisotropy in this context is mathematically more complex. -->
+<!-- L'adaptation basée sur les caractéristiques (Feature-based) : On cherche le meilleur maillage pour capturer les variations d'un capteur physique donné (vitesse, pression, etc.).
+L'adaptation orientée par l'objectif (Goal-oriented) : On optimise le maillage pour observer une fonctionnelle scalaire précise (par exemple, la traînée ou la portance d'une aile).
+Problématiques et Motivations
+Bien que l'efficacité de l'anisotropie soit prouvée, le passage aux solutions numériques (où la solution exacte \\(u\\) est inconnue) soulève des défis :Erreur d'approximation : On cherche à minimiser \\(\|u - u_h\|_ {L^p}\\) au lieu de l'erreur d'interpolation pure.Capture multi-échelles : L'utilisation de la norme \\(L^p\\) (au lieu de \\(L^\infty\\)) est indispensable pour capturer des phénomènes dont l'amplitude est parfois 1000 fois plus faible que les structures principales, sans avoir besoin de fixer arbitrairement une taille de maille minimale.Convergence théorique : L'adaptation permet de retrouver un ordre de convergence de 2 (souvent perdu sur des maillages uniformes en présence de chocs ou de forts gradients), ce qui valide la qualité du calcul.L'algorithme d'adaptationL'adaptation est un processus non-linéaire résolu par une boucle itérative. On ne se contente pas de calculer une métrique ; on génère un nouveau maillage à chaque étape pour converger vers le couple maillage-solution optimal.La boucle type (Algorithme 2) :Calcul : Résolution de l'écoulement sur le maillage actuel.Métrique : Calcul de la métrique \\(M_{L^p}\\) basée sur l'estimation d'erreur.Gradation : Lissage de la métrique pour éviter des variations de taille trop brutales entre voisins.Génération : Création d'un nouveau maillage adapté à cette métrique.Interpolation : Transfert de la solution précédente sur le nouveau maillage pour redémarrer le calcul. -->
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="fondations-théoriques"><a class="header" href="#fondations-théoriques">Fondations Théoriques</a></h1>
 <p>Pour appréhender pleinement les travaux présentés dans ce document, une bonne compréhension des concepts fondamentaux de la dynamique des fluides numérique et de l’adaptation de maillage est essentielle</p>
@@ -673,7 +877,7 @@ When introducing new vertices on boundaries, a projection step is required to en
 <center>
 <img src="images/Schema_Remesh_bg.png" alt="Logo Tucanos" width="100%">
 </center>
-<p>L’analyse d’erreur, qui succède à la résolution CFD, est le moteur de l’adaptation de maillage. <br> De cette analyse découle un champ de métrique, une entité qui précise comment le maillage doit être modifié pour minimiser les erreurs sur le maillage intial. Pour bien saisir ce mécanisme, il est fondamental de comprendre ce qu’est une métrique et comment elle définit un granularité spatiale. (Voir section sur les métriques : <a href="#metric">Metrics</a>) <br></p>
+<p>L’analyse d’erreur, qui succède à la résolution CFD, est le moteur de l’adaptation de maillage. <br> De cette analyse découle un champ de métrique, une entité qui précise comment le maillage doit être modifié pour minimiser les erreurs sur le maillage intial. Pour bien saisir ce mécanisme, il est fondamental de comprendre ce qu’est une métrique et comment elle définit un granularité spatiale. (Voir section sur les métriques : <a href="#anisotropic-mesh-adaptation">Metrics</a>) <br></p>
 <p>Une fois cette métrique cible établie, il devient nécessaire de savoir comment la traduire en actions concrètes sur le maillage. La section sur <strong>l’Adaptation de Maillage</strong> explicitera les opérations géométriques et topologiques qui transforment le maillage pour qu’il réponde aux spécifications de la métrique (voir section <a href="#adaptation-de-maillage">Mesh Adaptation</a>)</p>
 <p>Finalement, pour que l’ensemble de ce processus d’adaptation soit viable et performant pour les applications industrielles à grande échelle, une maîtrise du Calcul Parallèle est indispensable. On expliquera certains aspects de la discipline et on montrera de quelle manière on souhaite l’utiliser dans le cadre de la thèse. (voir section <a href="#calcul-parallèle">Parallel_Computing</a>)</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -742,7 +946,7 @@ continuous mesh theory.</p>
 <p>L’orientation is represented by the eigenvector matrix \( \mathcal{R} \) of \( \mathcal{M} \) .</p>
 <p>Finally, the complexity\( \mathcal{C}\) of the metric \(  \mathcal{M} \) (which corresponds to the target number of vertices  \( N  \) ) is defined by the integral of the density over the domain::
 \[  \mathcal{C}(\mathcal{M}) = \int_{\Omega} d(x) \ dx = \int_{\Omega} \sqrt{\det(\mathcal{M}(x))} \ dx \]</p>
-<h3 id="error-control-and-continuous-formulation-in-mesh-adaptation-1"><a class="header" href="#error-control-and-continuous-formulation-in-mesh-adaptation-1">Error Control and Continuous Formulation in Mesh Adaptation</a></h3>
+<h3 id="error-control-and-continuous-formulation-in-mesh-adaptation"><a class="header" href="#error-control-and-continuous-formulation-in-mesh-adaptation">Error Control and Continuous Formulation in Mesh Adaptation</a></h3>
 <p>In mesh adaptation, the goal is to control the interpolation error between an exact solution \( u \)  and its linear reconstruction on a mesh \( \mathcal{H}\) :</p>
 <p>\[  |u- \Pi_h u |_{L^p(\Omega_h)}\]</p>
 <p>where :</p>
@@ -753,12 +957,12 @@ continuous mesh theory.</p>
 <p>This formulation is discrete and explicitly depends on the mesh, which makes global optimization complex. By using a continuous metric field \( \mathcal{M}(x) \),one can define a continuous interpolation error associated with the metric \( \mathcal{M}(x) \)independent of any specific discrete mesh:</p>
 <p>\[  |u- \Pi_{\mathcal{M}} u |_{L^p(\Omega_h)}\]</p>
 <p>For a quadratic function \(u \), the following theorem holds:</p>
-<h4 id="théorème-31-1"><a class="header" href="#théorème-31-1">Théorème 3.1.</a></h4>
+<h4 id="théorème-31"><a class="header" href="#théorème-31">Théorème 3.1.</a></h4>
 <p>For any element \(K\) that is unit with respect to  \(\mathcal{M} \) , the \(L^1 \)   interpolation error of \( u \)is independent of the element’s shape and depends solely on the Hessian \(\mathbf{H} \) of \(u \) and the metric \(\mathcal{M}\).
 In 3D, for all tetrahedra \(K \) that are unit with respect to \(\mathcal{M}\) , the following equality holds: :</p>
 <p>\[|u - \Pi_h u|_{L^1(K)} = \frac{\sqrt{2}}{240} \det \left( \mathcal{M}^{-\frac{1}{2}} \right) \text{trace} \left( \mathcal{M}^{-\frac{1}{2}} \mathbf{H} \mathcal{M}^{-\frac{1}{2}} \right)\]</p>
 <p>The error is well-defined for a quadratic solution on an element K, however, since a metric is defined at every point in the domain\( x \in \Omega \)it is necessary to define the error throughout the entire domain :</p>
-<h4 id="théorème-32-1"><a class="header" href="#théorème-32-1">Théorème 3.2.</a></h4>
+<h4 id="théorème-32"><a class="header" href="#théorème-32">Théorème 3.2.</a></h4>
 <p>Let\(u\)be a twice continuously differentiable function on a domain \( \Omega \) and let \( \mathcal{M}(x)_{x \in \Omega} \)  be a continuous mesh of  \( \Omega\).</p>
 <p>There exists a unique function\( \pi_M \)  such that:
 \[ \forall a \in \Omega, |u - \pi_M u|(a) = \frac{|u_Q - \Pi_h u_Q|_{L^1(K)}}{|K|} = \frac{1}{20} \text{trace} \left( \mathcal{M}(a)^{-\frac{1}{2}} |\mathbf{H}(a)| \mathcal{M}(a)^{-\frac{1}{2}} \right) \]
@@ -769,7 +973,7 @@ for any element K that is unit with respect to \(\mathcal{M}(a)\) , where \( u_Q
 <p>The local interpolation error becomes global when the mesh is unit with respect to a constant metric tensor (which does not necessarily imply that the mesh is uniform) and when the function is quadratic. In this specific case, neglecting boundary discretization errors, we obtain the following equality:</p>
 <p>\[ |u - \Pi_h u|_{L^1(\Omega_h)} = |u - \pi_M u| _{ L^1(\Omega) }\]</p>
 <p>for all meshes \( \mathcal{H} \) that are unit with respect to\( \mathcal{M}(x)_{x \in \Omega} \)</p>
-<h3 id="34--optimal-control-of-the-lp-norm-interpolation-error-1"><a class="header" href="#34--optimal-control-of-the-lp-norm-interpolation-error-1">3.4  Optimal Control of the \(L^p\)-norm Interpolation Error</a></h3>
+<h3 id="34--optimal-control-of-the-lp-norm-interpolation-error"><a class="header" href="#34--optimal-control-of-the-lp-norm-interpolation-error">3.4  Optimal Control of the \(L^p\)-norm Interpolation Error</a></h3>
 <p>In its most general form, the mesh adaptation problem consists of finding the mesh \(\mathcal{H}\) of a domain \( \Omega \) that minimizes a given error for a defined function \( u \).</p>
 <p>For the sake of simplicity, we consider here the linear interpolation error \( |u - \Pi_h u | \) controlled in the \(L^p\)norm, although other norms may also be used. The problem is thus posed a priori:
 Find \( H_{opt} \) with \(N\) vertices such that:
@@ -780,7 +984,7 @@ Find \( H_{opt} \) with \(N\) vertices such that:
 <p>All these strategies share a common trait: they solve a local problem, as they operate in the neighborhood of a single element. Consequently, such error minimizations are equivalent to a gradient descent algorithm that only converges toward a local minimum with poor convergence properties. This drawback arises from the fact that the minimization is performed directly on a discrete mesh.</p>
 <br>
 <br>
-<h2 id="35-optimal-control-of-the-lp-norm-interpolation-error-in-a-continuous-framework-1"><a class="header" href="#35-optimal-control-of-the-lp-norm-interpolation-error-in-a-continuous-framework-1">3.5 Optimal Control of the \(L^p\)-norm Interpolation Error in a Continuous Framework</a></h2>
+<h2 id="35-optimal-control-of-the-lp-norm-interpolation-error-in-a-continuous-framework"><a class="header" href="#35-optimal-control-of-the-lp-norm-interpolation-error-in-a-continuous-framework">3.5 Optimal Control of the \(L^p\)-norm Interpolation Error in a Continuous Framework</a></h2>
 <p>We propose to address the resolution of \((P)\) within a continuous framework. Consequently, \((P)\) is reformulated as a continuous optimization problem where the discrete interpolation error is replaced by its continuous equivalent:</p>
 <p>Find \(M_{opt}\) with a complexity of \(N\) such that:
 \[E_{L^p}(M_{opt}) = \min_{M} |u - \pi_M u|_{L^p(\Omega)}\]</p>
@@ -789,7 +993,7 @@ Find \( H_{opt} \) with \(N\) vertices such that:
 <p>\[E_{L^p}(M) = \left( \int_{\Omega} (u(x) - \pi_M u(x))^p , dx \right)^{1/p} = \left( \int_{\Omega} \text{trace} \left( M(x)^{-1/2} |H_u(x)| M(x)^{-1/2} \right)^p  dx \right)^{1/p} \quad (4)\]</p>
 <p>subject to the constraint: \[\mathcal{C}(M) = \int_{\Omega} d(x) \ dx = N\]</p>
 <p>The complexity constraint is added to avoid the trivial solution where all sizes \((h_i)_{i=1,3}\) would be zero, which would result in zero error. Unlike a discrete analysis, this problem can be solved globally using the calculus of variations, which is well-defined over the space of continuous meshes.</p>
-<h3 id="theorem-33-1"><a class="header" href="#theorem-33-1">Theorem 3.3</a></h3>
+<h3 id="theorem-33"><a class="header" href="#theorem-33">Theorem 3.3</a></h3>
 <p>Let \(u\) be a twice continuously differentiable function defined on \(\Omega \subset \mathbb{R}^3\), and \(H_u\) its Hessian. The optimal continuous mesh \(M_{L^p}(u) = (M_{L^p}(x))_{x \in \Omega}\) that locally minimizes Problem (4) is given by:</p>
 <p>\[M_{L^p}(x) = N^{\frac{2}{3}} \left( \int_{\Omega} \det(|H_u(\bar{x})|)^{\frac{p}{2p+3}} d\bar{x} \right)^{-\frac{2}{3}} \times \det(|H_u(x)|)^{-\frac{1}{2p+3}} |H_u(x)| \quad (5)\]</p>
 <p>It satisfies the following properties:</p>
@@ -800,12 +1004,12 @@ Find \( H_{opt} \) with \(N\) vertices such that:
 </ul>
 <p>\[ |u - \pi_{M_{L^p}} u|_ {L^p(\Omega)} = 3 N^{-\frac{2}{3}} \left( \int_{\Omega} \det(|H_u|)^{\frac{p}{2p+3}} \right)^{\frac{2p+3}{3p}}\]</p>
 <p>It thus appears that the search for the optimal mesh cannot be dissociated from the metric from which it originates; the latter acts as the pivot between the theoretical minimization of error and the geometric construction of a discrete and efficient computational domain.</p>
-<h3 id="4-mesh-adaptation-for-steady-flows-1"><a class="header" href="#4-mesh-adaptation-for-steady-flows-1">4. Mesh Adaptation for Steady Flows</a></h3>
+<h3 id="4-mesh-adaptation-for-steady-flows"><a class="header" href="#4-mesh-adaptation-for-steady-flows">4. Mesh Adaptation for Steady Flows</a></h3>
 <p>The transition from a theoretical error analysis to a numerical application in Fluid Dynamics requires a reformulation of the optimization problem. While pure theory defines the optimal metric as an ideal tensor, the operational challenge lies in the effective generation of a mesh whose density and anisotropy minimize the approximation error.</p>
 <p>In numerical simulations, the exact solution \(u\) is, by definition, unknown.</p>
 <p>Problem \((P)\) therefore transposed to minimize the error between \(u \text{ and } u_h \) in the \(  |L^{p}| \) norm .</p>
 <p>This transition requires coupling continuous mesh theory with error estimators capable of linking the approximation error to the local interpolation error.</p>
-<h3 id="41-adaptation-strategies-1"><a class="header" href="#41-adaptation-strategies-1">4.1. Adaptation Strategies</a></h3>
+<h3 id="41-adaptation-strategies"><a class="header" href="#41-adaptation-strategies">4.1. Adaptation Strategies</a></h3>
 <p>Two distinct methodological approaches are used to drive anisotropy:</p>
 <p>Feature-based approach :This aims to optimize the mesh to capture all physical structures of a specific sensor (e.g., pressure, Mach number). The use of the \(L^p\)norm is crucial here for capturing multi-scale phenomena, allowing for the refinement of structures whose amplitude is several orders of magnitude smaller than the primary scales.</p>
 <p>Goal-oriented approach: This focuses the error reduction effort on a specific scalar functional of interest (e.g., lift, drag), although prescribing anisotropy in this context is mathematically more complex.</p>
@@ -837,11 +1041,11 @@ Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
 </div>
  
 <p>\(\) \(\) \(\) \(\) \(\)</p>
-<h3 id="definition-cavity-1"><a class="header" href="#definition-cavity-1">Definition: Cavity</a></h3>
+<h3 id="definition-cavity"><a class="header" href="#definition-cavity">Definition: Cavity</a></h3>
 <p>Given a mesh entity \( e \) (a vertex or an edge in this case), the cavity \( \mathcal{C}(e) \)is the set of mesh elements that contain the entity \( e \).</p>
 <p>A cavity \( \mathcal{C}(e) \) can be “re-filled” from a vertex \( \mathbf v \) as the set of elements created from \( \mathbf v \) and the faces of the cavity boundary \( \partial \mathcal{C}(e) \) (outward-oriented).</p>
 <p>\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \]</p>
-<h3 id="definition-swap-1"><a class="header" href="#definition-swap-1">Definition: Swap</a></h3>
+<h3 id="definition-swap"><a class="header" href="#definition-swap">Definition: Swap</a></h3>
 <figure style="text-align: center;">
   <img src="images/swap.svg" alt="Anisotropic metric tensor " width="70%">
 </figure>
@@ -863,7 +1067,7 @@ Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
 </li>
 </ul>
 <p>These three criteria must be assessed to determine if a swap operation is accepted or not.</p>
-<h3 id="definition-split-1"><a class="header" href="#definition-split-1">Definition: Split</a></h3>
+<h3 id="definition-split"><a class="header" href="#definition-split">Definition: Split</a></h3>
 <figure style="text-align: center;">
   <img src="images/split.svg" alt="Anisotropic metric tensor" width="70%">
 </figure>
@@ -876,7 +1080,7 @@ Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
 </ul>
 <p>These 2 criteria have to be assessed to determine if a <strong>split</strong> operation is accepted or not
 When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.</p>
-<h3 id="definition-collapse-1"><a class="header" href="#definition-collapse-1">Definition: Collapse</a></h3>
+<h3 id="definition-collapse"><a class="header" href="#definition-collapse">Definition: Collapse</a></h3>
 <figure style="text-align: center;">
   <img src="images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
 </figure>

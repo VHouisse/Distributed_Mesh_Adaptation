@@ -1,6 +1,5 @@
-# Metric
-
-### 3.1 Definition : Métrique
+# Anisotropic Mesh Adaptation 
+### 3.1 Definition : Metric
 A **metric tensor** \\( \mathcal{M} \in \mathbb{R}^{n \times n} \\) is a symmetric positive definite matrix.
 
 \\( \mathcal{M} \\) is always diagonalizable and can be decomposed as \\( \mathcal{M}= {^T}\mathcal{R} \Delta \mathcal{R} \\), where \\( \mathcal{R} \\) and \\( \Delta \\) respectively the matrices of the eigenvectors and eigenvalues of \\( \mathcal{M} \\).
@@ -336,7 +335,7 @@ i.e., to have:
 \\[ \frac{1}{f} \leq \lambda_{\min}(\mathcal{M}_ 1^{-\frac{1}{2}} \mathcal{M} \mathcal{M}_ 1^{-\frac{1}{2}}) \leq \lambda_{\max}(\mathcal{M}_1^{-\frac{1}{2}} \mathcal{M} \mathcal{M}_1^{-\frac{1}{2}}) \leq f \\]
 Practically, "as close as possible" is defined as minimizing the Frobenius norm $\|\mathcal{M}_1^{-\frac{1}{2}} (\mathcal{M} - \mathcal{M}_2) \mathcal{M}_1^{-\frac{1}{2}}\|_F$.The optimal $\mathcal{M}^*$ is then computed as follows:Compute $\mathbf{N} := \mathcal{M}_1^{-\frac{1}{2}} \mathcal{M}_2 \mathcal{M}_1^{-\frac{1}{2}}$Compute the eigenvalue decomposition $\mathbf{Q} \mathbf{D} \mathbf{Q}^{\top} = \mathbf{N}$, with $\mathbf{D} = \text{diag}(\lambda_i)$Compute $\mathbf{N}^* := \mathbf{Q} \text{diag}(\hat{\lambda}_i) \mathbf{Q}^{\top}$ where $\hat{\lambda}_i := \min(\max(\lambda_i, \frac{1}{f}), f)$Compute $\mathcal{M}^* := \mathcal{M}_1^{\frac{1}{2}} \mathbf{N}^* \mathcal{M}_1^{\frac{1}{2}}$
 
-
+###### A REFORMULER 
 ### 4. Ansitropic Mesh Adaptation Strategy 
 Now that the mathematical foundations specifically the Riemannian metric framework and the discrete-continuous duality have been established, we possess the necessary tools to address the mesh adaptation problem formally. The challenge shifts from a purely geometric construction to a constrained optimization problem.
 
@@ -348,8 +347,317 @@ Let \\(\mathcal{T}_ K\\) be a simplex mesh composed of elements \\(K\\). For a g
 While solving this directly in the discrete space is combinatorially explosive, the continuous mesh theory provides a powerful alternative. By representing the mesh as a continuous metric field \\(\mathcal{M}(\mathbf{x})\\), we can recast the problem into a variational form. The goal becomes finding the optimal continuous metric \\(\mathcal{M}_ {opt}\\) that minimizes a continuous error functional \\(\mathcal{E}(\mathcal{M})\\) under a fixed complexity constraint \\(\mathcal{C}(\mathcal{M}) = N\\):
 \\[\mathcal{M}_ {opt} = \arg \min_{\mathcal{C}(\mathcal{M})=N} \mathcal{E}(\mathcal{M})\\]
 
+However, we only defined the duality between discrete and continuous entities for elements and meshes
+but not for error models. In the following we will see how this duality is defined in literature for the
+linear interpolation error of a sensor w (Feature-based mesh adaptation).
 
 ### 4.1 Feature-based mesh adaptation
+
+The feature-based mesh adaptation strategy is based on the multiscale error estimate [32]. It comes
+from the idea to control the interpolation error of sensor field \\(w = f(u)\\) defined from the state \\(u\\).
+Let \\(\mathcal{T}_K\\) be a simplex mesh on which the sensor w is piecewise linear approximated on elements \\( K \\). We denote the piecewise approximation by \\(\Pi_hw\\) on the mesh \\(\mathcal{T}_K\\). The idea is to solve \\((65)\\)Given the following \\(L^p\\)-norm interpolation error model of the the sensor field : 
+
+
+\\[  E_{L^p}(\mathcal{T}_K) = (\int _{\Omega} |\omega - \Pi_h \omega |^P d\Omega)^{\frac{1}{p}} \\]
+
+To establish a rigorous link between the discrete mesh \\(\mathcal{T}_h\\) and the continuous metric field \\(\mathcal{M}(\mathbf{x})\\), we must define a continuous counterpart to the interpolation error. This is achieved by analyzing the local interpolation error of a quadratic sensor function \\(w\\), which represents the local Taylor expansion of a physical solution $u$ around a point \\(\mathbf{a} \in \Omega\\).
+
+
+#### 4.1.1 Local Error Estimate for Quadratic Forms 
+
+Let \\(w(\mathbf{x}) = \frac{1}{2} \mathbf{x}^{\top} \mathbf{H} \mathbf{x}\\) be a quadratic form. For a simplex element \\(K\\) with edges \\((\mathbf{e}_i)\\) and volume \\(|K|\\), the \\(L^1\\) interpolation error is bounded by the alignment of the edges with the Hessian matrix \\(|\mathbf{H}|\\). According to [33], this error is expressed as:
+
+\\[ | \omega - \Pi_h \omega |_ {L^1(K)} \leq \frac{|K|}{c_d} \sum_{i=1}^{n_e} \mathbf{e}_i^{\top} |\mathbf{H}| \mathbf{e}_i\\]
+
+where \\(c_d\\) is a constant depending on the dimension (\\(c_2 = 24, c_3 = 40\\)).\
+
+To handle hyperbolic functions, the absolute value of the Hessian \\(|\mathbf{H}|\\) is used, effectively treating the error as an over-estimation by transforming the local model into an elliptic or parabolic one.
+
+We now consider a metric \\( \mathcal{M} \\) for which \\(K\\) is unit, and an interpolation error on a quadratic elliptic
+or parabolic function \\(w\\) (if \\(w\\) is hyperbolic, we take \\(|H|\\) to define the discrete interpolation error). using the geometric invariants in 3.2.1 and the proposition above we have the following link (theorem) between the linear interpolation error and the metric \\( \mathcal{M} \\) for quadratic functions:
+
+In 2D:
+\\[ |w - \Pi_h w|_ {L^1(K)} = \frac{\sqrt{3}}{64} \det(\mathcal{M}^{-\frac{1}{2}}) \text{Tr}(\mathcal{M}^{-\frac{1}{2}} |\mathbf{H}| \mathcal{M}^ {-\frac{1}{2}})\\]
+In 3D:
+$$\|w - \Pi_h w\|_{L^1(K)} = \frac{\sqrt{2}}{240} \det(\mathcal{M}^{-\frac{1}{2}}) \text{Tr}(\mathcal{M}^{-\frac{1}{2}} |\mathbf{H}| \mathcal{M}^{-\frac{1}{2}})$$
+
+This theorem confirms that the use of metric-based mesh adaptation is particularly well suited to
+control anisotropically the interpolation error, because the metric alone contains enough information
+to describe completely the linear interpolation error. The complete proof of theorem this can be found
+in [33].
+
+#### 4.1.2 Continuous linear interpolate
+The main difficulty in defining the continuous linear interpolate is to connect a discrete error computed on an element to a local continuous error that is defined pointwise. Suppose now that the continuous mesh \\(\mathcal{M}(x)_ {x \in \Omega}\\) is varying and \\(w\\) is not quadratic but only twice differentiable (to define its Hessian \\(H_w\\)).
+The equality 70 do not apply anymore but the right hand-side terms are defined continuously. The definition of a continuous linear interpolate \\(\pi_{\mathcal{M}}\\) follows this consideration.We denote by \\(w_Q\\) the quadratic approximation of a smooth function \\(w\\). At point \\(a, w_Q\\) is defined in the vicinity of \\(a\\) as the truncated second order Taylor expansion of \\(w\\):
+\\[ \forall x \in \mathcal{V}(a), w_Q(a, x) = w(a) + \nabla w(a)(x - a) + \frac{1}{2}(x - a)^{\top}H_w(a)(x - a) \\]
+
+
+\\(w_Q\\) is a complete quadratic form composed of a constant term, a linear term, and finally a quadratic term. In the vicinity of \\(a,w_Q\\) approximates \\(w\\) and \\(\mathcal{M}(x)_ {x \in \Omega}\\) reduces to \\(\mathcal{M}(a)\\) in the tangent space.\
+Given the following hypothesis, (theorem) there exists a unique continuous linear interpolate function \\(\pi_{\mathcal{M}}\\) such that
+$$\forall a \in \Omega, |w - \pi_{\mathcal{M}}w|(a) = 2\frac{\|w_Q - \Pi_h w_Q\|_ {L^1(K)}}{|K|} \quad (71)$$
+for every \\(K\\) unit element with respect to \\(\mathcal{M}(a)\\). The proof of this theorem can be found in [33]. The consequence of this theorem allows to write the continuous linear interpolation error w.r.t only the geometry and the Hessian:
+$$\forall a \in \Omega, |w - \pi_{\mathcal{M}}w|(a) = \frac{1}{8} \text{tr}(\mathcal{M}(a)^{-\frac{1}{2}} |H(a)| \mathcal{M}(a)^{-\frac{1}{2}}) \text{ in 2D} \quad (72)$$
+$$\forall a \in \Omega, |w - \pi_{\mathcal{M}}w|(a) = \frac{1}{10} \text{tr}(\mathcal{M}(a)^{-\frac{1}{2}} |H(a)| \mathcal{M}(a)^{-\frac{1}{2}}) \text{ in 3D} \quad (73)$$
+The proof of this is obtained by combining the above theorem 71, the equality 70 and the geometric invariants from 3.2.1.
+
+
+#### 4.1.3 Continuous linear interpolation error model
+
+The continuous linear interpolation model in \\(L^p\\)-norm is given by the following:
+$$\mathcal{E}_ {L^p}(\mathcal{M}) = \left( \int_{\Omega} |w - \pi_{\mathcal{M}} w|^p d\Omega \right)^{\frac{1}{p}} \quad (74)$$
+We can express the error only with \\(\mathcal{M}(x)_ {x \in \Omega}\\) and \\(H_w\\) the Hessian of \\(w\\). 
+Putting this error model expression into problem (66) allows for a direct computation of \\(\mathcal{M}_ {L^p}^{opt}\\) that takes the following form:
+$$\mathcal{M}_ {L^p}^{opt} = N^{\frac{2}{d}} \left( \int_{\Omega} \det |H_w|^{\frac{p}{2p+d}} d\Omega \right)^{-\frac{2}{d}} \det |H_w|^{-\frac{1}{2p+d}} |H_w| \quad (75)$$
+where \\(d\\) denotes the dimension. The proof of this is in [34].
+
+
+### 4.2 Goal-oriented mesh adaptation 
+
+
+Feature-based mesh adaptation is efficient in controlling the interpolation error of a sensor field and has the good property of being generic. The multiscale error estimate in \\(L^p\\)-norm allows to automatically capture all scales within the flow. However, if generecity is a good advantage, it also has some flaws.\
+Indeed, the precision of a PDE solution is not always well described by the interpolation error. This can result in precision error in the computation of a function \\(J(u)\\) depending on the state \\(u\\) ([32],[2]). In aerodynamics, the accuracy of the aerodynamic coefficients is of interest for industrials. For example, it has been seen on wing profiles ([2]) that a mesh adaptation strategy based on the precise computation of the Drag enriched the boundary layer earlier and put less elements in the wake compared to Feature-
+based mesh adaptation on the mach number. This lead to a faster convergence of the drag coefficient, however it does not guarantee that all functions are well computed on the adapted mesh.
+
+
+
+
+
+### 4.3 Iterative Procedure and Convergence
+
+Given an input discrete metric field ***, the goal of the remeshing algorithm is to perform operations on the current mesh to inforce as best as possible the desired metric. This comes in an iterative process called a mesh adaptation loop (see figure 10) in which a series of steady state solution computations, error analysis and remeshing are performed at constant complexity until mesh convergence is achieved. In practice, we apply this loop until aerodynamic coefficients reach a plateau. Then the complexity increase is specified by the user in the form of table 1 where complexity and iteration number at constant complexity are specified. Exit loop conditions could be added in the latter similar to [2] where a Cauchy convergence criterion with an error threshold \\(\epsilon\\) on the aerodynamic coefficients is used
+to get to higher complexities.
+Practically, the remesher works as follows: the metric is interpolated [5] on the vertexes of the mesh. Then the definition of metric lengths is possible between two vertexes with 60. Following that, local operations are performed on mesh entities within cavities (list of geometrical entities containing the entity). Different local operators exists such as edge splits, edge collapses, edge swaps, face swaps, vertex smoothing etc [30]. The idea of cavity operators is to replace an existing set of elements by a new one that conserves mesh topology (for example there is no face F counted twice). Depending on the operation, each local operator is performed if it prescribes the new metric (i.e. if the lenghts in the cavity are quasi-unit) with quality sufficient elements. The quality threshold is usually hard-coded, however it is possible to change the quality thresholds in Tucanos. The scheduling of such operators is performed as in P.C. Caplan’PhD [14] p58. To our knowledge this scheduling is different from the one present in classic anisotropic remeshers such as MMG [20], fefloa [30] or refine [37].
+
+Since mesh adaptation is intrinsically non-linear, its resolution relies on an iterative loop aimed at the convergence of the mesh-solution pair. The process follows a rigorous sequence:
+
+Flow resolution on a given mesh \\(H_i\\).
+Estimation of the optimal metric \\(M_{L^p}\\)from the computed solution (generally via Hessian recovery).
+Metric field gradation to ensure geometric regularity (smoothing).
+Modification of \\(H_i\\) in order to get a new mesh \\(H_{i+1}\\)  that adheres to the prescribed metric.
+
+This strategy not only allows for the capture of singularities and strong discontinuities (shocks, boundary layers) but also ensures the recovery of the numerical scheme's theoretical convergence order, which is often degraded on non-adapted meshes.
+
+the transformation of the actual mesh  \\(H_i\\)  in a adapted mesh \\(H_{i+1}\\) that respect the prescribed metric itself extracted from the interpoaltion error analysis is performed threw a combination of different mesh operations.
+
+
+<figure style="text-align: center;">
+  <img src="../images/Schema_Remesh_bg.png" alt="Anisotropic metric tensor" width="70%">
+</figure>
+
+#### 4.3.1 Cavity 
+
+Given a mesh entity \\( e \\) (a vertex or an edge in this case), the cavity \\( \mathcal{C}(e) \\)is the set of mesh elements that contain the entity \\( e \\).
+
+A cavity \\( \mathcal{C}(e) \\) can be "re-filled" from a vertex \\( \mathbf v \\) as the set of elements created from \\( \mathbf v \\) and the faces of the cavity boundary \\( \partial \mathcal{C}(e) \\) (outward-oriented).
+
+\\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \\]
+
+
+
+
+
+<div class="algorithm">
+<b>Algorithm:</b> Mesh Adaptation Loop for Steady Flows<br><br>
+
+<b>Input:</b> Initial mesh and solution \\((H_0, S_0^0)\\), target complexity \\(N\\)<br>
+<b>Output:</b> Adapted mesh and solution<br><br>
+
+<ol>
+Compute solution \\(S_i\\) using the flow solver from \\( (H_i, S_i^0) \\)
+If \\(i = n_{\text{adap}}\\) , <b>break</b> 
+Compute metric \\(M_{L^p,i} \text{from} (H_i, S_i)\\)
+Apply metric gradation to obtain \\(\tilde{M}_{L^p,i}\\)
+Generate adapted mesh \\(H_{i+1}\\)from \\((H_i, \tilde{M}_{L^p,i})\\)
+Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
+</ol>
+
+</div> 
+
+### 4.3.2 Swap 
+
+<figure style="text-align: center;">
+  <img src="../images/swap.svg" alt="Anisotropic metric tensor " width="70%">
+</figure>
+
+The __swap__ operation aims at improving the quality of the elements. It locally modifies the connectivity of a mesh without adding or removing vertices.
+
+This operation may fail for several reasons. It is topologically impossible if the edge to be modified has only one adjacent element or if it lies on a fixed boundary. Similarly, the operation fails if the vertex topology is incompatible.
+
+These 3 criteria have to be assessed to determine if a __swap__ operation is accepted or not.
+
+
+The swap of edge \\(e_ {i,j}\\) can be performed as follow
+- build the edge cavity \\(C(e_{i,j})\\)
+- compute \\(q_{min} = \min_{K \in C(e_{i,j})} q(K)\\)
+- if \\(q_{min}\\) is too low, loop over all the vertices \\(\mathbf{x}\\) on the boundary of C (that are neither \\(\mathbf{x}_i\\) nor \\(\mathbf{x}_j\\))
+    - fill the vertex cavity from \\(\mathbf{x} : F = \mathcal{F} (\mathbf{x},C(\mathbf e_{i,j}))\\)
+    - if \\(F\\) passes all the criteria, it is a valid candidate
+- if valid candidates are available, let \\(F_0\\) be the best one (the one with for which the minimum element quality is maximum) 
+    - remove all the elements from \\(C(\mathbf{e}_{i,j})\\) from the mesh
+    - insert all the elements from \\(F_0\\) to the mesh
+
+
+It can however introduce:
+
+* "long" or "short" edges
+
+* a poor representation of the geometry that will be difficult to recover later
+
+* inconsistent tagging
+
+
+### 4.3.3 Split
+
+
+
+<figure style="text-align: center;">
+  <img src="../images/split.svg" alt="Anisotropic metric tensor" width="70%">
+</figure>
+
+The __split__ operation aims at splitting "long" edges. It is applied to edges whose length (in metric space) is larger than \\(l_0 > \sqrt{2}\\). 
+
+The split of edge \\(e_ {i,j}\\) can be performed as follow : 
+- build the edge cavity \\(C(e_{i,j})\\)
+- create the midpoint \\(\mathbf x = (\mathbf x_i + \mathbf x_j) / 2\\), project it onto the geometry if needed, and compute the metric \\(\mathcal M = \exp((\log(\mathcal{M}_i) + \log(\mathcal M_j)) / 2)\\)
+- fill the vertex cavity from \\(\mathbf{x} : F = \mathcal{F} (\mathbf{x} ,C(\mathbf{e}_{i,j}))\\)
+- if \\(F\\) passes all the criteria for swaps
+    - remove all the elements from \\(C(\mathbf e_{i,j})\\) from the mesh
+    - insert verted \\(\mathbf{x}\\) (with metric \\(\mathcal{M}\\)) to the mesh
+    - insert all the elements from \\(F\\) to the mesh
+
+
+It can however introduce
+- "short" edges
+- element of low quality (including invalid elements)
+
+These 2 criteria have to be assessed to determine if a __split__ operation is accepted or not
+When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.
+
+
+
+###  4.3.4 Collapse
+
+<figure style="text-align: center;">
+  <img src="../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
+</figure>
+
+
+The __collapse__ operation aims at removing "small" edges. It is applied to edges whose length (in metric space) is smaller than \\( l_0 < 1/\sqrt{2} \\). 
+
+It can however introduce
+- "long" edges
+- element of low quality (including invalid elements)
+- a poor representation of the geometry that will be difficult to recovered later
+
+These 3 criteria have to be assessed to determine if a __collapse__ operation is accepted or not.
+
+The collapse of edge $e_{i,j} = (\mathbf x_i, \mathbf x_j)$ can be performed as follow
+- check the tags
+    - if $dim(e_{i,j}) >  dim(\mathbf x_i)$ and $dim(e_{i,j}) > dim(\mathbf x_j)$, do not collapse
+    - if $dim(e_{i,j}) >  dim(\mathbf x_i)$ and $dim(e_{i,j}) = dim(\mathbf x_j)$, swap indices $i$ and $j$
+- build the vertex cavity $C(\mathbf x_i)$
+- fill the vertex cavity from $\mathbf x_j$: $F = \mathcal F(\mathbf x_j,C(\mathbf x_i))$
+- if $F$ passes all the criteria for swaps
+    - remove all the elements from $C(\mathbf x_i)$ from the mesh
+    - insert all the elements from $F$ to the mesh
+
+
+<!-- Just as with a split, a collapse on an edge deemed too short can only be performed under certain conditions. The operation is first subject to feasibility checks. It fails if the edge is on a fixed boundary, if the modification risks degrading the resulting mesh quality, or if it leads to an irregular vertex geometry. -->
+
+### Definition: Smooth
+
+The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.
+
+In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity (or one of its children) are considered for smoothing. A projection step is still required for boundary vertices to ensure consistency with the CAD model.
+
+
+The smoothnig of vertex $\mathbf x_{i}$ can be performed as follow
+- build the vertex cavity $C(\mathbf x_{i})$
+- compute $q_{min} = \min_{K \in C(\mathbf x_{i})} q(K)$
+- compute the subset of the vertices in $C(\mathbf x_{i})$ that are tagged in the same entity as $\mathbf x_{i}$ or one of its children, and average the positions of these vertices to obtain the new position $\mathbf x$
+- if $\mathbf x_{i}$ is on a boundary, project $\mathbf x$ on the geometry
+- fill the vertex cavity from $\mathbf x$: $F = \mathcal F(\mathbf x,C(\mathbf x_{i}))$
+- if $\min_{K \in F} q(K) < q_{min}$:
+    - locate the element of $C(\mathbf x_{i})$ that contains $\mathbf x$ (or is the closest), and interpolate the metric in $\mathbf x$ using the barycentric coordinates 
+    - update the location and metric of vertex $i$
+
+
+
+### 5. Tucanos Remeshing Library 
+
+Tucanos is a remeshing library developped by Xavier Garnaud and Jérome Robert in the CRT (Research
+and technology center) of Airbus. It contains isotropic and anisotropic 2D and 3D remeshers, optima28 metric computation in the sense of the Lp multiscale error estimate and onboard hessian computations.
+The main core is written in RUST with a python API available called pytucanos. It is open-source and available on git https://github.com/tucanos along with some benchmarks and documentation. It enables parallel multithreading remeshing using Rayon and metis for partitionning the mesh. The theoretical aspects follow P.C. Caplan’s PhD [14], which is based on the continuous mesh theory ([33],[34]).
+
+
+#### 5.1 Tucanos Parameters
+
+.... 
+
+
+
+
+While the formulation of the optimal metric \\(\mathcal{M}_ {L^p}^{opt}\\) provides a theoretical definition of the ideal mesh for minimizing interpolation error, its implementation on complex aerodynamic configurations quickly encounters hardware limitations. 
+
+Indeed, high-fidelity CFD simulations, coupled with an anisotropic adaptation process generating millions of elements, induce memory loads and computational times that are prohibitive for classical sequential architectures.Consequently, to maintain turnaround times compatible with industrial requirements, it becomes imperative to leverage the power of High-Performance Computing (HPC). 
+
+This transition from sequential to distributed computing introduces a major challenge: the partitioning of the computational domain into multiple sub-domains. This necessitates the definition of robust partitioning strategies capable of equitably distributing mesh complexity while minimizing the communication costs between processors.
+
+
+### 6. Parallel Strategies 
+
+The massive data scales inherent to high-fidelity CFD and the demand for High-Performance Computing (HPC) necessitate the distribution of the computational workload across multiple processing units. Consequently, it is imperative to partition the underlying mesh of the spatial domain \\( \Omega \\). Partitioning decomposes the global domain into \\( n \\) sub-domains, effectively transforming the initial problem into \\( n \\) smaller, coupled sub-problems that can be solved in parallel.An efficient partitioning strategy must satisfy three primary criteria:
+
+
+* **Interdependency Reduction**: Minimizing the number of shared edges or faces between sub-domains to reduce costly inter-processor communication overhead.
+
+* **Quality Preservation**: Ensuring that the partitioning process does not degrade the geometric or topological quality of the individual sub-meshes.
+
+* **Load Balancing**: Uniformly distributing the computational effort among all processors to prevent bottlenecks and maximize parallel speedup.
+
+
+
+#### 6.1 Partitioning for Remeshing: The Interface Challenge
+
+
+In the context of mesh adaptation, managing the interfaces between partitions presents a significant challenge. These boundaries must be adapted without compromising the global continuity of the mesh or parallel efficiency. Two distinct methodologies are commonly employed:
+
+
+#### 6.1.1  The Two-Step Process 
+This method begins with an initial domain partitioning where the resulting interfaces are "frozen," allowing each processor to remesh its local sub-domain independently. Following this local adaptation phase, a second partitioning is performed. The key to this strategy is ensuring that the new interfaces do not coincide with the previously frozen ones. This staggered approach guarantees that the entire domain, including the initial interface regions, is eventually adapted.
+
+<center>
+<img src="../images/Two_Step_Process.png" alt="Two_Step_Process" width="100%">
+</center>
+
+#### 6.1.2 Hierarchical Interface Freezing Method 
+
+This approach utilizes iterative, hierarchical freezing. After the initial sub-domains are remeshed with frozen interfaces, the interfaces themselves are extracted and partitioned. By "freezing" the newly created sub-interfaces, the original boundary regions can be remeshed. This recursive process—freezing interfaces of interfaces—can be repeated until global conformity and satisfactory mesh resolution are achieved across all boundaries. 
+
+
+<center>
+<img src="../images/Freezing_Interface.png" alt="Freezing_Interface" width="80%">
+</center>
+
+Regarding Tucanos, the second approach is considered.Beyond interface management strategies for parallel remeshing, the fundamental challenge of the initial decomposition of a mesh into sub-domains remains. This task is performed by partitioning algorithms, whose objectives were discussed previously. Various partitioning algorithms are available within the Tucanos library, and a comparative performance analysis will be conducted regarding the quality of the resulting partitions. A viable metric for assessing partitioning quality is the measurement of the number of shared edges or 'edge-cut' between partitions following the decomposition.
+
+... Exemples de décomposition de domaine. Test cube 3D ? 
+
+
+### 6.2 Load Balancing in Parallel Mesh Adaptation  
+The performance of parallel remeshing is intrinsically limited by the sub-domain with the highest computational load. This workload is a complex function of the local remeshing operators (insertion, collapse, swap, smoothing), the target metric \\(\mathcal{M}_ T\\), and the initial induced metric \\(\mathcal{M}_{\mathcal{H}}\\).
+
+An effective domain partitioning strategy should indeed balance the work which is going to be done by the local remesher on each partition, knowing that each partition is meshed independently.
+
+It is convenient to define the work at the elements because it is the elements that are uniquely distributed to each partition. We recall that the natural metric of an element \\(K\\) is the unique metric tensor \\(\mathcal{M}_K\\) such that all edges of \\(K\\) are of length 1 for \\(\mathcal{M}_K\\) . It is obtained by solving a simple linear system [35].
+And, metric field \\(\mathcal{M}_ {\mathcal{H}} (x) \in \Omega \\)  is the union of the element metrics \\(\mathcal{M}_ K\\). To define the remesher work per element and the total work, we use a continuous approach – similarly to the error estimate theory [35,36] – because the initial mesh and the targeted final adapted mesh are represented by their respective metric fields \\(\mathcal{M}_{\mathcal{H}} x \in \Omega \\)  and (M(x))x∈Ω.
+
+
+#### Remark 
+If we consider that the metric induced by the initial mesh is equal to the target metric at every point of the domain \\(\Omega\\), i.e., \\( (\mathcal{M}_ {\mathcal{H}}(x))_{x \in \Omega} = (\mathcal{M}_T(x)) _{x \in \Omega}\\), then no remeshing work is required.
+
+
+<!-- 
 
 ### Error Control and Continuous Formulation in Mesh Adaptation
 
@@ -471,129 +779,10 @@ Two distinct methodological approaches are used to drive anisotropy:
 
 Feature-based approach :This aims to optimize the mesh to capture all physical structures of a specific sensor (e.g., pressure, Mach number). The use of the \\(L^p\\)norm is crucial here for capturing multi-scale phenomena, allowing for the refinement of structures whose amplitude is several orders of magnitude smaller than the primary scales.
 
-Goal-oriented approach: This focuses the error reduction effort on a specific scalar functional of interest (e.g., lift, drag), although prescribing anisotropy in this context is mathematically more complex.
-
-### 4.3. Iterative Procedure and Convergence
-
-Since mesh adaptation is intrinsically non-linear, its resolution relies on an iterative loop aimed at the convergence of the mesh-solution pair. The process follows a rigorous sequence:
-
-Flow resolution on a given mesh \\(H_i\\).
-Estimation of the optimal metric \\(M_{L^p}\\)from the computed solution (generally via Hessian recovery).
-Metric field gradation to ensure geometric regularity (smoothing).
-Generation of a new mesh \\(H_{i+1}\\)  that adheres to the prescribed metric.
-
-This strategy not only allows for the capture of singularities and strong discontinuities (shocks, boundary layers) but also ensures the recovery of the numerical scheme's theoretical convergence order, which is often degraded on non-adapted meshes.
-
-We no longer seek merely to mathematically define an optimal metric, but to physically construct the resulting optimal mesh to solve complex fluid dynamics problems.
-
+Goal-oriented approach: This focuses the error reduction effort on a specific scalar functional of interest (e.g., lift, drag), although prescribing anisotropy in this context is mathematically more complex. -->
 
 <!-- L'adaptation basée sur les caractéristiques (Feature-based) : On cherche le meilleur maillage pour capturer les variations d'un capteur physique donné (vitesse, pression, etc.).
 L'adaptation orientée par l'objectif (Goal-oriented) : On optimise le maillage pour observer une fonctionnelle scalaire précise (par exemple, la traînée ou la portance d'une aile).
 Problématiques et Motivations
 Bien que l'efficacité de l'anisotropie soit prouvée, le passage aux solutions numériques (où la solution exacte \\(u\\) est inconnue) soulève des défis :Erreur d'approximation : On cherche à minimiser \\(\|u - u_h\|_ {L^p}\\) au lieu de l'erreur d'interpolation pure.Capture multi-échelles : L'utilisation de la norme \\(L^p\\) (au lieu de \\(L^\infty\\)) est indispensable pour capturer des phénomènes dont l'amplitude est parfois 1000 fois plus faible que les structures principales, sans avoir besoin de fixer arbitrairement une taille de maille minimale.Convergence théorique : L'adaptation permet de retrouver un ordre de convergence de 2 (souvent perdu sur des maillages uniformes en présence de chocs ou de forts gradients), ce qui valide la qualité du calcul.L'algorithme d'adaptationL'adaptation est un processus non-linéaire résolu par une boucle itérative. On ne se contente pas de calculer une métrique ; on génère un nouveau maillage à chaque étape pour converger vers le couple maillage-solution optimal.La boucle type (Algorithme 2) :Calcul : Résolution de l'écoulement sur le maillage actuel.Métrique : Calcul de la métrique \\(M_{L^p}\\) basée sur l'estimation d'erreur.Gradation : Lissage de la métrique pour éviter des variations de taille trop brutales entre voisins.Génération : Création d'un nouveau maillage adapté à cette métrique.Interpolation : Transfert de la solution précédente sur le nouveau maillage pour redémarrer le calcul. -->
-
-
-
-<div class="algorithm">
-<b>Algorithm:</b> Mesh Adaptation Loop for Steady Flows<br><br>
-
-<b>Input:</b> Initial mesh and solution \\((H_0, S_0^0)\\), target complexity \\(N\\)<br>
-<b>Output:</b> Adapted mesh and solution<br><br>
-
-<ol>
-Compute solution \\(S_i\\) using the flow solver from \\( (H_i, S_i^0) \\)
-If \\(i = n_{\text{adap}}\\) , <b>break</b> 
-Compute metric \\(M_{L^p,i} \text{from} (H_i, S_i)\\)
-Apply metric gradation to obtain \\(\tilde{M}_{L^p,i}\\)
-Generate adapted mesh \\(H_{i+1}\\)from \\((H_i, \tilde{M}_{L^p,i})\\)
-Interpolate solution to obtain \\(S_{i+1}^0\\) from \\((H_{i+1}, H_i, S_i)\\)
-</ol>
-
-</div> 
-
-
-
-\\(\\) \\(\\) \\(\\) \\(\\) \\(\\) 
-
-
-### Definition: Cavity
-
-Given a mesh entity \\( e \\) (a vertex or an edge in this case), the cavity \\( \mathcal{C}(e) \\)is the set of mesh elements that contain the entity \\( e \\).
-
-A cavity \\( \mathcal{C}(e) \\) can be "re-filled" from a vertex \\( \mathbf v \\) as the set of elements created from \\( \mathbf v \\) and the faces of the cavity boundary \\( \partial \mathcal{C}(e) \\) (outward-oriented).
-
-\\[ \mathcal F(\mathbf v,C(e))= { K=(\mathbf v, \mathbf g_1, \cdots, \mathbf g_d) | g = (\mathbf g_1, \cdots, \mathbf g_d) \in \partial C(e), \mathbf v \notin g} \\]
-
-### Definition: Swap
-
-<figure style="text-align: center;">
-  <img src="../images/swap.svg" alt="Anisotropic metric tensor " width="70%">
-</figure>
-
-The __swap__ operation aims at improving the quality of the elements. It locally modifies the connectivity of a mesh without adding or removing vertices.
-
-This operation may fail for several reasons. It is topologically impossible if the edge to be modified has only one adjacent element or if it lies on a fixed boundary. Similarly, the operation fails if the vertex topology is incompatible.
-
-These 3 criteria have to be assessed to determine if a __swap__ operation is accepted or not.
-
-This operation may fail for several reasons. It is topologically impossible if the edge to be modified has only one adjacent element or if it lies on a fixed boundary. Similarly, the operation fails if the vertex topology is incompatible.
-
-A swap is also rejected when quality and geometric constraints are not met. The operation is not performed if the current mesh quality is already above the required threshold, or if it risks compromising surface regularity by creating, for instance, an excessively large normal angle. Specifically, the new elements resulting from the swap must respect a minimum quality and predefined edge length limits. Finally, the swap is considered a failure if the proposed modification does not change the cavity connectivit
-
-
-It can however introduce:
-
-* "long" or "short" edges
-
-* a poor representation of the geometry that will be difficult to recover later
-
-* inconsistent tagging
-
-These three criteria must be assessed to determine if a swap operation is accepted or not.
-
-### Definition: Split
-
-
-
-<figure style="text-align: center;">
-  <img src="../images/split.svg" alt="Anisotropic metric tensor" width="70%">
-</figure>
-
-The __split__ operation aims at splitting "long" edges. It is applied to edges whose length (in metric space) is larger than \\(l_0 > \sqrt{2}\\). 
-
-For a split to be performed on an edge deemed too long, it must not be located on a fixed boundary, and the modification must not result in poor mesh quality or excessively short edges. If any of these conditions are not met, the operation fails. The operation is validated and executed only if all conditions are respected and if it effectively improves the mesh quality. 
-
-It can however introduce
-- "short" edges
-- element of low quality (including invalid elements)
-
-These 2 criteria have to be assessed to determine if a __split__ operation is accepted or not
-When introducing new vertices on boundaries, a projection step is required to ensure the consistency with the CAD model.
-
-
-
-### Definition: Collapse
-
-<figure style="text-align: center;">
-  <img src="../images/collapse.svg" alt="Tenseur métrique anisotrope" width="70%">
-</figure>
-
-
-The __collapse__ operation aims at removing "small" edges. It is applied to edges whose length (in metric space) is smaller than \\( l_0 < 1/\sqrt{2} \\). 
-
-It can however introduce
-- "long" edges
-- element of low quality (including invalid elements)
-- a poor representation of the geometry that will be difficult to recovered later
-
-These 3 criteria have to be assessed to determine if a __collapse__ operation is accepted or not.
-
-Just as with a split, a collapse on an edge deemed too short can only be performed under certain conditions. The operation is first subject to feasibility checks. It fails if the edge is on a fixed boundary, if the modification risks degrading the resulting mesh quality, or if it leads to an irregular vertex geometry.
-
-### Definition: Smooth
-
-The smoothing operation aims at improving the quality of the elements by moving vertices to some average of the locations of its neighbors.
-
-In order to have a consistent smoothing on the boundaries of the computational domain, only the neighbors tagged on the same topological entity (or one of its children) are considered for smoothing. A projection step is still required for boundary vertices to ensure consistency with the CAD model.
-
 
